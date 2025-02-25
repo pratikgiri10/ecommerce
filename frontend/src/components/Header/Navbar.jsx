@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+// import {username} from '../../features/auth/authSlice'
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
     const navigate = useNavigate();
   return (
     <div>
@@ -29,7 +31,7 @@ const Navbar = () => {
       <div className="hidden md:flex gap-4">
         <div 
          onClick={() => {
-          navigate('/cart')
+          isLoggedIn ? navigate('/cart') : navigate('/login')
         }} 
         className='flex items-center gap-2'>
           <ShoppingCart color='white' size={26}/>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 import {
     Form,
@@ -11,8 +11,10 @@ import {
   } from "@/components/ui/form"
   import { Button } from '../ui/button'
   import { Input } from '../ui/input'
+  import axios from 'axios'
 
 function Register() {
+   
     const form = useForm({
         defaultValues: {
             name: "",
@@ -21,8 +23,19 @@ function Register() {
           },
     })
 
-    const onSubmit = () => {
-        console.log("Login Data");
+    const onSubmit = async (data) => {
+        // e.preventDefault()
+        console.log(data)
+        const {name, email, password} = data
+        try{
+            console.log("Login Data");
+            const response = await axios.post('http://localhost:3000/api/register',{
+               name, email, password
+            })
+        }catch(err){
+            console.log(err)
+        }
+       
       };
   return (
    <div className='flex items-center justify-center h-screen bg-orange-600 w-full p-0'>
@@ -41,7 +54,9 @@ function Register() {
                 <FormItem >          
                         <FormLabel>Name</FormLabel>
                         <FormControl>
-                        <Input type='text' placeholder="your name" {...field} />
+                        <Input 
+                       
+                        type='text' placeholder="your name" {...field} />
                         </FormControl>  
                         <FormMessage />
                 </FormItem>
@@ -55,7 +70,9 @@ function Register() {
                 <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                    <Input type="email" placeholder="Enter your email" {...field} />
+                    <Input 
+                    
+                    type="email" placeholder="Enter your email" {...field} />
                     </FormControl>
                     <FormMessage />
                 </FormItem>
@@ -69,7 +86,9 @@ function Register() {
                 <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                    <Input type="password" placeholder="Enter your password" {...field} />
+                    <Input 
+                    
+                    type="password" placeholder="Enter your password" {...field} />
                 </FormControl>
                 <FormMessage />
                 </FormItem>
