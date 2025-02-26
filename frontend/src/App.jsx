@@ -7,6 +7,7 @@ import Checkout from './components/Cart/Checkout'
 import Product from './pages/Product'
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
+import ProtectedRoute from './components/protected/ProtectedRoute'
 
 
 function App() {
@@ -17,8 +18,12 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home />}></Route>
-          <Route path='/cart' element={<Carts />}></Route>
-          <Route path='/checkout' element={<Checkout />}></Route>
+
+          <Route element={<ProtectedRoute />}>
+            <Route path='/cart' element={<Carts />}></Route>
+            <Route path='/checkout' element={<Checkout />}></Route>
+          </Route>
+          
           <Route path='/product' element={<Product />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>

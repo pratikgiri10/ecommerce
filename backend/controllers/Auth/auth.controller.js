@@ -1,4 +1,5 @@
 import client from '../../config/dbConfig.js'
+import jwt from 'jsonwebtoken'
 const db = client.db('ecommerce');
 
 export const register =  async (req, res) => {
@@ -31,11 +32,38 @@ export const login = async (req, res) => {
     try{
         const response = await db.collection('users').findOne({email})
         if(response){
-            response.password == password ? res.status(200).json({response}): res.status(404).json({success: false, error: "email doesn't exist"})
+            const token = jwt.sign({
+                    id: response._id,
+                    email
+                },
+                process.env.JWT_SECRET,
+                {
+                    expiresIn: '2h'
+                }
+            )
+            const options = {
+                httpOnly: true,
+                sameSite: 'lax'
+            }
+            response.password == password ? res.cookie("token", token, options).json({response, success: true}) : res.status(404).json({success: false, error: "email doesn't exist"})
+           
         }
-        console.log(response)
+       
     }catch(err){
         console.log(err)
         res.status(400).json({success: false})
+    }
+}
+
+export const auth = (req,res) => {
+    const token = req.cookies.token;
+    // console.log(token)
+    if(!token)
+        return res.status(401).json({error: "Access Denied"})
+    try{
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        res.json({success: true, user: decoded})
+    }catch(error){
+        res.status(403).json({error: "invalid token"})
     }
 }

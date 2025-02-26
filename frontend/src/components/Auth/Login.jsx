@@ -14,19 +14,33 @@ export default function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const checkSession = async () => {
+    const response = await axios.get('http://localhost:3000/api/session',{
+      withCredentials: true
+    })
+    return response.data.sucesss
+  }
+
   const handleLogin = async (e) => {
     e.preventDefault()
-    dispatch(login(username))
+   
     try{
       const response = await axios.post('http://localhost:3000/api/login',{
         username, password
+      }, {
+        withCredentials: true
       })
-      if(response.data){
-        navigate('/')
+      console.log(response)
+      if(response.data.success){
+        
+          dispatch(login(username))
+          navigate('/')
+        
+        
       }
-      else{
-        navigate('/login')
-      }
+      // else{
+      //   navigate('/login')
+      // }
     }catch(err){
       console.log(err)
     }

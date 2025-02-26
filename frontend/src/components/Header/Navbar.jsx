@@ -2,13 +2,15 @@ import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { logout } from '@/features/auth/authSlice';
 // import {username} from '../../features/auth/authSlice'
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
     const navigate = useNavigate();
+    const dispatch = useDispatch()
   return (
     <div>
          <nav className="bg-orange-600 text-white shadow-md px-6 py-3 flex justify-between items-center">
@@ -40,11 +42,16 @@ const Navbar = () => {
           className="text-xl text-white p-0" variant="link">Cart</Button>
         </div>
         
-        <Button 
+       {!isLoggedIn ?  <Button 
         onClick={() => {
           navigate('/login')
         }} 
-        className="text-xl" variant="ghost">Login</Button>
+        className="text-xl" variant="ghost">Login</Button>:  <Button 
+        onClick={() => {
+          dispatch(logout())
+          navigate('/')
+        }} 
+        className="text-xl" variant="ghost">Logout</Button> }
       </div>
 
       {/* Mobile Menu Button */}
