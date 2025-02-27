@@ -13,24 +13,24 @@ export class Service {
         this.bucket = new Storage(this.client)
     }
 
-    async createProd({name, description, image, status}){
+    async createProd({name, description, image,  price}){
         try{
            return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                  conf.appwriteColllectionId,
                   ID.unique(),
                     {
-                         name, 
-                         description,
-                         image,
-                         status
+                         prod_name: name, 
+                         prod_description: description,
+                         prod_image: image,
+                         price
                     })
         }catch(error){
              console.log("Appwrite service :: createProd :: error", error);
              
         }
     }
-    async updateProd({name, description, image, status}){
+    async updateProd({name, description, image, status, price}){
         try{
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
@@ -58,12 +58,13 @@ export class Service {
             return false
         }
     }
-    async getProds(queries = [Query.equal("status", "active")]){
+    async getProds(){
+        // queries = [Query.equal("status", "active")]
         try{
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteColllectionId,
-                queries
+                // queries
             )
         }catch(error){
             console.log("Appwrite service :: getProd :: error", error)
@@ -81,6 +82,15 @@ export class Service {
         }catch(error){
             console.log(error)
         }
+    }
+    async getFilePreview(fileId){
+       
+            return this.bucket.getFilePreview(
+                conf.appwriteBucketId,
+                fileId
+            )
+           
+    
     }
     async deleteFile(fileId){
         try{

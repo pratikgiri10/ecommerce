@@ -9,28 +9,36 @@ import {
   } from "@/components/ui/card"
  
   import { Button } from '../ui/button'
+import ProductImage from './ProductImage'
 
-const Item = ({img}) => {
+const Item = ({item}) => {
+  const addToCart = () => {
+    
+  }
+
   return (
     <Card className='bg-white text-black w-[25%]'>
        <CardContent>
-           <img className='h-52 w-full object-cover' src={img} alt="" />
+        <ProductImage prod_image={item.prod_image}/>
+           {/* <img className='h-52 w-full object-cover' src={img} alt="" /> */}
         </CardContent>
       <div className='flex justify-between items-baseline'>
       <div>
        <CardHeader className='justify-start items-start'>
-            <CardTitle >Laptop</CardTitle>
-            <CardDescription className='text-left'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, quas.</CardDescription>
+            <CardTitle >{item.prod_name}</CardTitle>
+            <CardDescription className='text-left'>{item.prod_description}</CardDescription>
         </CardHeader>
       
        </div>
        <div>
        <CardFooter>
-            <p>$99</p>
+            <p>{item.price}</p>
         </CardFooter>
        </div>
       </div>
-      <Button className='w-full bg-orange-600'>Add to Cart</Button>
+      <Button 
+      onClick={addToCart}
+      className='w-full bg-orange-600'>Add to Cart</Button>
     </Card>
 
   )

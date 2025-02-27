@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { ShoppingCart } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { logout } from '@/features/auth/authSlice';
 // import {username} from '../../features/auth/authSlice'
@@ -18,17 +18,14 @@ const Navbar = () => {
       <div className="text-2xl font-bold">EShop</div>
 
       {/* Desktop Links */}
-      <div className="hidden md:flex gap-4">
-        <Button 
-        onClick={() => {
-          navigate('/')
-        }}
-        className="text-xl text-white" variant="link">Home</Button>
-        <Button 
-         onClick={() => {
-          navigate('/product')
-        }}
-        className="text-xl text-white" variant="link">Products</Button>
+      <div className="hidden md:flex gap-10 font-medium items-center">
+        <NavLink to='/' className={({isActive}) => 
+        `text-xl  ${ isActive ? 'text-zinc-900':'text-white hover:underline hover:underline-offset-8' } `
+        }> Home</NavLink>
+        <NavLink to='/product' className={({isActive}) => 
+        `${isActive ? 'text-zinc-900':'text-white  hover:underline hover:underline-offset-8' } text-xl `
+        }> Products</NavLink>
+      
       </div>
       <div className="hidden md:flex gap-4">
         <div 
