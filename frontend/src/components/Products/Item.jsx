@@ -10,10 +10,16 @@ import {
  
   import { Button } from '../ui/button'
 import ProductImage from './ProductImage'
+import { useDispatch } from 'react-redux'
+import { setToCart } from '@/features/cart/cartSlice'
+import { useNavigate } from 'react-router-dom'
 
 const Item = ({item}) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const addToCart = () => {
-    
+    dispatch(setToCart(item))
+    navigate('/cart')
   }
 
   return (

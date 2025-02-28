@@ -13,7 +13,7 @@ import Dashboard from './components/Dashboard/Dashboard'
 import AdminDashboard from './components/Dashboard/AdminDashboard'
 import ManageProducts from './components/Dashboard/ManageProducts'
 import ManageUsers from './components/Dashboard/ManageUsers'
-import ViewProducts from './components/Dashboard/VIewProducts'
+import ViewProducts from './components/Dashboard/ViewProducts'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { login } from '@/features/auth/authSlice'
@@ -49,7 +49,7 @@ function App() {
           
 
           <Route element={<ProtectedRoute />}>
-            <Route path='/cart' element={<Carts />}></Route>
+          <Route path='/cart' element={<Carts />}></Route>
             <Route path='/checkout' element={<Checkout />}></Route>
           </Route>
           

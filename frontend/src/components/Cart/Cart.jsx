@@ -10,26 +10,29 @@ import {
 } from "@/components/ui/card"
 
 import { Button } from '../ui/button'
+import ProductImage from '../Products/ProductImage'
 
-const Cart = ({img}) => {
+const Cart = ({item}) => {
   const [count, setCount] = useState(1)
+  console.log(item)
   return ( 
    <Card className='flex bg-white text-black'>
           <CardContent>
-              <img className='h-52 object-cover' src={img} alt="" />
+            <ProductImage prod_image={item.prod_image}/>
+              {/* <img className='h-52 object-cover' src={img} alt="" /> */}
            </CardContent>
          <div className='flex flex-col gap-10'>
           <div className='flex justify-center gap-10 items-baseline'>
             <div>
               <CardHeader className='justify-start items-start'>
-                  <CardTitle >Laptop</CardTitle>
-                  {/* <CardDescription className='text-left'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, quas.</CardDescription> */}
+                  <CardTitle >{item.prod_name}</CardTitle>
+                  <CardDescription className='text-left'>{item.prod_description}</CardDescription>
               </CardHeader>
             
             </div>
             <div>
               <CardFooter>
-                  <p>$99</p>
+                  <p>{item.price}</p>
               </CardFooter>
             </div>
           </div>

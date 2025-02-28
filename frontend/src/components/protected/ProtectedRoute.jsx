@@ -11,7 +11,9 @@ const ProtectedRoute = () => {
       const response = await axios.get('http://localhost:3000/api/session',{
         withCredentials: true
       })
+      console.log(response)
       if (response.data.success) {
+        localStorage.setItem('userId', JSON.stringify(response.data.user.id))
         return true;
       }
       return false;
