@@ -10,20 +10,28 @@ import {
  
   import { Button } from '../ui/button'
 import ProductImage from './ProductImage'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setToCart } from '@/features/cart/cartSlice'
 import { useNavigate } from 'react-router-dom'
 
 const Item = ({item}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const status = useSelector((state) => state.auth.isLoggedIn)
   const addToCart = () => {
-    dispatch(setToCart(item))
-    navigate('/cart')
+   
+    if(status){
+      dispatch(setToCart(item))
+      navigate('/cart')
+    }
+    else{
+      navigate('/login')
+    }
+    
   }
 
   return (
-    <Card className='bg-white text-black w-[25%]'>
+    <Card className='bg-white text-black'>
        <CardContent>
         <ProductImage prod_image={item.prod_image}/>
            {/* <img className='h-52 w-full object-cover' src={img} alt="" /> */}

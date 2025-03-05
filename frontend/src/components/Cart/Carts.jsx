@@ -5,27 +5,25 @@ import Checkout from './Checkout'
 import { useSelector } from 'react-redux'
 
 const Carts = () => {
-  const [items, setItems] = useState([])
-  const item = useSelector(state => state.cart.items)
-  useEffect(() => {
-    
-    // setItems(prev => [...prev, item])
-    console.log(item)
-  },[])
+  // const [items, setItems] = useState([])
+  const items = useSelector(state => state.cart.items)
+
+  const val = items.reduce((acc, item) => acc+item.price,0)
+  console.log('item',items)
+  console.log(val)
+ 
   
   
   return (
-    <div className='flex gap-4'>
-       <div>
-        {item.map((item) => (
+    <div className='flex justify-between px-8 py-4 w-full'>
+       <div className='w-[50%]'>
+        {items.map((item) => (
+         
            <Cart key={item.$id} item={item}/>
         ))}
-          {/* <Cart img={phone1}/>
-          <Cart img={phone1}/>
-          <Cart img={phone1}/> */}
+        {items.length < 1 && <div>No items in cart</div>}
        </div>
-        <Checkout />
-        
+        {items.length >=1 && <Checkout price={val} items={items}/>}
     </div>
   )
 }

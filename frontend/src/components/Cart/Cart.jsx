@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   Card,
@@ -11,17 +11,39 @@ import {
 
 import { Button } from '../ui/button'
 import ProductImage from '../Products/ProductImage'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeFromCart, setToCart, decreaseQuantity } from '@/features/cart/cartSlice'
 
 const Cart = ({item}) => {
-  const [count, setCount] = useState(1)
-  console.log(item)
+  const dispatch = useDispatch()
+  const [count, setCount] = useState()
+
+  const handleAddCount = () => {
+    setCount(count+1)
+    dispatch(setToCart(item))
+
+  }
+  const handleMinusCount = () => {
+    setCount(count-1)
+    dispatch(decreaseQuantity(item))
+    if(count <= 1){
+      setCount(1)
+    }
+  }
+  const handleRemoveFromCart = () => {
+    dispatch(removeFromCart(item))
+  }
+  useEffect(() => {
+    setCount(item.quantity)
+  },[])
+  // console.log(item)
   return ( 
-   <Card className='flex bg-white text-black'>
+   <Card className='flex justify-between bg-white text-black '>
           <CardContent>
             <ProductImage prod_image={item.prod_image}/>
               {/* <img className='h-52 object-cover' src={img} alt="" /> */}
            </CardContent>
-         <div className='flex flex-col gap-10'>
+         <div className='flex flex-col items-center gap-10 mb-2'>
           <div className='flex justify-center gap-10 items-baseline'>
             <div>
               <CardHeader className='justify-start items-start'>
@@ -40,16 +62,19 @@ const Cart = ({item}) => {
             <Button 
             size='sm'
             className='bg-orange-600 text-xl'
-            onClick={() => {
-              setCount(count-1)}}
+            onClick={handleMinusCount}
             >-</Button>
             <p className='text-xl'>{count}</p>
             <Button
             size='sm'
             className='bg-orange-600 text-xl'
-            onClick={() => {
-              setCount(count+1)}}
+            onClick={handleAddCount}
             >+</Button>
+          </div>
+          <div>
+            <Button 
+            onClick={handleRemoveFromCart}
+            className='bg-orange-600'>Remove from Cart</Button>
           </div>
          </div>
          {/* <Button className='w-full bg-orange-600'>Checkout</Button> */}

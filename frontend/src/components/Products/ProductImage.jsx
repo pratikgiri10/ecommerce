@@ -12,7 +12,7 @@ const ProductImage = ({prod_image}) => {
     }, [])
   return (
                             
-    <img className='h-52 w-full object-cover' src={url} alt="" />
+    <img className='w-[400px] object-cover' src={url} alt="" />
    
   )
 }

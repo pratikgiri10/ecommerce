@@ -29,7 +29,7 @@ function Register() {
         const {name, email, password} = data
         try{
             console.log("Login Data");
-            const response = await axios.post('http://localhost:3000/api/register',{
+            const response = await axios.post(`${import.meta.env.VITE_DOMAIN}/api/register`,{
                name, email, password
             })
         }catch(err){
