@@ -21,8 +21,8 @@ export const cartSlice = createSlice({
            else{
             state.items.push({...cart, quantity: 1})
            }
-        //    state.totalPrice += cart.price;
-             // Save to localStorage
+            // state.totalPrice += cart.price;
+            // Save to localStorage
             localStorage.setItem(`cart_${userId}`, JSON.stringify(state));
         },
         decreaseQuantity: (state,action) => {

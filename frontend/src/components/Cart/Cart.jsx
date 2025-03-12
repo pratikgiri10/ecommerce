@@ -24,11 +24,13 @@ const Cart = ({item}) => {
 
   }
   const handleMinusCount = () => {
-    setCount(count-1)
-    dispatch(decreaseQuantity(item))
+   
     if(count <= 1){
       setCount(1)
+      return
     }
+    setCount(count-1)
+    dispatch(decreaseQuantity(item))
   }
   const handleRemoveFromCart = () => {
     dispatch(removeFromCart(item))
@@ -38,7 +40,7 @@ const Cart = ({item}) => {
   },[])
   // console.log(item)
   return ( 
-   <Card className='flex justify-between bg-white text-black '>
+   <Card className='flex justify-between bg-gray-300 text-black '>
           <CardContent>
             <ProductImage prod_image={item.prod_image}/>
               {/* <img className='h-52 object-cover' src={img} alt="" /> */}

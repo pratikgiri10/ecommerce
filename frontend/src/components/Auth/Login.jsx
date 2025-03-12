@@ -15,7 +15,7 @@ export default function Login() {
   const dispatch = useDispatch()
 
   const checkSession = async () => {
-    const response = await axios.get('http://localhost:3000/api/session',{
+    const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/users/session`,{
       withCredentials: true
     })
     return response.data.sucesss
@@ -25,7 +25,7 @@ export default function Login() {
     e.preventDefault()
    
     try{
-      const response = await axios.post(`${import.meta.env.VITE_DOMAIN}/api/login`,{
+      const response = await axios.post(`${import.meta.env.VITE_DOMAIN}/users/login`,{
         username, password
       }, {
         withCredentials: true

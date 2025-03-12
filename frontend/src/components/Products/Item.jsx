@@ -33,7 +33,7 @@ const Item = ({item}) => {
   return (
     <Card className='bg-white text-black'>
        <CardContent>
-        <ProductImage prod_image={item.prod_image}/>
+        <ProductImage prod_image={item.prod_image} className={'h-[200px]'}/>
            {/* <img className='h-52 w-full object-cover' src={img} alt="" /> */}
         </CardContent>
       <div className='flex justify-between items-baseline'>

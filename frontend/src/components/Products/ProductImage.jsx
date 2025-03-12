@@ -1,7 +1,7 @@
 import service from '@/appwrite/config'
 import React, { useEffect, useState } from 'react'
 
-const ProductImage = ({prod_image}) => {
+const ProductImage = ({prod_image, className}) => {
     const [url, setUrl] = useState()
    
     useEffect(() => {
@@ -12,7 +12,7 @@ const ProductImage = ({prod_image}) => {
     }, [])
   return (
                             
-    <img className='w-[400px] object-cover' src={url} alt="" />
+    <img className={`object-cover ${className}`} src={url} alt="" />
    
   )
 }

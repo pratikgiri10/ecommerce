@@ -1,4 +1,10 @@
 import {MongoClient} from 'mongodb'
-import 'dotenv/config'
-const client  = new MongoClient(`${process.env.MONGO_URI}`);
-export default client
+export const client  = new MongoClient(`${process.env.MONGO_URI}`);
+const connectDb = async () => {        
+
+        const con = await client.connect()
+       
+   
+    
+}
+export default connectDb

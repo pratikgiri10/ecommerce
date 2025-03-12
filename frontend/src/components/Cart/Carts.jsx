@@ -8,7 +8,7 @@ const Carts = () => {
   // const [items, setItems] = useState([])
   const items = useSelector(state => state.cart.items)
 
-  const val = items.reduce((acc, item) => acc+item.price,0)
+  const val = items.reduce((acc, item) => acc+item.price*item.quantity,0)
   console.log('item',items)
   console.log(val)
  
@@ -16,7 +16,7 @@ const Carts = () => {
   
   return (
     <div className='flex justify-between px-8 py-4 w-full'>
-       <div className='w-[50%]'>
+       <div className='w-[800px]'>
         {items.map((item) => (
          
            <Cart key={item.$id} item={item}/>

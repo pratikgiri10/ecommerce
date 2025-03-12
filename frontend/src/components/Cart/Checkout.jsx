@@ -8,6 +8,10 @@ const Checkout = ({price, items}) => {
 
     const date = new Date(new Date().getTime()+ (3*24*60*60*1000));
 
+    const handleCheckout = async () => {
+
+    }
+
     const discountedPrice = useMemo(() => {        
      return price = price - discount   
     }, [price])
@@ -20,13 +24,16 @@ const Checkout = ({price, items}) => {
         <h1 className='text-2xl text-left font-semibold'>Checkout</h1>
         <div className='flex flex-col gap-4 px-6 py-4'>
             <h2 className='text-lg'>Delivery Date: </h2>
-            <p>{date.toLocaleString()}</p>
+            <p>{date.toDateString()}</p>
            
                {items.map((item) => (
+                    
                      <div key={item.$id} className='flex items-center justify-between'>
                           <h2 className='text-lg'>{item.prod_name}</h2>
+                          <h2>{item.quantity}</h2>
                           <p>{item.price}</p>
                     </div>
+                  
                ))}
            
            <div className='flex items-center justify-between border-t-2'>
@@ -42,7 +49,9 @@ const Checkout = ({price, items}) => {
                 <p>{discountedPrice}</p> 
            </div>
         </div>
-        <Button className='bg-orange-600'>Proceed to Checkout</Button>
+        <Button 
+        onClick={handleCheckout}
+        className='bg-orange-600'>Proceed to Checkout</Button>
     </div>
   )
 }

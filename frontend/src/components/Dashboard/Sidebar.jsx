@@ -11,14 +11,7 @@ import {
     SidebarMenuItem,
     SidebarProvider,
   } from "@/components/ui/sidebar"
-  import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  
 
 import { NavLink } from "react-router-dom"
   
@@ -56,11 +49,11 @@ import { NavLink } from "react-router-dom"
         },
       ]
     return (
-     <SidebarProvider>
-         <Sidebar className='text-white'>
+     <SidebarProvider className='w-64 min-h-screen text-black'>
+         <Sidebar className='text-white bg-orange-600'>
             <SidebarContent className='bg-orange-600 py-4 px-6'>
                 <div className="">
-                <h1 className="text-2xl font-semibold text-center">EShop</h1>
+                <h1 className="text-2xl font-semibold ">EShop</h1>
                 </div>
                 <SidebarGroup>
                     {/* <SidebarGroupLabel>EShop</SidebarGroupLabel> */}
@@ -78,10 +71,14 @@ import { NavLink } from "react-router-dom"
                                </SidebarMenuItem>
                             ))}
                         </SidebarMenu>
+                       
                     </SidebarGroupContent>
                 </SidebarGroup>
             
             </SidebarContent>
+            <SidebarFooter className='bg-orange-600 p-4 hover:bg-red-600 hover:text-white'>
+              <SidebarMenuButton className='hover:bg-red-600 hover:text-white'><h1 className="text-xl font-medium ">Logout</h1></SidebarMenuButton>
+            </SidebarFooter>
           
         </Sidebar>
      </SidebarProvider>

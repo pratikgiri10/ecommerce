@@ -8,12 +8,12 @@ const ProtectedRoute = () => {
 
   const checkAuth = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/api/session`,{
+      const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/users/session`,{
         withCredentials: true
       })
       console.log(response)
       if (response.data.success) {
-        localStorage.setItem('userId', JSON.stringify(response.data.user.id))
+        localStorage.setItem('userId', JSON.stringify(response.data.data._id))
         return true;
       }
       return false;

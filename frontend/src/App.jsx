@@ -11,23 +11,24 @@ import ProtectedRoute from './components/protected/ProtectedRoute'
 import { AppSidebar } from './components/Dashboard/Sidebar'
 import Dashboard from './components/Dashboard/Dashboard'
 import AdminDashboard from './components/Dashboard/AdminDashboard'
-import ManageProducts from './components/Dashboard/ManageProducts'
-import ManageUsers from './components/Dashboard/ManageUsers'
-import ViewProducts from './components/Dashboard/ViewProducts'
+import ManageProducts from './components/Dashboard/ManageProduct/ManageProducts'
+import ManageUsers from './components/Dashboard/ManageUsers/ManageUsers'
+import ViewProducts from './components/Dashboard/Tables/ViewProducts'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { login } from '@/features/auth/authSlice'
 import { useEffect } from 'react'
+import AddProducts from './components/Dashboard/Forms/AddProducts'
 
 
 function App() {
   const dispatch = useDispatch()
   useEffect(() => {
-    axios.get('http://localhost:3000/api/session',{
+    axios.get(`${import.meta.env.VITE_DOMAIN}/users/session`,{
       withCredentials: true
     }).then((response) => {
       if(response.data.success){
-        dispatch(login(response.data.user))
+        dispatch(login(response.data.data.email))
       }
       else{
         dispatch(logout())
@@ -44,8 +45,9 @@ function App() {
           <Route path='/sidebar' element={<AppSidebar />}></Route>
           <Route path='/dashboard' element={<AdminDashboard />}></Route>
           <Route path='/manageproducts' element={<ManageProducts />}></Route>
-          <Route path='/viewproducts' element={<ViewProducts />}></Route>
           <Route path='/manageusers' element={<ManageUsers />}></Route>
+          <Route path='/addproducts' element={<AddProducts />}></Route>
+          <Route path='/viewproducts' element={<ViewProducts />}></Route>
           
 
           <Route element={<ProtectedRoute />}>
