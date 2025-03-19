@@ -38,7 +38,7 @@ function Register() {
        
       };
   return (
-   <div className='flex items-center justify-center h-screen bg-orange-600 w-full p-0'>
+   <div className='flex items-center justify-center h-screen bg-black w-full p-0'>
     <div  className='w-[30%] p-4 bg-white rounded-md' >
         <h1 className='text-2xl font-semibold text-center underline underline-offset-8 mb-4 '>Register</h1>
         <Form {...form}>
@@ -94,7 +94,7 @@ function Register() {
                 </FormItem>
             )}
             />
-            <Button className='bg-orange-600' type="submit">Submit</Button>
+            <Button className='bg-black' type="submit">Submit</Button>
             </form>
         </Form>
     </div>

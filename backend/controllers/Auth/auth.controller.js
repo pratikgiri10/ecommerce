@@ -81,13 +81,13 @@ export const register =  asyncHandler(async (req, res) => {
 
 export const login = asyncHandler(async (req, res) => {
     const {username: email, password} = req.body
-        console.table(req.body)
+        // console.table(req.body)
     if(!email || !password)
         throw new ApiError(400, "please fill all the fields")
         // return res.status(400).json({error: "please fill all the fields"}) 
    
     const response = await db.collection('users').findOne({email})
-    console.log(response.password)
+    // console.log(response.password)
     if(response.password !== password)
         throw new ApiError(401, "Invalid user credentials")
 
@@ -196,4 +196,14 @@ export const getUsers = asyncHandler(async (req,res) => {
         new ApiError(401,'bad request' )
 
     res.status(200).json(new ApiResponse(200, users, 'users were found'))
+})
+
+export const getUser = asyncHandler(async(req,res) => {
+
+    const user = await db.collection('users').find({accessToken: req.cookies.accessToken}, {projection: {password: 0, accessToken: 0, refreshToken: 0}}).toArray()
+    if(!user)
+        return new ApiError(401, 'user not found')
+
+    res.status(200).json(new ApiResponse(200, user, 'user was found'))
+    // console.log('user:',user)
 })

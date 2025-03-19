@@ -4,6 +4,7 @@ import { ShoppingCart } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { logout } from '@/features/auth/authSlice';
+import { clearCart, loadUserCart } from '@/features/cart/cartSlice';
 // import {username} from '../../features/auth/authSlice'
 
 const Navbar = () => {
@@ -12,18 +13,18 @@ const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
   return (
-    <div>
-         <nav className="bg-orange-600 text-white shadow-md px-6 py-3 flex justify-between items-center">
+    <div >
+         <nav className="bg-black text-white shadow-md px-6 py-3 flex justify-between items-center h-20">
       {/* Logo */}
       <div className="text-2xl font-bold">EShop</div>
 
       {/* Desktop Links */}
       <div className="hidden md:flex gap-10 font-medium items-center">
         <NavLink to='/' className={({isActive}) => 
-        `text-xl  ${ isActive ? 'text-zinc-900':'text-white hover:underline hover:underline-offset-8' } `
+        `text-xl  ${ isActive ? 'text-gray-400':'text-white hover:underline hover:underline-offset-8' } `
         }> Home</NavLink>
         <NavLink to='/product' className={({isActive}) => 
-        `${isActive ? 'text-zinc-900':'text-white  hover:underline hover:underline-offset-8' } text-xl `
+        `${isActive ? 'text-gray-400':'text-white  hover:underline hover:underline-offset-8' } text-xl `
         }> Products</NavLink>
       
       </div>
@@ -41,11 +42,14 @@ const Navbar = () => {
         
        {!isLoggedIn ?  <Button 
         onClick={() => {
+         
           navigate('/login')
         }} 
         className="text-xl" variant="ghost">Login</Button>:  <Button 
         onClick={() => {
+          dispatch(clearCart())
           dispatch(logout())
+         
           navigate('/')
         }} 
         className="text-xl" variant="ghost">Logout</Button> }

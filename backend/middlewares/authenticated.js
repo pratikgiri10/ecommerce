@@ -16,12 +16,12 @@ export const isAuthenticated = asyncHandler( async (req,res, next) => {
         // return res.status(401).json({error: "Access Denied"})
    
         const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
-        console.log(decoded)
+        // console.log(decoded)
         const user = await db.collection('users').findOne({
             _id: new ObjectId(decoded.id)
          })
         // {$projection: {password: 0, refreshToken: 0}}
-        console.log(user)
+        // console.log(user)
         if(!user)
             throw new ApiError(401, "Invalid access token")
         req.user = user

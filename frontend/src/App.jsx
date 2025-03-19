@@ -19,6 +19,9 @@ import axios from 'axios'
 import { login } from '@/features/auth/authSlice'
 import { useEffect } from 'react'
 import AddProducts from './components/Dashboard/Forms/AddProducts'
+import PlaceOrder from './components/order/PlaceOrder'
+import { OrderData } from './components/order/OrderData'
+import AddressInfo from './components/Auth/AddressInfo'
 
 
 function App() {
@@ -48,6 +51,8 @@ function App() {
           <Route path='/manageusers' element={<ManageUsers />}></Route>
           <Route path='/addproducts' element={<AddProducts />}></Route>
           <Route path='/viewproducts' element={<ViewProducts />}></Route>
+          <Route path='/placeorder' element={<OrderData />}></Route>
+          <Route path='/address' element={<AddressInfo />}></Route>
           
 
           <Route element={<ProtectedRoute />}>

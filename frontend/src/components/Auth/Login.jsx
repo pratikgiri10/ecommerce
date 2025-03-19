@@ -47,7 +47,7 @@ export default function Login() {
    
   }
   return (
-    <div className="flex min-h-screen items-center justify-center bg-orange-600">
+    <div className="flex min-h-screen items-center justify-center bg-black">
       <Card className="w-full max-w-md bg-white shadow-lg rounded-2xl px-6 py-4">
         <CardHeader className="text-center p-0">
           <CardTitle className="text-2xl font-semibold underline underline-offset-8">Login</CardTitle>
@@ -70,7 +70,7 @@ export default function Login() {
             </div>
             <Button 
             onClick={handleLogin}
-            className="w-full bg-orange-600 hover:bg-blue-700 text-white py-2 rounded-xl">
+            className="w-full bg-black hover:bg-blue-700 text-white py-2 rounded-xl">
               Sign In
             </Button>
           </form>

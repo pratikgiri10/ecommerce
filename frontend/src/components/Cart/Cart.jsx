@@ -40,12 +40,12 @@ const Cart = ({item}) => {
   },[])
   // console.log(item)
   return ( 
-   <Card className='flex justify-between bg-gray-300 text-black '>
+   <Card className='flex justify-between bg-gray-300 text-black h-fit'>
           <CardContent>
-            <ProductImage prod_image={item.prod_image}/>
+            <ProductImage prod_image={item.prod_image} className={'h-[250px] w-[400px]'}/>
               {/* <img className='h-52 object-cover' src={img} alt="" /> */}
            </CardContent>
-         <div className='flex flex-col items-center gap-10 mb-2'>
+         <div className='flex flex-col items-center gap-8 mb-2'>
           <div className='flex justify-center gap-10 items-baseline'>
             <div>
               <CardHeader className='justify-start items-start'>
@@ -63,20 +63,20 @@ const Cart = ({item}) => {
           <div className='flex justify-center items-center gap-4'>
             <Button 
             size='sm'
-            className='bg-orange-600 text-xl'
+            className='bg-black text-xl'
             onClick={handleMinusCount}
             >-</Button>
             <p className='text-xl'>{count}</p>
             <Button
             size='sm'
-            className='bg-orange-600 text-xl'
+            className='bg-black text-xl'
             onClick={handleAddCount}
             >+</Button>
           </div>
           <div>
             <Button 
             onClick={handleRemoveFromCart}
-            className='bg-orange-600'>Remove from Cart</Button>
+            className='bg-black'>Remove from Cart</Button>
           </div>
          </div>
          {/* <Button className='w-full bg-orange-600'>Checkout</Button> */}

@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setToCart } from '@/features/cart/cartSlice'
 import { useNavigate } from 'react-router-dom'
 
-const Item = ({item}) => {
+const Item = ({item, className}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const status = useSelector((state) => state.auth.isLoggedIn)
@@ -31,9 +31,9 @@ const Item = ({item}) => {
   }
 
   return (
-    <Card className='bg-white text-black'>
+    <Card className={`bg-white text-black ${className}`}>
        <CardContent>
-        <ProductImage prod_image={item.prod_image} className={'h-[200px]'}/>
+        <ProductImage prod_image={item.prod_image} className={'h-[250px] w-[500px]'}/>
            {/* <img className='h-52 w-full object-cover' src={img} alt="" /> */}
         </CardContent>
       <div className='flex justify-between items-baseline'>
@@ -52,7 +52,7 @@ const Item = ({item}) => {
       </div>
       <Button 
       onClick={addToCart}
-      className='w-full bg-orange-600'>Add to Cart</Button>
+      className='w-full bg-black rounded-none'>Add to Cart</Button>
     </Card>
 
   )
