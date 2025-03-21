@@ -13,11 +13,12 @@ export class Service {
         this.bucket = new Storage(this.client)
     }
 
+    // for product collection
     async createProd({name, description, image,  price}){
         try{
            return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
-                 conf.appwriteColllectionId,
+                 conf.appwriteProductCollectionId,
                   ID.unique(),
                     {
                          prod_name: name, 
@@ -34,7 +35,7 @@ export class Service {
         try{
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
-                 conf.appwriteColllectionId,
+                conf.appwriteProductCollectionId,
                   ID.unique(),
                     {
                          name, 
@@ -50,7 +51,7 @@ export class Service {
     async deleteProd(){
         try{
             await this.databases.deleteDocument(  conf.appwriteDatabaseId,
-                conf.appwriteColllectionId,
+                conf.appwriteProductCollectionId,
                  ID.unique())
                  return true
         }catch(error){
@@ -63,7 +64,7 @@ export class Service {
         try{
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
-                conf.appwriteColllectionId,
+                conf.appwriteProductCollectionId,
                 // queries
             )
         }catch(error){
@@ -102,7 +103,65 @@ export class Service {
             console.log(error)
         }
     }
+
+
+    //for order collection
+    async createOrder({order_price, order_items, order_status, userId, payment_method, payment_status}){
+        try{
+            return await this.databases.createDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteOrderCollectionId,
+                ID.unique(),
+                {
+                    order_price,
+                    order_items, 
+                    order_status, 
+                    customer: userId, 
+                    payment_method, 
+                    payment_status
+                }
+            );
+        }catch(error){
+            console.log("Appwrite service :: createOrder :: error", error);
+        }
+    }
+    async getOrderInfo(){
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteOrderCollectionId,
+                [
+
+                ]
+            )
+        } catch (error) {
+            console.log("Appwrite service :: getOrderInfo :: error", error);
+        }
+        
+    }
+    async getOrderHistory(id){
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteOrderCollectionId,
+                [
+                    Query.equal('customer', id)
+                ]
+            )
+        } catch (error) {
+            console.log("Appwrite service :: getOrderHistory :: error", error);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
 const service = new Service()
 
 export default service

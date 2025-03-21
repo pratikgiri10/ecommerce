@@ -22,6 +22,7 @@ import AddProducts from './components/Dashboard/Forms/AddProducts'
 import PlaceOrder from './components/order/PlaceOrder'
 import { OrderData } from './components/order/OrderData'
 import AddressInfo from './components/Auth/AddressInfo'
+import OrderHistory from './components/order/OrderHistory'
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
           <Route path='/viewproducts' element={<ViewProducts />}></Route>
           <Route path='/placeorder' element={<OrderData />}></Route>
           <Route path='/address' element={<AddressInfo />}></Route>
+          <Route path='/orderhistory' element={<OrderHistory />}></Route>
           
 
           <Route element={<ProtectedRoute />}>

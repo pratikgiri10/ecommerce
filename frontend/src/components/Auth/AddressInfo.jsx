@@ -1,20 +1,32 @@
+import { setAddress } from '@/features/auth/authSlice';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 const AddressInfo = () => {
   const { 
     register, 
     handleSubmit, 
     formState: { errors } 
   } = useForm();
+const dispatch = useDispatch()
+const navigate = useNavigate()
 
-  const onSubmit = (data) => {
+const onSubmit = async (data) => {
     console.log('Form submitted with data:', data);
+
     if(data.saveAddress){
         console.log('db')
+        const response = await axios.post(`${import.meta.env.VITE_DOMAIN}/users/postaddress`,{data},{
+                    withCredentials: true
+               })
+        dispatch(setAddress(data))
     }
     else{
         console.log('not db')
+        dispatch(setAddress(data))
+        navigate('/placeorder')
     }
     // Here you would typically send this data to your backend
   };

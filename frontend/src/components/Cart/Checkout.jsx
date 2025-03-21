@@ -1,8 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Button } from '../ui/button'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { setAddress } from '@/features/auth/authSlice'
 
 const Checkout = ({price, items}) => {
+     const dispatch = useDispatch()
      const navigate = useNavigate()
     const [discount, setDiscount] = useState(100)
     const [total, setTotal] = useState()
@@ -10,7 +14,22 @@ const Checkout = ({price, items}) => {
     const date = new Date(new Date().getTime()+ (3*24*60*60*1000));
 
     const handleCheckout = async () => {
-          navigate('/placeorder')
+          try{
+               const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/users/getaddress`,{
+                    withCredentials: true
+               })
+               console.log(response.data)
+               if(response.data.success && response.data.data){
+                    dispatch(setAddress(response.data.data))
+                    navigate('/placeorder')
+               }
+               else{
+                    navigate('/address')
+               }
+          }catch(err){
+               console.log(err)
+          }
+         
     }
 
     const discountedPrice = useMemo(() => {        

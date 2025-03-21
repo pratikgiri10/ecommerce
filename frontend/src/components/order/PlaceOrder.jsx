@@ -1,19 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import service from '@/appwrite/config';
 
-const PlaceOrder = ({ orderNumber, shipping, tax, shippingAddress, paymentMethod, estimatedDelivery }) => {
+const PlaceOrder = ({ orderNumber, shipping, tax, shippingAddress, paymentMethod}) => {
+  const [name, setName] = useState('')
+  const [order, setOrder] = useState({
+    order_price:0,
+    order_items: [''],
+    order_status: 'processing',
+    customer: '',
+    payment_method: 'COD',
+    payment_status: 'pending'
+  })
   const items = useSelector(state => state.cart.items)
   const subTotal = items.reduce((acc, item) => acc+item.price*item.quantity,0)
+  const address = useSelector(state => state.auth.address)
+const estimatedDelivery = new Date(new Date().getTime()+ (3*24*60*60*1000))
   useEffect(() => {
     const getUser = async () => {
       const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/users/getuser`, {
         withCredentials: true
       })
       console.log(response.data)
+      setName(response.data.data[0].name)
     }
     getUser()
+
+    service.createOrder().then(() => {
+
+    })
   },[])
   
   return (
@@ -84,13 +101,15 @@ const PlaceOrder = ({ orderNumber, shipping, tax, shippingAddress, paymentMethod
         <div className="bg-gray-50 rounded-lg p-6">
           <h2 className="text-xl font-bold mb-3">Shipping Information</h2>
           <address className="not-italic text-gray-700">
-            <p>{shippingAddress.name}</p>
-            <p>{shippingAddress.street}</p>
-            <p>{shippingAddress.city}, {shippingAddress.state} {shippingAddress.zip}</p>
-            <p>{shippingAddress.country}</p>
+            <p>{name}</p>
+            <p>{address[0].addressLine1}</p>
+            <p>{address[0].addressLine2}</p>
+            <p>{address[0].city}, {address[0].state} {address[0].zipCode}</p>
+            <p>{address[0].country}</p>
+            <p>{address[0].phone}</p>
           </address>
           <div className="mt-3 text-gray-700">
-            <p><span className="font-medium">Estimated delivery:</span> {estimatedDelivery}</p>
+            <p><span className="font-medium">Estimated delivery:</span> {estimatedDelivery.toDateString()}</p>
           </div>
         </div>
         
