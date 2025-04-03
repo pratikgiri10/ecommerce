@@ -6,6 +6,7 @@ const ProductImage = ({prod_image, className}) => {
    
     useEffect(() => {
         service.getFilePreview(prod_image).then((image) => {
+          console.log('image: ', image)
             if(image)
                 setUrl(image)
         })

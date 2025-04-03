@@ -8,7 +8,7 @@ import {
     CardTitle,
   } from "@/components/ui/card"
  
-  import { Button } from '../ui/button'
+import { Button } from '../ui/button'
 import ProductImage from './ProductImage'
 import { useDispatch, useSelector } from 'react-redux'
 import { setToCart } from '@/features/cart/cartSlice'

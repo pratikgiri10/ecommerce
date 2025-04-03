@@ -65,12 +65,9 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
           }
         }
         >
-          {items.map((item) => (  
-                   
-           <div  key={item.$id} className='w-1/3 flex-shrink-0 px-2'>
-             
-                <Item  item={item} className=''/> 
-        
+          {items.map((item) => (                   
+           <div key={item.$id} className='w-1/3 flex-shrink-0 px-2'>             
+                <Item  item={item} className=''/>        
            </div>
                          
               
