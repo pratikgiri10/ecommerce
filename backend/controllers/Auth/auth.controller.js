@@ -80,8 +80,7 @@ export const register =  asyncHandler(async (req, res) => {
 })
 
 export const login = asyncHandler(async (req, res) => {
-    const {username: email, password} = req.body
-        // console.table(req.body)
+    const {email, password} = req.body
     if(!email || !password)
         throw new ApiError(400, "please fill all the fields")
         // return res.status(400).json({error: "please fill all the fields"}) 
@@ -168,6 +167,8 @@ export const refreshAccessToken = asyncHandler(async (req,res) => {
 })
 export const auth = (req,res) => {
     res.status(200).json(new ApiResponse(200, req.user, "user is loggedin"))
+
+    
     // const token = req.cookies.accessToken;
     // // console.log(token)
     // if(!token)

@@ -5,13 +5,21 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { logout } from '@/features/auth/authSlice';
 import { clearCart, loadUserCart } from '@/features/cart/cartSlice';
+import { useGetCurrentUserQuery } from '@/api/user';
 // import {username} from '../../features/auth/authSlice'
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  
     const navigate = useNavigate();
     const dispatch = useDispatch()
+
+    // const {
+    //   data: currentAuthenticatedUser, 
+    //   isSuccess: isCurrentAuthenticatedUserFetchSuccess, 
+    //   isError: isCurrentAuthenticatedUserFetchFailure, error} = useGetCurrentUserQuery()
+
   return (
     <div >
          <nav className="bg-black text-white shadow-md px-6 py-3 flex justify-between items-center h-20">
@@ -49,6 +57,7 @@ const Navbar = () => {
         onClick={() => {
           dispatch(clearCart())
           dispatch(logout())
+          //TODO - clear the localStorage and make api call to clear the access token
          
           navigate('/')
         }} 

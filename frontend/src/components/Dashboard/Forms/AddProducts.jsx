@@ -6,6 +6,9 @@ import service from '@/appwrite/config'
 import { useDispatch } from 'react-redux'
 import { postProducts } from '@/features/product/productSlice.js'
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import { usePostProductMutation } from '@/api/product'
+import { toast } from 'sonner'
 
 const AddProducts = () => {
     const {register, handleSubmit, setFocus, formState: {errors}} = useForm()
@@ -24,17 +27,25 @@ const AddProducts = () => {
         console.log(data)
         console.log(typeof data.price)
         // const file = await service.uploadFile(data.image[0])
-        if(file){
-           
-            data.image = file.$id
+            // data.image = file.$id
+            
            data.price = Number(data.price)
             // const dbPost = await service.createProd({...data})
+            const {onSuccess, onError, mutate: postProduct} = usePostProductMutation()
+            postProduct(data, {
+              onSuccess(){
+                toast.success('Product Added Succesfully')
+              },
+              onError(){
+                toast.error('Failed to add product')
+              }
+            })
             if(dbPost){
                
                 dispatch(postProducts({data}))
                 navigate('/viewproducts')
             }
-        }
+        
     }
     useEffect(() => {
      setFocus('name')
