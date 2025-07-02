@@ -1,4 +1,3 @@
-import service from '@/appwrite/config';
 import React, { useEffect, useState } from 'react';
 
 const OrderHistory = () => {
@@ -55,9 +54,9 @@ const OrderHistory = () => {
         return response.data.data[0]._id
       }
      
-    service.getOrderHistory(getUser).then((data) => {
-        console.log(data.documents)
-    })
+    // service.getOrderHistory(getUser).then((data) => {
+    //     console.log(data.documents)
+    // })
   },[])
   
   // State for expanded order details

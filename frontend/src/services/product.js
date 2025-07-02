@@ -1,5 +1,6 @@
-import axios from 'axios';
+import { api } from "."
+
 
 export const postProductDetails = (data) => {
-    axios.post('', data)
+    api.post('product/post/productDetails', data)
 }

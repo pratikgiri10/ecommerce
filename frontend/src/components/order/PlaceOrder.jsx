@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import service from '@/appwrite/config';
+
 
 const PlaceOrder = ({ orderNumber, shipping, tax, shippingAddress, paymentMethod}) => {
   const [name, setName] = useState('')
@@ -28,9 +28,9 @@ const estimatedDelivery = new Date(new Date().getTime()+ (3*24*60*60*1000))
     }
     getUser()
 
-    service.createOrder().then(() => {
+    // service.createOrder().then(() => {
 
-    })
+    // })
   },[])
   
   return (

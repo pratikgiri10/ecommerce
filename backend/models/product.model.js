@@ -4,22 +4,30 @@ const { Schema } = mongoose
 const productSchema = new Schema ({
     title: {
         type: String,
-        required: true
+        required: [true, "A product title is required"],
+        trim: true
     },
     description: {
         type: String,
+        required: [true, "A product description is required"],
+        trim: true
     },
     imageUrl: {
         type: String,
+        required: [true, 'image is required']
     },
     price: {
-        type: Number
+        type: Number,
+        required: [true, "A product must have a price"],
+        min: [1, "A product price must be more than or equal to 1"],
     },
     category: {
         type: String
     },
     stock: {
-        type: Number
+        type: Number,
+        required: [true, "A product quantity is required"],
+        min: [1, "A product quantity cannot be less than 1"],
     },
     status: {
         type: String,

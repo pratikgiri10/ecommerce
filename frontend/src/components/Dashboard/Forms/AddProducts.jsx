@@ -2,7 +2,6 @@ import React, { useEffect, useId, useRef } from 'react'
 import {useForm} from 'react-hook-form'
 import { Input } from '../../ui/input'
 import { Button } from '../../ui/button'
-import service from '@/appwrite/config'
 import { useDispatch } from 'react-redux'
 import { postProducts } from '@/features/product/productSlice.js'
 import { useNavigate } from 'react-router-dom'
@@ -23,29 +22,29 @@ const AddProducts = () => {
       { value: "Headphones", label: "Headphones" },      
       { value: "Books", label: "Books" },
     ];
+    const {onSuccess, onError, mutate: postProduct} = usePostProductMutation()
     const onSubmit = async (data) => {
-        console.log(data)
-        console.log(typeof data.price)
-        // const file = await service.uploadFile(data.image[0])
-            // data.image = file.$id
-            
-           data.price = Number(data.price)
-            // const dbPost = await service.createProd({...data})
-            const {onSuccess, onError, mutate: postProduct} = usePostProductMutation()
-            postProduct(data, {
+       
+        const image = data.image[0]
+        data.price = Number(data.price)
+        const formData = new FormData();
+        formData.append('prod_image', image)
+        formData.append('name', data.name)
+        formData.append('description', data.description)
+        formData.append('category', data.category)
+        formData.append('price', data.price)
+        formData.append('stock', data.stock)
+         
+            postProduct(formData, {
               onSuccess(){
                 toast.success('Product Added Succesfully')
+                //  dispatch(postProducts({data}))
+                // navigate('/viewproducts')
               },
               onError(){
                 toast.error('Failed to add product')
               }
-            })
-            if(dbPost){
-               
-                dispatch(postProducts({data}))
-                navigate('/viewproducts')
-            }
-        
+            })        
     }
     useEffect(() => {
      setFocus('name')

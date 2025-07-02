@@ -1,4 +1,3 @@
-import service from '@/appwrite/config'
 import Button from '@/components/Button'
 import ProductImage from '@/components/Products/ProductImage'
 import React, { useEffect, useState } from 'react'
@@ -7,9 +6,9 @@ import { Link } from 'react-router-dom'
 const ViewProducts = () => {
   const [items, setItems] = useState([])
   useEffect(() => {
-    service.getProds().then((items) => {
-      setItems(items.documents)
-    })
+    // service.getProds().then((items) => {
+    //   setItems(items.documents)
+    // })
    
   },[])
   useEffect(() => {

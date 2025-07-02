@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Item from './Item'
 import item1 from '../../assets/lp1.webp'
 import item2 from '../../assets/lp2.webp'
-import service from '@/appwrite/config'
 import Loading from '../Loading'
 import Button from '../Button'
 
@@ -37,11 +36,11 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
   }
   useEffect(() => {
     // console.log(post)
-      service.getProds().then((data) =>{
-          console.log(data)
-           setItems(data.documents)
-           setLoading(false)
-      })   
+      // service.getProds().then((data) =>{
+      //     console.log(data)
+      //      setItems(data.documents)
+      //      setLoading(false)
+      // })   
 
   }, [])
   return (
