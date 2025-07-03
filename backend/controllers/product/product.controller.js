@@ -1,8 +1,17 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
+import { ApiError } from '../../utils/ApiError.js'
+import { uploadOnCloudinary } from '../../utils/cloudinary.js' 
 
 export const postProductDetails = asyncHandler( async (req, res) => {
-    console.log('product:', req.body)
-    console.log(req.file);
+       console.log(req.file);
+       
+    const prodImgLocalPath = req.file?.path
+    console.log(prodImgLocalPath);
     
-    const prodImgLocalPath = req.files?.prod_image[0]?.path
+    if(!prodImgLocalPath){
+        throw new ApiError(400, "Product Image is required")
+    }
+    const productImage = await uploadOnCloudinary(prodImgLocalPath)
+    console.log(productImage);
+    
 })

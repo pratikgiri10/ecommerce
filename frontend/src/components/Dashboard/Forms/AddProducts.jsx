@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef } from 'react'
+import React, { useEffect, useId, useRef, useState } from 'react'
 import {useForm} from 'react-hook-form'
 import { Input } from '../../ui/input'
 import { Button } from '../../ui/button'
@@ -10,7 +10,9 @@ import { usePostProductMutation } from '@/api/product'
 import { toast } from 'sonner'
 
 const AddProducts = () => {
-    const {register, handleSubmit, setFocus, formState: {errors}} = useForm()
+    const {register, handleSubmit, setFocus, formState: {errors} , reset} = useForm()
+    const [image, setImage] = useState()
+    const [imagePreview, setImagePreview] = useState()
     const dispatch = useDispatch()
     const navigate = useNavigate()
   
@@ -22,11 +24,30 @@ const AddProducts = () => {
       { value: "Headphones", label: "Headphones" },      
       { value: "Books", label: "Books" },
     ];
-    const {onSuccess, onError, mutate: postProduct} = usePostProductMutation()
+    const handleImageChange = (e) => {
+      console.log('invoked');
+      
+       const file = e.target.files?.[0];
+       setImage(file)
+    console.log(file);
+    
+      // setImageFile(file);
+     const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    
+    }
+    const {isPending, onSuccess, onError, mutate: postProduct} = usePostProductMutation()
     const onSubmit = async (data) => {
        
-        const image = data.image[0]
+        
         data.price = Number(data.price)
+
+        // formData is used to parse the file
+        // we can also send just the object but need to specify headers content-type to multipart/form-data in api
+
         const formData = new FormData();
         formData.append('prod_image', image)
         formData.append('name', data.name)
@@ -34,10 +55,16 @@ const AddProducts = () => {
         formData.append('category', data.category)
         formData.append('price', data.price)
         formData.append('stock', data.stock)
+       
+       
+        
          
             postProduct(formData, {
               onSuccess(){
                 toast.success('Product Added Succesfully')
+                reset()
+                setImage(null)
+                setImagePreview(null)
                 //  dispatch(postProducts({data}))
                 // navigate('/viewproducts')
               },
@@ -65,8 +92,32 @@ const AddProducts = () => {
           <Input required type='number' placeholder='stock' {...register('stock')}/>
           <Input required type='number' placeholder='price' {...register('price')}/>
        
-          <Input accept='.png, .jpeg, .jpg' type='file' placeholder='image' {...register('image')} className=''/>
-         
+          <Input 
+          id="image-upload"
+          accept='.png, .jpeg, .jpg' 
+          type='file' 
+          placeholder='image' 
+          onChange = {handleImageChange}
+          className='hidden'/>
+          <label
+              htmlFor="image-upload"
+              className="cursor-pointer flex flex-col items-center gap-2"
+            >
+                 {imagePreview ? (
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="w-48 h-48 object-cover rounded-lg"
+                  
+                />
+              ) : (
+                <div className="w-48 h-48 bg-muted rounded-lg flex items-center justify-center">
+                </div>
+              )}
+              <span className="text-sm text-muted-foreground">
+                Click to upload product image
+              </span>
+            </label>
           {/* errors will return when field validation fails  */}
           {errors.exampleRequired && <span className='text-red-600'>This field is required</span>}
 
