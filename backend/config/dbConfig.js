@@ -1,10 +1,8 @@
-import {MongoClient} from 'mongodb'
-export const client  = new MongoClient(`${process.env.MONGO_URI}`);
+import mongoose from "mongoose";
+
 const connectDb = async () => {        
 
-        const con = await client.connect()
-       
-   
+      await mongoose.connect(process.env.MONGO_URI)  
     
 }
 export default connectDb

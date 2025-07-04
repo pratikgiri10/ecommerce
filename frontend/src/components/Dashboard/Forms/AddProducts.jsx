@@ -39,7 +39,7 @@ const AddProducts = () => {
       reader.readAsDataURL(file);
     
     }
-    const {isPending, onSuccess, onError, mutate: postProduct} = usePostProductMutation()
+    const {mutate: postProduct} = usePostProductMutation()
     const onSubmit = async (data) => {
        
         

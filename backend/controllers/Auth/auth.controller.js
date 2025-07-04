@@ -1,13 +1,14 @@
-import {client} from '../../config/dbConfig.js'
+// import {client} from '../../config/dbConfig.js'
 import jwt from 'jsonwebtoken'
 import { asyncHandler } from '../../utils/asyncHandler.js';
 import {ApiError} from '../../utils/ApiError.js'
 import { ApiResponse } from '../../utils/ApiResponse.js';
-export const db = client.db('ecommerce');
+import User from '../../models/user.model.js'
+// export const db = client.db('ecommerce');
 
 const generateToken = async (userId) => {
     try{
-        const user = await db.collection('users').findOne({_id: userId});
+        const user = await User.findOne({_id: userId});
       
         if(!user)
             throw new ApiError(400, 'cannot find the user')
@@ -31,7 +32,7 @@ const generateToken = async (userId) => {
             }
         )
        
-        await db.collection('users').updateOne(
+        await User.findByIdAndUpdate(
             {_id: userId},
             { $set: {
                 accessToken: accessToken,
@@ -49,8 +50,7 @@ const generateToken = async (userId) => {
 }
 
 export const register =  asyncHandler(async (req, res) => {
-  
-    console.log("register")
+
     const {name, email, password} =  req.body;   
     console.table(req.body)
    
@@ -59,21 +59,23 @@ export const register =  asyncHandler(async (req, res) => {
     )
         throw new ApiError(400, "please fill all the fields")
         // return res.status(400).json({error: "please fill all the fields"})
-
-    const existingUser = await db.collection('users').findOne({email})
-
+  
+    const existingUser = await User.findOne({email})
+  
     if(existingUser)
         throw new ApiError(409, "user already exists")
         // return res.status(401).json({message: 'user already exist'})
-
+ 
+     const newUser = await User.create({
+        name,
+        email,
+        password
+    })
     
-        const response = await db.collection('users').insertOne({
-            name,
-            email,
-            password
-        })
+ 
+
         return res.status(201).json(
-            new ApiResponse(200, response, "user registered successfully")
+            new ApiResponse(200, newUser, "user registered successfully")
         )
         // res.status(200).json({success: true})
    

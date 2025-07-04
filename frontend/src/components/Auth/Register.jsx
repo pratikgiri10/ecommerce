@@ -12,6 +12,9 @@ import {
   import { Button } from '../ui/button'
   import { Input } from '../ui/input'
   import axios from 'axios'
+import { usePostSignUpMutation } from '@/api/auth'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 function Register() {
    
@@ -22,20 +25,20 @@ function Register() {
             password: "",
           },
     })
-
+    const navigate = useNavigate()
+    const {mutate: signUpUser, isPending} = usePostSignUpMutation()
     const onSubmit = async (data) => {
-        // e.preventDefault()
-        console.log(data)
-        const {name, email, password} = data
-        try{
-            console.log("Login Data");
-            const response = await axios.post(`${import.meta.env.VITE_DOMAIN}/users/register`,{
-               name, email, password
-            })
-        }catch(err){
-            console.log(err)
+       signUpUser(data, {
+        onSuccess: (res) => {
+            form.reset()
+            navigate('/login')
+        },
+        onError: (error) => {
+            const errorMessage =
+            error?.response?.data?.detail || 'An error occurred. Please try again.';
+            toast.error(errorMessage);
         }
-       
+       })
       };
   return (
    <div className='flex items-center justify-center h-screen bg-black w-full p-0'>
@@ -94,7 +97,7 @@ function Register() {
                 </FormItem>
             )}
             />
-            <Button className='bg-black' type="submit">Submit</Button>
+            <Button className='bg-black' type="submit" disabled={isPending}>Submit</Button>
             </form>
         </Form>
     </div>

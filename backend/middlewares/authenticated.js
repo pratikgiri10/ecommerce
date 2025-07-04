@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken'
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { ObjectId } from 'mongodb';
-import { db } from '../controllers/Auth/auth.controller.js';
+import User from '../models/user.model.js'
+// import { db } from '../controllers/Auth/auth.controller.js';
 
 //this is the middleware to check whether the user making the req is a authenticated user
 //to check that, we get the access token that should be present in the cookie or request header if ther user is authenticated otherwise access is not given
@@ -17,7 +18,7 @@ export const isAuthenticated = asyncHandler( async (req,res, next) => {
    
         const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
         // console.log(decoded)
-        const user = await db.collection('users').findOne({
+        const user = await User.findOne({
             _id: new ObjectId(decoded.id)
          })
         // {$projection: {password: 0, refreshToken: 0}}
