@@ -3,6 +3,6 @@ import { postProductDetails } from '../controllers/product/product.controller.js
 import { upload } from '../middlewares/multer.js'
 const router = express.Router();
 
-router.post('/post/productDetails', upload.single('prod_image') ,postProductDetails)
+router.post('/post/productDetails', upload.fields([{name: 'prod_image', maxCount: 5}]),postProductDetails)
 
 export default router

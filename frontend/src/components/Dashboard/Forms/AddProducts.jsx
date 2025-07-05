@@ -11,8 +11,8 @@ import { toast } from 'sonner'
 
 const AddProducts = () => {
     const {register, handleSubmit, setFocus, formState: {errors} , reset} = useForm()
-    const [image, setImage] = useState()
-    const [imagePreview, setImagePreview] = useState()
+    const [image, setImage] = useState([])
+    const [imagePreview, setImagePreview] = useState([])
     const dispatch = useDispatch()
     const navigate = useNavigate()
   
@@ -26,17 +26,24 @@ const AddProducts = () => {
     ];
     const handleImageChange = (e) => {
       console.log('invoked');
+      setImagePreview([])
       
-       const file = e.target.files?.[0];
-       setImage(file)
-    console.log(file);
+       const files = Array.from(e.target.files);
+       setImage(files)
+      console.log(files);
     
       // setImageFile(file);
-     const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+      const imagePreview = files.map((file) => URL.createObjectURL(file))
+      setImagePreview((prev) => [...prev, ...imagePreview])
+    //  const reader = new FileReader();
+
+    //   reader.onloadend = () => {
+    //     setImagePreview(...reader.result);
+    //   };
+     
+    //   files.forEach((file) => {
+    //     reader.readAsDataURL(file);
+    //   })
     
     }
     const {mutate: postProduct} = usePostProductMutation()
@@ -49,7 +56,9 @@ const AddProducts = () => {
         // we can also send just the object but need to specify headers content-type to multipart/form-data in api
 
         const formData = new FormData();
-        formData.append('prod_image', image)
+       image.forEach((image) => (
+         formData.append('prod_image', image)
+       ))
         formData.append('name', data.name)
         formData.append('description', data.description)
         formData.append('category', data.category)
@@ -82,7 +91,7 @@ const AddProducts = () => {
             <h1 className='text-xl font-semibold'>Add Products</h1>
         
           <Input required type='text' placeholder='product name' {...register('name')}/>     
-          <Input type='text' placeholder='description' {...register('description')}/>
+          <textarea className='h-10 w-full rounded-md border px-3 py-2 text-base resize-none ' type='text' placeholder='description' {...register('description')}/>
           {/* <Input type='text' placeholder='category' {...register('category')}/> */}
           <select className='outline-none border-2 px-3 py-2 rounded-md' {...register('category')}>
             {categoryList.map((category) => (
@@ -92,28 +101,33 @@ const AddProducts = () => {
           <Input required type='number' placeholder='stock' {...register('stock')}/>
           <Input required type='number' placeholder='price' {...register('price')}/>
        
-          <Input 
+          <Input
           id="image-upload"
           accept='.png, .jpeg, .jpg' 
           type='file' 
+          name='prod_image'
           placeholder='image' 
+          multiple
           onChange = {handleImageChange}
-          className='hidden'/>
+          className=''/>
           <label
               htmlFor="image-upload"
               className="cursor-pointer flex flex-col items-center gap-2"
             >
-                 {imagePreview ? (
+              <div className='flex items-center justify-center gap-4'>
+                
+                 {imagePreview ? imagePreview.map((image) =>  (
                 <img
-                  src={imagePreview}
+                  src={image}
                   alt="Preview"
-                  className="w-48 h-48 object-cover rounded-lg"
+                  className="w-32 h-32 object-cover rounded-lg"
                   
                 />
-              ) : (
+              )) : (
                 <div className="w-48 h-48 bg-muted rounded-lg flex items-center justify-center">
                 </div>
               )}
+              </div>
               <span className="text-sm text-muted-foreground">
                 Click to upload product image
               </span>

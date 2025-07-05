@@ -20,7 +20,7 @@ class ApiFeatures {
 
         //we need to remove the special fields from the query string 
         const removeFields = ['sort', 'limit', 'page', 'fields']
-        removeFields.forEach(el => delete queryCopy[el]);
+        removeFields.forEach(el => delete queryStrObj[el]);
 
         // we need to replace gte with $gte
         //like price[gte]=100 -> { price : { $gte: 100 }}
@@ -33,15 +33,15 @@ class ApiFeatures {
 
 
         const mongoQuery = {};
-        Object.keys(queryObj).forEach((key) => {
+        Object.keys(queryStrObj).forEach((key) => {
         if (key.includes("[")) {
             // Handle operator-based queries like price[gte]=100
             const [field, operator] = key.replace("]", "").split("[");
             if (!mongoQuery[field]) mongoQuery[field] = {};
-            mongoQuery[field][`$${operator}`] = queryObj[key];
+            mongoQuery[field][`$${operator}`] = queryStrObj[key];
             } else {
                 // Handle simple equality queries like category=electronics
-                mongoQuery[key] = queryObj[key];
+                mongoQuery[key] = queryStrObj[key];
             }
         });
         this.query = this.query.find(mongoQuery);
@@ -74,3 +74,4 @@ class ApiFeatures {
         return this;
     }
 }
+export default ApiFeatures

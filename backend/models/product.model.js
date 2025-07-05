@@ -1,4 +1,6 @@
+import { url } from 'inspector'
 import mongoose from 'mongoose'
+import { type } from 'os'
 const { Schema } = mongoose
 
 const productSchema = new Schema ({
@@ -13,7 +15,18 @@ const productSchema = new Schema ({
         trim: true
     },
     imageUrl: {
-        type: String,
+        type: [
+            {
+                public_id: {
+                    type: String,
+                    required: true
+                },
+                url: {
+                    type: String,
+                    required: true
+                }
+            }
+        ],
         required: [true, 'image is required']
     },
     price: {
