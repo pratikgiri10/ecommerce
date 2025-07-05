@@ -87,7 +87,7 @@ export const login = asyncHandler(async (req, res) => {
         throw new ApiError(400, "please fill all the fields")
         // return res.status(400).json({error: "please fill all the fields"}) 
    
-    const response = await db.collection('users').findOne({email})
+    const response = await User.findOne({email})
     // console.log(response.password)
     if(response.password !== password)
         throw new ApiError(401, "Invalid user credentials")
@@ -96,7 +96,7 @@ export const login = asyncHandler(async (req, res) => {
         throw new ApiError(404, 'user does not exist')
     
     const {accessToken, refreshToken} =  await generateToken(response._id)
-    const user = await db.collection('users').findOne(
+    const user = await User.findOne(
         {email},
         { projection: {password: 0, refreshToken: 0}}
     )
@@ -239,3 +239,9 @@ export const postAddress = asyncHandler(async(req,res) => {
     const user = await db.collection('users').findOneAndUpdate({_id: id}, { $set : {name: 1, addressLine1, addressLine2, city, state, zipCode, phone}}, {new: true})
     console.log(user)
 })
+// this is only for testing as i can completely empty the document 
+export const deleteUsers = async(req, res) => {
+    console.log('deleting');
+    
+    await User.deleteMany({})
+}

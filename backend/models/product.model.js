@@ -29,6 +29,10 @@ const productSchema = new Schema ({
         required: [true, "A product quantity is required"],
         min: [1, "A product quantity cannot be less than 1"],
     },
+    seller: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+    },
     status: {
         type: String,
         default: 'new'

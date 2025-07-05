@@ -15,3 +15,7 @@ export const postProductDetails = asyncHandler( async (req, res) => {
     console.log(productImage);
     
 })
+
+export const getProductDetails = asyncHandler( async(req,res) => {
+    
+})
