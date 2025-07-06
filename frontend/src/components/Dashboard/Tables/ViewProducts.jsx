@@ -1,19 +1,13 @@
+import { useGetProductQuery } from '@/api/product'
 import Button from '@/components/Button'
 import ProductImage from '@/components/Products/ProductImage'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const ViewProducts = () => {
-  const [items, setItems] = useState([])
-  useEffect(() => {
-    // service.getProds().then((items) => {
-    //   setItems(items.documents)
-    // })
-   
-  },[])
-  useEffect(() => {
-    console.log(items)
-  },[items])
+   const {data: {data:productList}} = useGetProductQuery()
+  console.log(productList.products);
+  
   return (
    
       <div className='w-full min-h-screen p-4'>
@@ -53,29 +47,30 @@ const ViewProducts = () => {
               </tr>
             </thead>
             <tbody className='rounded-b-md'>
-            {items?.map((item) => (
-          <tr  key={item.$id} className='bg-gray-100'>
+            {productList.products?.map((product) => (
+          <tr  key={product.$id} className='bg-gray-100'>
             <td className='p-4 '> 
               <div className='flex items-center gap-2'>
-                <ProductImage prod_image={item.prod_image} className='w-24'/>              
+                <ProductImage prod_image={product.prod_image} className='w-24'/>              
                 <div>
-                  <h1 className='text-black text-lg'>{item.prod_name}</h1>
-                  <p className='text-black text-sm'>{item.prod_description}</p>
+                  <h1 className='text-black text-lg'>{product.title}</h1>
+                  <p className='text-black text-sm'>{product.description}</p>
                 </div>  
               </div>         
                           
             </td>         
             <td className='p-4'>
-              <p className='text-black text-lg'>no</p>
+              <p className='text-black text-lg'>{product.category}</p>
             </td>
             <td className='p-4'>
-              <p className='text-black text-lg'>no</p>
+              <p className='text-black text-lg'>{new Date(product.createdAt).toLocaleDateString()}</p>
             </td>
             <td className='p-4'>
-              <p className='text-black text-lg'>no</p>
+              <p className='text-black text-lg'>{product.stock}</p>
             </td>
+            
             <td className='p-4'>
-              <p className='text-black text-lg'>{item.price}</p>
+              <p className='text-black text-lg'>{product.price}</p>
               </td>         
             <td className='p-4 flex items-center gap-4'>
               <Button children='Edit' className='bg-blue-700 hover:bg-blue-400'/>
