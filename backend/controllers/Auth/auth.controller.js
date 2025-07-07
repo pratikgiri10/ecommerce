@@ -190,20 +190,22 @@ export const auth = (req,res) => {
 }
 
 export const getUsers = asyncHandler(async (req,res) => {
-    const users = await db.collection('users').find(
-        {},
-        {projection: {password: 0, accessToken: 0, refreshToken: 0}
-    }).toArray()
-    
+    console.log('api hit');
+     
+     const users = await User.find({}).select({password: 0})
+     console.log(users);
+              
     if(!users)
-        new ApiError(401,'bad request' )
+        throw new ApiError(401,'bad request' )
 
     res.status(200).json(new ApiResponse(200, users, 'users were found'))
+  
+   
 })
 
 export const getUser = asyncHandler(async(req,res) => {
     const id = req.user._id
-    const user = await db.collection('users').find({_id: id}, {projection: {password: 0, accessToken: 0, refreshToken: 0}}).toArray()
+    const user = await User.find({_id: id}, {projection: {password: 0, accessToken: 0, refreshToken: 0}}).toArray()
     if(!user)
         return new ApiError(401, 'user not found')
 
@@ -221,7 +223,7 @@ export const getAddress = asyncHandler(async (req,res) => {
         phone: 1,
          _id: 0
     }
-    const user = await db.collection('users').find({_id: id}, {projection: data}).toArray()
+    const user = await User.find({_id: id}, {projection: data}).toArray()
     if(!user)
         return new ApiError(401, 'user not found')
     if(user.length < 1 || user.every(obj => Object.keys(obj).length < 2)){
@@ -236,7 +238,7 @@ export const getAddress = asyncHandler(async (req,res) => {
 export const postAddress = asyncHandler(async(req,res) => {
     const {addressLine1, addressLine2, city, state, zipCode, phone} = req.body.data
     const id = req.user._id
-    const user = await db.collection('users').findOneAndUpdate({_id: id}, { $set : {name: 1, addressLine1, addressLine2, city, state, zipCode, phone}}, {new: true})
+    const user = await User.findOneAndUpdate({_id: id}, { $set : {name: 1, addressLine1, addressLine2, city, state, zipCode, phone}}, {new: true})
     console.log(user)
 })
 // this is only for testing as i can completely empty the document 

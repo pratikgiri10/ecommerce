@@ -4,6 +4,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const UsersDetail = ({header, title, users, ...props}) => {
+  console.log(users);
+  
   return (
     <div className='w-full min-h-screen p-4'>
          <h1 className='font-medium text-4xl'>{header}</h1>
@@ -40,7 +42,7 @@ const UsersDetail = ({header, title, users, ...props}) => {
               </tr>
             </thead>
             <tbody className='rounded-b-md'>
-            {users?.map((user) => (
+            {users?.data.map((user) => (
           <tr  key={users._id} className='bg-gray-100'>
              <td className='p-4'>
               <p className='text-black text-lg'>{user._id}</p>

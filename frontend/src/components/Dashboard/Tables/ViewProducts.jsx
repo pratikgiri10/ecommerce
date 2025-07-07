@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const ViewProducts = () => {
-   const {data: {data:productList}} = useGetProductQuery()
-  console.log(productList.products);
+   const {data: productList} = useGetProductQuery()
+
   
   return (
    
@@ -30,7 +30,7 @@ const ViewProducts = () => {
        </div>
        <div className='flex-1'>
         <Link to='/addproducts'>
-        <Button children='Add Products' className='hover:bg-orange-400'/>
+        <Button children='Add Products' className='bg-orange-600 hover:opacity-70'/>
         </Link>
         
        </div>
@@ -47,11 +47,11 @@ const ViewProducts = () => {
               </tr>
             </thead>
             <tbody className='rounded-b-md'>
-            {productList.products?.map((product) => (
+            {productList?.data?.data?.products?.map((product) => (
           <tr  key={product.$id} className='bg-gray-100'>
             <td className='p-4 '> 
               <div className='flex items-center gap-2'>
-                <ProductImage prod_image={product.prod_image} className='w-24'/>              
+                <ProductImage prod_image={product.imageUrl[0].url} className='w-24'/>              
                 <div>
                   <h1 className='text-black text-lg'>{product.title}</h1>
                   <p className='text-black text-sm'>{product.description}</p>

@@ -1,4 +1,4 @@
-import { getCurrentUserDetails } from "@/services/user"
+import { getAllUsersDetails, getCurrentUserDetails } from "@/services/user"
 import { useQuery } from "@tanstack/react-query"
 
 export const useGetCurrentUserQuery = () => {
@@ -9,5 +9,12 @@ export const useGetCurrentUserQuery = () => {
                 await getCurrentUserDetails().data
             )
         }
+    })
+}
+export const useGetAllUsersQuery = () => {
+    return useQuery({
+        queryKey: ['user', 'all-users'],
+        queryFn: getAllUsersDetails        
+        
     })
 }

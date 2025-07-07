@@ -8,9 +8,10 @@ class ApiResponse {
         const success = statusCode < 400
         return {
             statusCode,
+            data,
             message,
             success,
-            ...data
+           
         }
         // this.statusCode = statusCode
         // this.data = data

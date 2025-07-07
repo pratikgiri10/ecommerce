@@ -33,14 +33,14 @@ const Item = ({item, className}) => {
   return (
     <Card className={`bg-white text-black ${className}`}>
        <CardContent>
-        <ProductImage prod_image={item.prod_image} className={'h-[250px] w-[300px]'}/>
+        <ProductImage prod_image={item.imageUrl[0].url} />
            {/* <img className='h-52 w-full object-cover' src={img} alt="" /> */}
         </CardContent>
       <div className='flex justify-between items-baseline'>
       <div>
        <CardHeader className='justify-start items-start'>
-            <CardTitle >{item.prod_name}</CardTitle>
-            <CardDescription className='text-left'>{item.prod_description}</CardDescription>
+            <CardTitle >{item.title}</CardTitle>
+            <CardDescription className='text-left'>{item.description}</CardDescription>
         </CardHeader>
       
        </div>

@@ -4,13 +4,18 @@ import item1 from '../../assets/lp1.webp'
 import item2 from '../../assets/lp2.webp'
 import Loading from '../Loading'
 import Button from '../Button'
+import { useGetProductQuery } from '@/api/product'
 
   
 
 const Product = () => {
   const [items, setItems] = useState([])
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const [index, setIndex] = useState(0)
+
+  const {data: products, isSuccess, isPending} = useGetProductQuery()
+  
+    
  
   // const chunkArray = (array, chunkSize) => {
   //   const result = [];
@@ -34,15 +39,7 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
     
     setIndex(index => index == 0 ? maxIndex : index-1 )
   }
-  useEffect(() => {
-    // console.log(post)
-      // service.getProds().then((data) =>{
-      //     console.log(data)
-      //      setItems(data.documents)
-      //      setLoading(false)
-      // })   
-
-  }, [])
+ 
   return (
    
    <div className='mt-16 flex flex-col items-center gap-12 w-full'>     
@@ -56,7 +53,7 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
           onClick={nextSlide}
           children='next' className='bg-black rounded-none'/>
         </div>
-        {loading? <Loading /> : 
+        {isPending? <Loading /> : 
         <div className={`flex items-center w-full transition-transform duration-300 ease-in-out`}
         style={
           {
@@ -64,9 +61,9 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
           }
         }
         >
-          {items.map((item) => (                   
-           <div key={item.$id} className='w-1/3 flex-shrink-0 px-2'>             
-                <Item  item={item} className=''/>        
+          {products?.data.data.products.map((product) => (                   
+           <div key={product.$id} className='w-1/3 flex-shrink-0 px-2'>             
+                <Item  item={product} className=''/>        
            </div>
                          
               
