@@ -6,6 +6,7 @@ export const postProductDetails = (data) => {
 }
 export const getProductDetails = () => {
     return api.get('product/get/productDetails')
-    
-    
+}
+export const getProductById = (id) => {
+    return api.get(`product/get/productDetails/${id}`)
 }

@@ -18,6 +18,11 @@ const Item = ({item, className}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const status = useSelector((state) => state.auth.isLoggedIn)
+
+  const handleItemClick = () => {
+    navigate(`/productdetails/${item._id}`)
+  }
+
   const addToCart = () => {
    
     if(status){
@@ -31,7 +36,7 @@ const Item = ({item, className}) => {
   }
 
   return (
-    <Card className={`bg-white text-black ${className}`}>
+    <Card onClick={handleItemClick} className={`bg-white text-black ${className}`}>
        <CardContent>
         <ProductImage prod_image={item.imageUrl[0].url} />
            {/* <img className='h-52 w-full object-cover' src={img} alt="" /> */}

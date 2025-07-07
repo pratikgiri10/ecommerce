@@ -39,7 +39,7 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
     
     setIndex(index => index == 0 ? maxIndex : index-1 )
   }
- 
+  
   return (
    
    <div className='mt-16 flex flex-col items-center gap-12 w-full'>     
@@ -62,8 +62,8 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
         }
         >
           {products?.data.data.products.map((product) => (                   
-           <div key={product.$id} className='w-1/3 flex-shrink-0 px-2'>             
-                <Item  item={product} className=''/>        
+           <div key={product._id} className='w-1/3 flex-shrink-0 px-2'>             
+                <Item item={product} className=''/>        
            </div>
                          
               

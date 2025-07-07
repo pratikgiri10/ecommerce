@@ -44,7 +44,7 @@ export const postProductDetails = asyncHandler( async (req, res) => {
 })
 
 export const getProductDetails = asyncHandler( async(req,res) => {
-    console.log('api hit');
+    
     
     const filteredQuery = new ApiFeatures(Product.find(), req.query)
     .filter()
@@ -58,7 +58,7 @@ export const getProductDetails = asyncHandler( async(req,res) => {
 
     const paginateQuery = filteredQuery.paginate();
     const products = await paginateQuery.query;
-    console.log(products);
+    
     const page = req.query.page || 1;
     const limit = req.query.limit || 12;
     // total page accor to limit per page   
@@ -82,6 +82,8 @@ export const getProductDetails = asyncHandler( async(req,res) => {
 })
 export const getProductById = asyncHandler(async(req,res) => {
     const product = await Product.findById(req.params.id)
+    console.log(product);
+    
     if(!product)
         throw new ApiError(404, 'product not found')
 
