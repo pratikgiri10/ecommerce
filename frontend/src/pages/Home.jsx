@@ -3,13 +3,13 @@ import Footer from '../components/Footer/Footer'
 import Navbar from "../components/Header/Navbar"
 import Product from '../components/Products/Product'
 import HeroSection from '@/components/HeroSection'
-import Banner from '@/components/Banner'
+import Banner from '@/components/common/Banner'
 
 // const Product = lazy(() => import('../components/Products/Product'))
 const Home = () => {
  
   return (
-    <div className='w-full'>
+    <div className='w-full bg-[rgb(242,242,242)]'>
       <Navbar />     
       <HeroSection />
       <Product />

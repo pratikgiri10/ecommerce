@@ -1,5 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import './App.css'
+import '../src/css/style.css'
 import Home from './pages/Home'
 import Cart from './components/Cart/Cart'
 import Carts from './components/Cart/Carts'
@@ -24,6 +25,7 @@ import { OrderData } from './components/order/OrderData'
 import AddressInfo from './components/Auth/AddressInfo'
 import OrderHistory from './components/order/OrderHistory'
 import ProductDetails from './components/Products/ProductDetails'
+import Review from './components/review/Review'
 
 
 function App() {
@@ -52,11 +54,15 @@ function App() {
           <Route path='/manageproducts' element={<ManageProducts />}></Route>
           <Route path='/manageusers' element={<ManageUsers />}></Route>
           <Route path='/addproducts' element={<AddProducts />}></Route>
+         
           <Route path='/viewproducts' element={<ViewProducts />}></Route>
           <Route path='/productdetails/:id' element={<ProductDetails />}></Route>
+          
           <Route path='/placeorder' element={<OrderData />}></Route>
           <Route path='/address' element={<AddressInfo />}></Route>
           <Route path='/orderhistory' element={<OrderHistory />}></Route>
+         
+          <Route path='/reviews' element={<Review />}></Route>
           
 
           <Route element={<ProtectedRoute />}>

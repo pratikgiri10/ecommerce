@@ -21,31 +21,31 @@ const Navbar = () => {
     //   isError: isCurrentAuthenticatedUserFetchFailure, error} = useGetCurrentUserQuery()
 
   return (
-    <div >
-         <nav className="bg-black text-white shadow-md px-6 py-3 flex justify-between items-center h-20">
-      {/* Logo */}
-      <div className="text-2xl font-bold">EShop</div>
+    <div className='px-6 py-3 h-20 '>
+         <nav className="bg-transparent text-black  flex justify-center items-center gap-28 ">     
 
       {/* Desktop Links */}
       <div className="hidden md:flex gap-10 font-medium items-center">
         <NavLink to='/' className={({isActive}) => 
-        `text-xl  ${ isActive ? 'text-gray-400':'text-white hover:underline hover:underline-offset-8' } `
+        `${ isActive ? 'text-gray-600':'text-black hover:underline hover:underline-offset-8' } text-base `
         }> Home</NavLink>
         <NavLink to='/product' className={({isActive}) => 
-        `${isActive ? 'text-gray-400':'text-white  hover:underline hover:underline-offset-8' } text-xl `
+        `${isActive ? 'text-gray-600':'text-black  hover:underline hover:underline-offset-8' } `
         }> Products</NavLink>
       
       </div>
+       {/* Logo */}
+      <div className="text-2xl font-bold text-yellow-500">DigitalDokan</div>
       <div className="hidden md:flex gap-4">
         <div 
          onClick={() => {
           isLoggedIn ? navigate('/cart') : navigate('/login')
         }} 
         className='flex items-center gap-2'>
-          <ShoppingCart color='white' size={26}/>
+          <ShoppingCart color='black' size={24}/>
           <Button
           
-          className="text-xl text-white p-0" variant="link">Cart</Button>
+          className="text-base text-black p-0" variant="link">Cart</Button>
         </div>
         
        {!isLoggedIn ?  <Button 
@@ -53,7 +53,7 @@ const Navbar = () => {
          
           navigate('/login')
         }} 
-        className="text-xl" variant="ghost">Login</Button>:  <Button 
+        className="text-base btn-primary" variant="ghost">Login</Button>:  <Button 
         onClick={() => {
           dispatch(clearCart())
           dispatch(logout())

@@ -7,25 +7,45 @@ import { clearCart, loadUserCart } from '@/features/cart/cartSlice';
 const Carts = () => {
   // const [items, setItems] = useState([])
   const dispatch = useDispatch()
-  dispatch(loadUserCart())
+  
   const items = useSelector(state => state.cart.items)
 
   const val = items.reduce((acc, item) => acc+item.price*item.quantity,0)
   console.log('item',items)
   console.log(val)
- 
+ useEffect(() => {
+  dispatch(loadUserCart())
+ }, [])
   
   
   return (
-    <div className='flex gap-4 px-8 py-4 w-full'>
-       <div className='w-[1000px]'>
-        {items.map((item) => (
+    <div className='min-h-screen bg-gray-50'>
+      <div className='max-w-7xl mx-auto px-4 py-8'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+         {/* cart items */}
+         <div className='lg:col-span-2'>
          
-           <Cart key={item.$id} item={item}/>
-        ))}
-        {items.length < 1 && <div>No items in cart</div>}
-       </div>
-        {items.length >=1 && <Checkout price={val} items={items}/>}
+          <div className='bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden'>
+             <div className='p-6 border-b border-gray-200'>
+              <h1 className='text-xl font-semibold text-gray-900'>Cart Items</h1>
+             </div>
+             <div className='divide-y divide-gray-200'>
+              {items.map((item) => (              
+                <Cart key={item.$id} item={item}/>
+              ))}
+             </div>
+          </div>
+          {items.length < 1 && <div>No items in cart</div>}
+         </div>
+         {/* checkout section */}
+         <div className='lg:col-span-1'>
+             {items.length >=1 && <Checkout price={val} items={items}/>}
+         </div>
+         
+        </div>
+         
+      </div>
+      
     </div>
   )
 }

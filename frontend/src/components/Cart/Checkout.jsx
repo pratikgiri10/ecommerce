@@ -40,7 +40,7 @@ const Checkout = ({price, items}) => {
      setTotal(price)        
     },[price])
   return (
-    <div className='border-2 px-4 py-6 bg-gray-300 w-[500px] max-h-fit'>
+    <div className='border border-gray-200 rounded-2xl px-4 py-6 bg-white w-[500px] max-h-fit'>
         <h1 className='text-2xl text-left font-semibold'>Checkout</h1>
         <div className='flex flex-col gap-8 px-6 py-4'>
            <div className='flex items-center gap-4'>
@@ -51,8 +51,8 @@ const Checkout = ({price, items}) => {
            <div className='flex flex-col gap-4'>
                {items.map((item) => (
                     
-                    <div key={item.$id} className='flex items-center justify-between'>
-                         <h2 className='text-lg'>{item.prod_name}</h2>
+                    <div key={item._id} className='flex items-center justify-between'>
+                         <h2 className='text-lg'>{item.title}</h2>
                          <h2>{item.quantity}</h2>
                          <p>{item.price}</p>
                </div>

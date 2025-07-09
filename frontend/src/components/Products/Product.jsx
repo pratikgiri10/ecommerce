@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Item from './Item'
 import item1 from '../../assets/lp1.webp'
 import item2 from '../../assets/lp2.webp'
-import Loading from '../Loading'
-import Button from '../Button'
+import Loading from '../common/Loading'
+import Button from '../common/Button'
 import { useGetProductQuery } from '@/api/product'
 
   
@@ -48,13 +48,13 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
         <div className='flex items-center gap-4'>
           <Button 
           onClick={prevSlide}
-          children='prev' className='bg-black rounded-none'/>
+          children='Prev' className='btn-primary rounded-none'/>
           <Button 
           onClick={nextSlide}
-          children='next' className='bg-black rounded-none'/>
+          children='Next' className='btn-primary rounded-none'/>
         </div>
         {isPending? <Loading /> : 
-        <div className={`flex items-center w-full transition-transform duration-300 ease-in-out`}
+        <div className={`grid md:grid-cols-3 lg:grid-cols-4 w-full transition-transform duration-300 ease-in-out`}
         style={
           {
             transform: `translateX(-${index * (100/visibleCards)}%)` 
@@ -62,8 +62,8 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
         }
         >
           {products?.data.data.products.map((product) => (                   
-           <div key={product._id} className='w-1/3 flex-shrink-0 px-2'>             
-                <Item item={product} className=''/>        
+           <div key={product._id} className='flex-shrink-0 px-2'>             
+                <Item item={product} className='w-full'/>        
            </div>
                          
               

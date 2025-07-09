@@ -1,5 +1,5 @@
 import { useGetProductQuery } from '@/api/product'
-import Button from '@/components/Button'
+import Button from '@/components/common/Button'
 import ProductImage from '@/components/Products/ProductImage'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'

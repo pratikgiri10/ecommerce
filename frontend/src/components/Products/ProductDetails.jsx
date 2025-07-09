@@ -1,43 +1,93 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { useParams } from 'react-router-dom'
 import { useGetProductByIdQuery } from '@/api/product';
+import { motion } from "motion/react"
+import { cn } from '@/lib/utils';
+import Review from '../review/Review';
 
 const ProductDetails = () => {
+    const [selectedImage, setSelectedImage] = useState(0)
     const { id } = useParams();
     console.log(id);
     
-   const {data, isLoading, isError} = useGetProductByIdQuery(id)
+   const {data, isLoading, isError, isSuccess} = useGetProductByIdQuery(id)
    const product = data?.data.data
    
     if(isLoading) return (<div className='p-8 text-lg'>Loading...</div>)
     if (isError || !product) return <p className='p-8 text-red-600'>Failed to load product.</p>;
-    
+
+   
   return (
     //wrapper for details page
-   <main className='px-12 py-8 w-full flex justify-between gap-12'>
-    {/* left section */}
-    <section className='flex flex-col gap-4 w-full md:w-2/3'>
-        {/* image  container*/}
-        <div className='w-full h-auto '>
-            <img className='w-full h-auto object-cover rounded-lg shadow' src={product.imageUrl?.[0]?.url} alt={product.title} />
+   <main className='container min-h-screen bg-gray-50'>
+    <div className='max-w-7xl mx-auto px-4 py-8'>
+        <div className='grid lg:grid-cols-3 gap-12'>
+              {/* left section */}
+            <section className='lg:col-span-2 flex flex-col gap-8'>
+                
+               <div className='flex space-x-4'>
+                {/* image thumbnail */}
+                    <div className='flex flex-col space-y-4'>
+                        {product?.imageUrl?.map((image, index) => (
+                        <button 
+                        className={`w-20 h-20 rounded-lg border-2  overflow-hidden flex-shrink-0 ${selectedImage == index ? 'border-blue-500' :'border-gray-400'}`}
+                        onClick={() => setSelectedImage(index)}
+                        >
+                            <img
+                            className=' w-full h-full object-cover ' 
+                            src={image.url} 
+                            alt={product.title} />
+                        </button>
+                        ))}
+                    </div>
+                    {/* image  container*/}
+                    <div className='overflow-hidden rounded-xl shadow-xl'>
+                        <img className='w-full h-96 lg:h-[500px] object-cover' src={product.imageUrl?.[selectedImage]?.url} alt={product.title} />
+                    </div>
+               </div>
+                {/* button container */}
+                <div className='flex gap-4 ml-24'>
+                    <Button size='lg' className='flex-1 text-md bg-blue-600 hover:bg-blue-700 transition'>Buy Now</Button>
+                    <Button size='lg' className='flex-1 bg-orange-600 hover:bg-orange-700 text-md transition'>Add to Cart</Button>
+                </div>     
+            </section>
+            {/* right section */}
+            <section className='lg:col-span-1'>
+                {/* product details */}
+                <div className='flex flex-col gap-4'>
+                    <div>
+                        <span className='text-sm font-medium bg-blue-200 text-blue-800 rounded-full px-3 py-1'>{product.category}</span>
+                    </div>
+                    <div>
+                        <h1 className='text-3xl font-bold text-gray-900'>{product.title}</h1>
+                    </div>
+                    <div>
+                         <p className='text-2xl text-gray-700'>{product.description}</p>
+                    </div>
+                    <div>
+                        <h2 className='text-3xl font-medium'>Rs.{product.price}</h2>
+                    </div>
+                     <div>
+                        <span className='text-sm font-medium bg-green-200 text-green-800 rounded-full px-3 py-1'>{product.stock} in stock</span>
+                    </div>   
+                               
+                    
+                </div>
+            </section>
         </div>
-        {/* button container */}
-        <div className='flex gap-4 '>
-           <Button size='lg' className=' flex-1 text-md bg-blue-600 hover:bg-blue-700 transition'>Buy Now</Button>
-           <Button size='lg' className='bg-orange-600 hover:bg-orange-700 flex-1 text-md transition'>Add to Cart</Button>
+        {/* customer reviews */}
+        <div className='border border-gray-200 shadow-md rounded-2xl mt-12'>
+            <div className='p-4'>
+                <h1 className='text-2xl font-semibold text-gray-800'>Customer Review</h1>
+            </div>
+            <Review />
         </div>
-    </section>
-    {/* right section */}
-    <section className='w-full md:w-1/3 '>
-        {/* product details */}
-        <div className='flex flex-col gap-8'>
-            <h1 className='text-3xl font-bold'>{product.title}</h1>
-            <p className='text-2xl text-gray-700'>{product.description}</p>
-            <h2 className='text-2xl font-medium text-orange-600'>{product.price}</h2>
-        </div>
-    </section>
+         
+    </div>
    </main>
+
+  
   )
 }
 

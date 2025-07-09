@@ -19,12 +19,13 @@ const Item = ({item, className}) => {
   const dispatch = useDispatch()
   const status = useSelector((state) => state.auth.isLoggedIn)
 
-  const handleItemClick = () => {
+  const handleItemClick = (e) => {
+  
     navigate(`/productdetails/${item._id}`)
   }
 
-  const addToCart = () => {
-   
+  const addToCart = (e) => {
+    e.stopPropagation()
     if(status){
       dispatch(setToCart(item))
       navigate('/cart')
@@ -36,28 +37,29 @@ const Item = ({item, className}) => {
   }
 
   return (
-    <Card onClick={handleItemClick} className={`bg-white text-black ${className}`}>
-       <CardContent>
-        <ProductImage prod_image={item.imageUrl[0].url} />
-           {/* <img className='h-52 w-full object-cover' src={img} alt="" /> */}
-        </CardContent>
+    <Card onClick={handleItemClick} className={`bg-transparent text-black w-full border-none ${className}`}>
+      
+        <ProductImage
+        className='w-[350px] h-[300px] object-cover'
+        prod_image={item.imageUrl[0].url} 
+        />
+       
       <div className='flex justify-between items-baseline'>
       <div>
        <CardHeader className='justify-start items-start'>
             <CardTitle >{item.title}</CardTitle>
-            <CardDescription className='text-left'>{item.description}</CardDescription>
+            <CardDescription className='text-left font-medium'>{item.description}</CardDescription>
+            
+            <p>Rs.{item.price}</p>
+       
         </CardHeader>
       
        </div>
-       <div>
-       <CardFooter>
-            <p>{item.price}</p>
-        </CardFooter>
-       </div>
+       
       </div>
-      <Button 
+      {/* <Button 
       onClick={addToCart}
-      className='w-full bg-black rounded-none'>Add to Cart</Button>
+      className='w-full btn-primary text-gray-900 rounded-none'>Add to Cart</Button> */}
     </Card>
 
   )
