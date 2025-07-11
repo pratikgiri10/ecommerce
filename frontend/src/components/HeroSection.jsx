@@ -6,7 +6,7 @@ import cv3 from '../assets/cover3.jpg'
 const HeroSection = () => {
   return (
     <div className='flex flex-col gap-6 w-full'>
-        <div className='w-[1300px] h-[600px] mx-auto py-8'>              
+        <div className='w-full h-[80vh] lg:max-w-screen-lg xl:max-w-screen-xl mx-auto py-8'>              
             <img 
             className='w-full h-full object-cover '
             src='https://images.unsplash.com/photo-1505740420928-5e560c06d30e' alt="bg" />

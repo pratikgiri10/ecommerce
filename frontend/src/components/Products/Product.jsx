@@ -43,7 +43,7 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
   return (
    
    <div className='mt-16 flex flex-col items-center gap-12 w-full'>     
-      <h1 className='text-4xl font-semibold'>Featured Products</h1>
+      <h1 className='text-3xl font-semibold'>Recent Products</h1>
      <div className='flex flex-col gap-4 mx-16 items-end overflow-hidden'>
         <div className='flex items-center gap-4'>
           <Button 

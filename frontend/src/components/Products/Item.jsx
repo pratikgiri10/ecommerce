@@ -37,22 +37,24 @@ const Item = ({item, className}) => {
   }
 
   return (
-    <Card onClick={handleItemClick} className={`bg-transparent text-black w-full border-none ${className}`}>
+    <Card onClick={handleItemClick} className={`w-full max-w-sm mx-auto bg-transparent text-black border-none transition-all duration-300 ${className}`}>
       
         <ProductImage
-        className='w-[350px] h-[300px] object-cover'
+        className='w-full h-[300px] object-cover transition-transform duration-300 group-hover:scale-105'
         prod_image={item.imageUrl[0].url} 
         />
        
       <div className='flex justify-between items-baseline'>
       <div>
-       <CardHeader className='justify-start items-start'>
-            <CardTitle >{item.title}</CardTitle>
-            <CardDescription className='text-left font-medium'>{item.description}</CardDescription>
-            
-            <p>Rs.{item.price}</p>
+       <CardHeader className='px-0'>
+          
+                <CardTitle className='truncate font-medium'>{item.title}</CardTitle>
+               <CardDescription className='text-left font-medium line-clamp-1'>{item.description}</CardDescription>
        
         </CardHeader>
+        <CardContent>
+           <span>Rs.{item.price}</span>
+        </CardContent>
       
        </div>
        

@@ -86,16 +86,20 @@ const AddProducts = () => {
      setFocus('name')
     },[])
   return (
-    <div className='min-h-screen flex justify-center items-center bg-orange-600'>
-         <form onSubmit={handleSubmit(onSubmit)} className='w-[50%] flex flex-col gap-4 bg-white py-4 px-6 rounded-lg'>
+    <div className='min-h-screen flex justify-center items-center bg-yellow-500'>
+         <form onSubmit={handleSubmit(onSubmit)} className='w-[50%] flex flex-col gap-4 bg-white py-4 px-6'>
             <h1 className='text-xl font-semibold'>Add Products</h1>
         
           <Input required type='text' placeholder='product name' {...register('name')}/>     
-          <textarea className='h-10 w-full rounded-md border px-3 py-2 text-base resize-none ' type='text' placeholder='description' {...register('description')}/>
+          <textarea 
+          className='h-40 w-full rounded-md border px-3 py-2 text-base resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500  focus-visible:ring-offset-2' 
+          type='text' 
+          placeholder='description' 
+          {...register('description')}/>
           {/* <Input type='text' placeholder='category' {...register('category')}/> */}
           <select className='outline-none border-2 px-3 py-2 rounded-md' {...register('category')}>
             {categoryList.map((category) => (
-              <option key={category.value} className=''>{category.label}</option>
+              <option value={category.value} key={category.value} className=''>{category.label}</option>
             ))}
           </select>
           <Input required type='number' placeholder='stock' {...register('stock')}/>
@@ -135,7 +139,7 @@ const AddProducts = () => {
           {/* errors will return when field validation fails  */}
           {errors.exampleRequired && <span className='text-red-600'>This field is required</span>}
 
-          <Button className='bg-orange-600'>Submit</Button>
+          <Button className='btn-primary'>Submit</Button>
         </form>
     </div>
    

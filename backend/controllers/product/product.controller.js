@@ -44,6 +44,7 @@ export const postProductDetails = asyncHandler( async (req, res) => {
 })
 
 export const getProductDetails = asyncHandler( async(req,res) => {
+    console.log(req.query);
     
     
     const filteredQuery = new ApiFeatures(Product.find(), req.query)
