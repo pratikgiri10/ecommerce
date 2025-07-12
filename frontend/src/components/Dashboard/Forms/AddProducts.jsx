@@ -8,13 +8,13 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { usePostProductMutation } from '@/api/product'
 import { toast } from 'sonner'
+import { X } from 'lucide-react';
 
 const AddProducts = () => {
     const {register, handleSubmit, setFocus, formState: {errors} , reset} = useForm()
     const [image, setImage] = useState([])
     const [imagePreview, setImagePreview] = useState([])
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const fileInputRef = useRef()
   
     const categoryList = [
       { value: "Electronics", label: "Electronics" },
@@ -26,11 +26,12 @@ const AddProducts = () => {
     ];
     const handleImageChange = (e) => {
       console.log('invoked');
-      setImagePreview([])
+      // setImagePreview([])
       
        const files = Array.from(e.target.files);
-       setImage(files)
-      console.log(files);
+       setImage((prev) => [...prev,...files])
+      fileInputRef.current.value = '';
+      // console.log(files);
     
       // setImageFile(file);
       const imagePreview = files.map((file) => URL.createObjectURL(file))
@@ -82,6 +83,15 @@ const AddProducts = () => {
               }
             })        
     }
+    const handleDeselectFile = (index) => {
+     console.log('removing');
+     
+     setImage((prev) => prev.filter((_,i) => i !== index))
+     setImagePreview((prev) => prev.filter((_,i) => i !== index))
+    console.log(fileInputRef.current.files)
+     
+     fileInputRef.current.value= ''; 
+    }
     useEffect(() => {
      setFocus('name')
     },[])
@@ -112,29 +122,38 @@ const AddProducts = () => {
           name='prod_image'
           placeholder='image' 
           multiple
+          ref={fileInputRef}
           onChange = {handleImageChange}
           className=''/>
           <label
-              htmlFor="image-upload"
+              // htmlFor="image-upload"
               className="cursor-pointer flex flex-col items-center gap-2"
             >
-              <div className='flex items-center justify-center gap-4'>
+              <div className=' flex items-center justify-center gap-4'>
                 
-                 {imagePreview ? imagePreview.map((image) =>  (
-                <img
+                 {imagePreview ? imagePreview.map((image, index) =>  (
+               <div className='relative w-32 h-32'>
+                   <img
                   src={image}
                   alt="Preview"
-                  className="w-32 h-32 object-cover rounded-lg"
+                  className="w-full h-full object-cover rounded-lg"
                   
                 />
-              )) : (
-                <div className="w-48 h-48 bg-muted rounded-lg flex items-center justify-center">
-                </div>
-              )}
+                <span
+                onClick={() => handleDeselectFile(index)} 
+                className='absolute top-1 right-1 text-red-500 hover:bg-red-100 hover:rounded-full'> <X /></span>
+               </div>
+              )) : null
+              // (
+              //   <div className="w-48 h-48 bg-muted rounded-lg flex items-center justify-center">
+              //   </div>
+              // )
+              }
+             
               </div>
-              <span className="text-sm text-muted-foreground">
+              {/* <span className="text-sm text-muted-foreground">
                 Click to upload product image
-              </span>
+              </span> */}
             </label>
           {/* errors will return when field validation fails  */}
           {errors.exampleRequired && <span className='text-red-600'>This field is required</span>}
