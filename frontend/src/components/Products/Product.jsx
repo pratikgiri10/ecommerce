@@ -54,7 +54,7 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
           children='Next' className='btn-primary rounded-none'/>
         </div>
         {isPending? <Loading /> : 
-        <div className={`grid md:grid-cols-3 lg:grid-cols-4 w-full transition-transform duration-300 ease-in-out`}
+        <div className={`grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full transition-transform duration-300 ease-in-out`}
         style={
           {
             transform: `translateX(-${index * (100/visibleCards)}%)` 
@@ -62,9 +62,9 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
         }
         >
           {products?.data.data.products.map((product) => (                   
-           <div key={product._id} className='flex-shrink-0 px-2'>             
-                <Item item={product} className='w-full'/>        
-           </div>
+                      
+                <Item key={product._id} item={product} />        
+          
                          
               
           ))}

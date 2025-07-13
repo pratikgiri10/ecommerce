@@ -83,7 +83,7 @@ export const getProductDetails = asyncHandler( async(req,res) => {
 })
 export const getProductById = asyncHandler(async(req,res) => {
     const product = await Product.findById(req.params.id)
-    console.log(product);
+    console.log('product: ',product);
     
     if(!product)
         throw new ApiError(404, 'product not found')

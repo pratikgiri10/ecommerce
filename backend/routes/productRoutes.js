@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post('/post/productDetails', upload.fields([{name: 'prod_image', maxCount: 5}]),postProductDetails);
 router.get('/get/productDetails', getProductDetails)
-router.get('/get/productDetails/:id', getProductById)
+router.get('/get/productDetailsById/:id', getProductById)
 
 export default router

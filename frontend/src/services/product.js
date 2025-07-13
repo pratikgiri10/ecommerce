@@ -12,5 +12,5 @@ export const getProductDetails = (filters) => {
     return api.get(`product/get/productDetails/${queryParts}`)
 }
 export const getProductById = (id) => {
-    return api.get(`product/get/productDetails/?${id}`)
+    return api.get(`product/get/productDetailsById/${id}`)
 }

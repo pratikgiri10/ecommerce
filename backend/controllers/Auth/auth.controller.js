@@ -89,11 +89,14 @@ export const login = asyncHandler(async (req, res) => {
    
     const response = await User.findOne({email})
     // console.log(response.password)
-    if(response.password !== password)
-        throw new ApiError(401, "Invalid user credentials")
-
     if(!response)
         throw new ApiError(404, 'user does not exist')
+    
+    const isMatch = await response.comparePassword(password)
+    if(!isMatch)
+        throw new ApiError(401, "Invalid user credentials")
+
+    
     
     const {accessToken, refreshToken} =  await generateToken(response._id)
     const user = await User.findOne(
@@ -247,3 +250,29 @@ export const deleteUsers = async(req, res) => {
     
     await User.deleteMany({})
 }
+
+export const registerAdmin = asyncHandler(async(req,res) => {
+    console.log('register admin');
+    const existingEmail = await User.findOne({email: req.body.email})
+
+    if(existingEmail)
+        throw new ApiError(401, 'User already Exist')
+
+    const existingAdmin = await User.findOne({role: 'admin'})
+    if(!existingAdmin)
+        throw new ApiError(401, 'There is no admin who can register you')
+
+    if(!(existingEmail.email == req.user.email))
+        throw new ApiError(401, 'User not authorized to register admin')
+
+   
+        const admin = await User.create({
+        name: 'Super Admin',
+        email: 'admin@example.com',
+        password: 'admin123',
+        role: 'admin'
+    })
+    res.status(200).json(new ApiResponse(200, admin, 'admin registered successfully'))
+   
+    
+})

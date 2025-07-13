@@ -51,7 +51,7 @@ export default function Login() {
     
   }
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black">
+    <div className="flex min-h-screen items-center justify-center bg-yellow-500">
       <Card className="w-full max-w-md bg-white shadow-lg rounded-2xl px-6 py-4">
         <CardHeader className="text-center p-0">
           <CardTitle className="text-2xl font-semibold underline underline-offset-8">Login</CardTitle>
@@ -72,7 +72,7 @@ export default function Login() {
             </div>
             <Button
             type = 'submit' 
-            className="w-full bg-black hover:opacity-95 text-white py-2 rounded-xl" disabled={isPending}>
+            className="btn-primary w-full hover:opacity-95 text-white py-2 rounded-xl" disabled={isPending}>
               Sign In
             </Button>
           </form>

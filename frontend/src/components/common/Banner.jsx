@@ -7,7 +7,7 @@ const Banner = () => {
   return (
     <div className=' bg-yellow-500 mt-4'>
        
-        <div className='flex justify-between max-w-7xl mx-auto '>
+        <div className='flex justify-between max-w-7xl mx-auto px-4 sm:px-12'>
           <div className='mt-20 space-y-8'>
               <h1 className='text-3xl font-medium text-gray-800 max-w-xl'>Get flat 20% discount by subscribing to our newsletter</h1>
               <div className='flex items-center w-full mt-3 space-x-8'>

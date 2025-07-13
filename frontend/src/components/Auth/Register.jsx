@@ -41,9 +41,9 @@ function Register() {
        })
       };
   return (
-   <div className='flex items-center justify-center h-screen bg-black w-full p-0'>
+   <div className='flex items-center justify-center h-screen bg-yellow-500 w-full p-0'>
     <div  className='w-[30%] p-4 bg-white rounded-md' >
-        <h1 className='text-2xl font-semibold text-center underline underline-offset-8 mb-4 '>Register</h1>
+        <h1 className='text-2xl  font-semibold text-center underline underline-offset-8 mb-4 '>Register</h1>
         <Form {...form}>
             <form 
             onSubmit={form.handleSubmit(onSubmit)}
@@ -58,7 +58,7 @@ function Register() {
                         <FormLabel>Name</FormLabel>
                         <FormControl>
                         <Input 
-                       
+                        
                         type='text' placeholder="your name" {...field} />
                         </FormControl>  
                         <FormMessage />
@@ -97,7 +97,7 @@ function Register() {
                 </FormItem>
             )}
             />
-            <Button className='bg-black' type="submit" disabled={isPending}>Submit</Button>
+            <Button className='btn-primary' type="submit" disabled={isPending}>Submit</Button>
             </form>
         </Form>
     </div>

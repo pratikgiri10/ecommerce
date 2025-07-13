@@ -13,6 +13,8 @@ const ProductDetails = () => {
     
    const {data, isLoading, isError, isSuccess} = useGetProductByIdQuery(id)
    const product = data?.data.data
+   console.log(product);
+   
    
     if(isLoading) return (<div className='p-8 text-lg'>Loading...</div>)
     if (isError || !product) return <p className='p-8 text-red-600'>Failed to load product.</p>;
@@ -60,13 +62,13 @@ const ProductDetails = () => {
                         <span className='text-sm font-medium bg-blue-200 text-blue-800 rounded-full px-3 py-1'>{product.category}</span>
                     </div>
                     <div>
-                        <h1 className='text-3xl font-bold text-gray-900'>{product.title}</h1>
+                        <h1 className='text-2xl font-bold text-gray-900'>{product.title}</h1>
                     </div>
                     <div>
-                         <p className='text-2xl text-gray-700'>{product.description}</p>
+                         <p className='text-xl text-gray-700'>{product.description}</p>
                     </div>
                     <div>
-                        <h2 className='text-3xl font-medium'>Rs.{product.price}</h2>
+                        <h2 className='text-xl font-medium'>Rs.{product.price}</h2>
                     </div>
                      <div>
                         <span className='text-sm font-medium bg-green-200 text-green-800 rounded-full px-3 py-1'>{product.stock} in stock</span>
