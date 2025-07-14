@@ -93,8 +93,17 @@ export const getProductById = asyncHandler(async(req,res) => {
 
 export const updateProduct = asyncHandler(async(req,res) => {
 
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    if(!product)
+        throw new ApiError(401, 'Failed to update a product')
+
+    res.status(200).json(new ApiResponse(200, product, 'Product updated successfully'))
 })
 
 export const deleteProduct = asyncHandler(async(req,res) => {
+    const product = await Product.deleteOne(req.params.id)
+    if(!product)
+        throw new ApiError(401, 'Failed to delete a product')
 
+    res.status(200).json(new ApiResponse(200, product, 'product deleted successfully'))
 })

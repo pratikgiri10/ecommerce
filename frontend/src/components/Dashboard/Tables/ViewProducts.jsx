@@ -5,8 +5,10 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const ViewProducts = () => {
-   const {data: productList} = useGetProductQuery()
-
+   const {data: productList, isSuccess} = useGetProductQuery()
+  if(isSuccess)
+    console.log(productList);
+    
   
   return (
    

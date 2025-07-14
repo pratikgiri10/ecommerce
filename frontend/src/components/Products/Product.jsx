@@ -13,8 +13,10 @@ const Product = () => {
   // const [loading, setLoading] = useState(true)
   const [index, setIndex] = useState(0)
 
-  const {data: products, isSuccess, isPending} = useGetProductQuery()
-  
+  const {data: products, isSuccess, isPending, isError, error} = useGetProductQuery()
+  if(isError)
+    console.log(error);
+    
     
  
   // const chunkArray = (array, chunkSize) => {
@@ -53,8 +55,12 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
           onClick={nextSlide}
           children='Next' className='btn-primary rounded-none'/>
         </div>
-        {isPending? <Loading /> : 
-        <div className={`grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full transition-transform duration-300 ease-in-out`}
+        {isPending? <Loading /> : (isError ?  <p className="text-center text-muted-foreground">
+          Error fetching products
+        </p> : (products.data.data.products === 0 ? <p className="text-center text-muted-foreground mt-6">
+          No products found.
+        </p> : 
+        (<div className={`grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full transition-transform duration-300 ease-in-out`}
         style={
           {
             transform: `translateX(-${index * (100/visibleCards)}%)` 
@@ -68,7 +74,7 @@ const maxIndex = Math.max(0, totalCards - visibleCards)
                          
               
           ))}
-        </div>}
+        </div>)))}
      </div>
    </div>
     

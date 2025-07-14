@@ -4,9 +4,9 @@ import { api } from "."
 export const postProductDetails = (data) => {
     api.post('product/post/productDetails', data)
 }
-export const getProductDetails = (filters) => {
+export const getProductDetails = (filters = []) => {
     const queryParts = []
-    if (filters.category) {
+    if (filters?.category) {
     queryParts.push(`category=${encodeURIComponent(filters.category)}`);
   }
     return api.get(`product/get/productDetails/${queryParts}`)
