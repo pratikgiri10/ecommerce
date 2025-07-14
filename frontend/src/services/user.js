@@ -6,3 +6,9 @@ export const getCurrentUserDetails = () => {
 export const getAllUsersDetails = () => {
     return api.get('/users/getallusers')
 }
+export const getUserAddress = async () => {
+    return await authenticated(api).get('users/getaddress')
+}
+export const postDefaultAddress = async () => {
+    return authenticated(api).post('/users/postaddress')
+}

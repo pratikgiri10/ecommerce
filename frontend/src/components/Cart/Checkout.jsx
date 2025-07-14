@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { setAddress } from '@/features/auth/authSlice'
+import AddressInfo from '../Auth/AddressInfo'
 
 const Checkout = ({price, items}) => {
      const dispatch = useDispatch()
@@ -41,14 +42,15 @@ const Checkout = ({price, items}) => {
     },[price])
   return (
     <div className='border border-gray-200 rounded-2xl px-4 py-6 bg-white w-[500px] max-h-fit'>
-        <h1 className='text-2xl text-left font-semibold'>Checkout</h1>
-        <div className='flex flex-col gap-8 px-6 py-4'>
-           <div className='flex items-center gap-4'>
+        <h1 className='text-xl font-bold' >Summary</h1>
+        <div className='flex flex-col gap-6 px-6 py-4'>
+          
+           {/* <div className='flex items-center gap-4'>
                <h2 className='text-lg font-medium'>Delivery Date: </h2>
                <p>{date.toDateString()}</p>
-           </div>
+           </div> */}
            
-           <div className='flex flex-col gap-4'>
+           {/* <div className='flex flex-col gap-4'>
                {items.map((item) => (
                     
                     <div key={item._id} className='flex items-center justify-between'>
@@ -58,9 +60,9 @@ const Checkout = ({price, items}) => {
                </div>
                     
                ))}
-           </div>
-           <div className='flex flex-col gap-6 '>               
-               <div className='flex items-center justify-between border-t-2'>
+           </div> */}
+           <div className='flex flex-col gap-6'>               
+               <div className='flex items-center justify-between '>
                     <h2 className='text-lg'>Subtotal</h2>
                     <p>{total}</p>
                </div>
@@ -73,9 +75,10 @@ const Checkout = ({price, items}) => {
                     <p>{discountedPrice}</p> 
                </div>
            </div>
+           <AddressInfo />
            <Button 
         onClick={handleCheckout}
-        className='bg-black hover:opacity-90 w-full text-lg'>Proceed to Checkout</Button>
+        className='btn-primary w-full text-lg'>Proceed to Checkout</Button>
         </div>
        
     </div>

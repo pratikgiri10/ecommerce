@@ -59,9 +59,9 @@ const Item = ({item, className}) => {
        </div>
        
       </div>
-      {/* <Button 
+      <Button 
       onClick={addToCart}
-      className='w-full btn-primary text-gray-900 rounded-none'>Add to Cart</Button> */}
+      className='w-full btn-primary text-gray-900 rounded-none'>Add to Cart</Button>
     </Card>
 
   )

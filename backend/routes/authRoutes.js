@@ -9,7 +9,7 @@ router.post('/register', register)
 
 router.post('/logout', isAuthenticated, logout)
 router.post('/refresh-token', refreshAccessToken)
-router.get('/session', isAuthenticated, auth)
+router.get('/session',isAuthenticated, auth)
 
 router.get('/admin/register', isAuthenticated,registerAdmin)
 

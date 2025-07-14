@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useGetCurrentUserQuery } from '@/api/user';
 
 
-const PlaceOrder = ({ orderNumber, shipping, tax, shippingAddress, paymentMethod}) => {
-  const [name, setName] = useState('')
+const PlaceOrder = ({ orderNumber, shipping, tax, paymentMethod}) => {
+  // const [name, setName] = useState('')
   const [order, setOrder] = useState({
     order_price:0,
     order_items: [''],
@@ -17,21 +18,19 @@ const PlaceOrder = ({ orderNumber, shipping, tax, shippingAddress, paymentMethod
   const items = useSelector(state => state.cart.items)
   const subTotal = items.reduce((acc, item) => acc+item.price*item.quantity,0)
   const address = useSelector(state => state.auth.address)
+  // if(address)
+  //   console.log(address);
+    
 const estimatedDelivery = new Date(new Date().getTime()+ (3*24*60*60*1000))
+const {data, isSuccess} = useGetCurrentUserQuery()
+
   useEffect(() => {
-    const getUser = async () => {
-      const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/users/getuser`, {
-        withCredentials: true
-      })
-      console.log(response.data)
-      setName(response.data.data[0].name)
-    }
-    getUser()
-
-    // service.createOrder().then(() => {
-
-    // })
-  },[])
+    
+    if(isSuccess)
+      console.log(data);
+      
+   
+  },[data])
   
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -54,7 +53,7 @@ const estimatedDelivery = new Date(new Date().getTime()+ (3*24*60*60*1000))
         {/* Items */}
         <div className="divide-y">
           {items.map((item) => (
-            <div key={item.$id} className="py-4 flex items-center">
+            <div key={item._id} className="py-4 flex items-center">
               <div className="w-16 h-16 bg-gray-200 rounded mr-4">
                 {item.image && (
                   <img 
@@ -102,11 +101,11 @@ const estimatedDelivery = new Date(new Date().getTime()+ (3*24*60*60*1000))
           <h2 className="text-xl font-bold mb-3">Shipping Information</h2>
           <address className="not-italic text-gray-700">
             <p>{name}</p>
-            <p>{address[0].addressLine1}</p>
-            <p>{address[0].addressLine2}</p>
-            <p>{address[0].city}, {address[0].state} {address[0].zipCode}</p>
-            <p>{address[0].country}</p>
-            <p>{address[0].phone}</p>
+            <p>{address.addressLine1}</p>
+            <p>{address.addressLine2}</p>
+            <p>{address.city}, {address.state} {address.zipCode}</p>
+            <p>{address.country}</p>
+            <p>{address.phone}</p>
           </address>
           <div className="mt-3 text-gray-700">
             <p><span className="font-medium">Estimated delivery:</span> {estimatedDelivery.toDateString()}</p>

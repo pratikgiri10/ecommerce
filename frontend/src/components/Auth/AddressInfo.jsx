@@ -32,26 +32,11 @@ const onSubmit = async (data) => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded shadow">
-      <h2 className="text-xl font-bold mb-4">Shipping Address</h2>
+    <div className="">
+      <h2 className="text-lg font-semibold mb-4">Shipping Address</h2>
       
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-1" htmlFor="fullName">
-            Full Name <span className='text-red-500'>*</span>
-          </label>
-          <input
-            id="fullName"
-            type="text"
-            className="w-full p-2 border rounded"
-            {...register("fullName", { 
-              required: "Full name is required" 
-            })}
-          />
-          {errors.fullName && (
-            <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>
-          )}
-        </div>
+       
 
         <div className="mb-4">
           <label className="block text-gray-700 mb-1" htmlFor="addressLine1">
@@ -141,30 +126,7 @@ const onSubmit = async (data) => {
               <p className="text-red-500 text-sm mt-1">{errors.zipCode.message}</p>
             )}
           </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1" htmlFor="country">
-              Country <span className='text-red-500'>*</span>
-            </label>
-            <select
-              id="country"
-              className="w-full p-2 border rounded"
-              {...register("country", { 
-                required: "Country is required" 
-              })}
-            >
-              <option value="">Select country</option>
-              <option value="Nepal">Nepal</option>
-             
-              {/* Add more countries as needed */}
-            </select>
-            {errors.country && (
-              <p className="text-red-500 text-sm mt-1">{errors.country.message}</p>
-            )}
-          </div>
-        </div>
-
-        <div className="mb-4">
+            <div className="mb-4">
           <label className="block text-gray-700 mb-1" htmlFor="phone">
             Phone Number <span className='text-red-500'>*</span>
           </label>
@@ -172,7 +134,7 @@ const onSubmit = async (data) => {
             id="phone"
             type="tel"
             className="w-full p-2 border rounded"
-            placeholder="For delivery questions only"
+            // placeholder="For delivery questions only"
             {...register("phone", { 
               required: "Phone number is required",
               pattern: {
@@ -185,6 +147,10 @@ const onSubmit = async (data) => {
             <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
           )}
         </div>
+         
+        </div>
+
+        
 
         <div className="mb-4">
           <label className="flex items-center">
@@ -193,16 +159,16 @@ const onSubmit = async (data) => {
               className="mr-2"
               {...register("saveAddress")}
             />
-            <span className="text-gray-700">Save this address for future orders</span>
+            <span className="text-gray-700">Save this address as default address</span>
           </label>
         </div>
 
-        <button 
+        {/* <button 
           type="submit" 
           className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
         >
           Save Address
-        </button>
+        </button> */}
       </form>
     </div>
   );

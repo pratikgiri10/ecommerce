@@ -19,7 +19,7 @@ export const getUsers = asyncHandler(async (req,res) => {
 
 export const getUser = asyncHandler(async(req,res) => {
     const id = req.user._id
-    const user = await User.find({_id: id}, {projection: {password: 0, accessToken: 0, refreshToken: 0}}).toArray()
+    const user = await User.findOne({_id: id}, {password: 0, accessToken: 0, refreshToken: 0})
     if(!user)
         return new ApiError(401, 'user not found')
 
@@ -27,7 +27,11 @@ export const getUser = asyncHandler(async(req,res) => {
     // console.log('user:',user)
 })
 export const getAddress = asyncHandler(async (req,res) => {
+    console.log('api hit');
+    
     const id = req.user._id
+    console.log('id:', id);
+    
     const data = {
         addressLine1: 1,
         addressLine2:1, 
@@ -35,25 +39,38 @@ export const getAddress = asyncHandler(async (req,res) => {
         state: 1, 
         zipCode: 1,
         phone: 1,
-         _id: 0
+        _id: 0
     }
-    const user = await User.find({_id: id}, {projection: data}).toArray()
-    if(!user)
+   
+    
+   try {
+     const user = await User.findOne({_id: id}, data).lean()
+    console.log(Object.keys(user).length);
+     if(!user)
         return new ApiError(401, 'user not found')
-    if(user.length < 1 || user.every(obj => Object.keys(obj).length < 2)){
+    if(user.length < 1 || (Object.keys(user).length < 1)){
         res.status(200).json(new ApiResponse(200, null, 'Address not found'))
     }
     else{
         res.status(200).json(new ApiResponse(200, user, 'Address found'))
     }
+   } catch (error) {
+        console.log(error);
+        
+   }
     
     
 })
 export const postAddress = asyncHandler(async(req,res) => {
     const {addressLine1, addressLine2, city, state, zipCode, phone} = req.body.data
     const id = req.user._id
-    const user = await User.findOneAndUpdate({_id: id}, { $set : {name: 1, addressLine1, addressLine2, city, state, zipCode, phone}}, {new: true})
+   try {
+     const user = await User.findOneAndUpdate({_id: id},  {addressLine1, addressLine2, city, state, zipCode, phone}, {new: true})
     console.log(user)
+   } catch (error) {
+    console.log(error);
+    
+   }
 })
 // this is only for testing as i can completely empty the document 
 export const deleteUsers = async(req, res) => {

@@ -31,7 +31,7 @@ import Review from './components/review/Review'
 function App() {
   const dispatch = useDispatch()
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_DOMAIN}/users/session`,{
+    axios.get(`${import.meta.env.VITE_DOMAIN}/auth/session`,{
       withCredentials: true
     }).then((response) => {
       if(response.data.success){

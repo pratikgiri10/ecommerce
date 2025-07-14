@@ -6,8 +6,8 @@ import { isAuthenticated } from '../middlewares/authenticated.js'
 const router = express.Router()
 router.get('/getallusers', getUsers)
 router.get('/getuser', isAuthenticated, getUser)
-router.get('/getaddress', getAddress)
-router.post('/postaddress', postAddress)
+router.get('/getaddress', isAuthenticated, getAddress)
+router.post('/postaddress', isAuthenticated, postAddress)
 router.get('/deleteallusers', deleteUsers)
 
 export default router

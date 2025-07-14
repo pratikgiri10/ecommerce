@@ -17,6 +17,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    defaultAddress: {
+        address: {
+            type: String,
+            required: [true, "Please provide an address"]
+        },
+        city: {
+            type: String,
+            required: [true, "Please provide us the name of the city"],
+        },
+        phone: {
+            type: String,
+            required: [true, "Please provide us your phone number"],
+        },
+        postalCode: {
+            type: String,
+            required: [true, "Please provide us the postal code of your area"],
+        },
+    },
     role: {
         type: String,
         default: 'user'

@@ -8,7 +8,7 @@ const ProtectedRoute = () => {
 
   const checkAuth = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/users/session`,{
+      const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/auth/session`,{
         withCredentials: true
       })
       console.log(response)
