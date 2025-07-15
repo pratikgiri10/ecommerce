@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { useGetUserAddressQuery, usePostDefaultAddressMutation, useUpdateDefaultAddressMutation } from '@/api/user';
+import { usePostShippingAddressMutation } from '@/api/order';
 const AddressInfo = () => {
   const { 
     register, 
@@ -12,23 +14,36 @@ const AddressInfo = () => {
   } = useForm();
 const dispatch = useDispatch()
 const navigate = useNavigate()
-
+const {data: address} = useGetUserAddressQuery()
+const {mutate: createShippingAddress} = usePostShippingAddressMutation()
+const {mutate: createDefaultAddress} = useUpdateDefaultAddressMutation()
 const onSubmit = async (data) => {
     console.log('Form submitted with data:', data);
 
     if(data.saveAddress){
         console.log('db')
-        const response = await axios.post(`${import.meta.env.VITE_DOMAIN}/users/postaddress`,{data},{
-                    withCredentials: true
-               })
+        createDefaultAddress(data, {
+          onSuccess:{},
+          onError: {}
+        })
+       
         dispatch(setAddress(data))
     }
-    else{
-        console.log('not db')
-        dispatch(setAddress(data))
-        navigate('/placeorder')
-    }
-    // Here you would typically send this data to your backend
+    createShippingAddress(data, {
+      onSuccess: (data) => {
+        console.log('form subitted:', data);
+        
+      },
+      onError: (error) => {
+        console.log(error);
+        
+      }
+    })   
+    console.log('not db')
+    dispatch(setAddress(data))
+    navigate('/placeorder')
+   
+    
   };
 
   return (
@@ -43,6 +58,7 @@ const onSubmit = async (data) => {
             Address Line 1 <span className='text-red-500'>*</span>
           </label>
           <input
+          value={address?.addressLine1}
             id="addressLine1"
             type="text"
             className="w-full p-2 border rounded"
@@ -61,6 +77,7 @@ const onSubmit = async (data) => {
             Address Line 2
           </label>
           <input
+            value={address?.addressLine2}
             id="addressLine2"
             type="text"
             className="w-full p-2 border rounded"
@@ -75,6 +92,7 @@ const onSubmit = async (data) => {
               City <span className='text-red-500'>*</span>
             </label>
             <input
+            value={address?.city}
               id="city"
               type="text"
               className="w-full p-2 border rounded"
@@ -92,6 +110,7 @@ const onSubmit = async (data) => {
               State/Province <span className='text-red-500'>*</span>
             </label>
             <input
+            value={address?.state}
               id="state"
               type="text"
               className="w-full p-2 border rounded"
@@ -111,6 +130,7 @@ const onSubmit = async (data) => {
               Zip/Postal Code <span className='text-red-500'>*</span>
             </label>
             <input
+            value={address?.postalcode}
               id="zipCode"
               type="text"
               className="w-full p-2 border rounded"
@@ -131,6 +151,7 @@ const onSubmit = async (data) => {
             Phone Number <span className='text-red-500'>*</span>
           </label>
           <input
+          value={address?.phone}
             id="phone"
             type="tel"
             className="w-full p-2 border rounded"
@@ -163,12 +184,12 @@ const onSubmit = async (data) => {
           </label>
         </div>
 
-        {/* <button 
+        <button 
           type="submit" 
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          className="w-full btn-primary p-2"
         >
-          Save Address
-        </button> */}
+          Proceed to Checkout
+        </button>
       </form>
     </div>
   );

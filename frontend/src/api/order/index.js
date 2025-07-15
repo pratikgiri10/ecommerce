@@ -1,9 +1,9 @@
 import { postShippingAddress } from "@/services/order"
 import { useMutation } from "@tanstack/react-query"
 
-export const usePostShippingAddressMutation = async () => {
+export const usePostShippingAddressMutation = () => {
     return useMutation({
         mutationKey: ['order', 'shipping-address'],
-        mutationFn: () => postShippingAddress
+        mutationFn: (data) => postShippingAddress(data)
     })
 }

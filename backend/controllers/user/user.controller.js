@@ -61,7 +61,7 @@ export const getAddress = asyncHandler(async (req,res) => {
     
     
 })
-export const postAddress = asyncHandler(async(req,res) => {
+export const updateAddress = asyncHandler(async(req,res) => {
     const {addressLine1, addressLine2, city, state, zipCode, phone} = req.body.data
     const id = req.user._id
    try {

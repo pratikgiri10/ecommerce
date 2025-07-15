@@ -31,12 +31,15 @@ const orderSchema = new Schema ({
         required: [true, "Please provide an address"],
       },
       addressLine2: {
-        type: String,
-        
+        type: String,        
       },
       city: {
         type: String,
         required: [true, "Please provide us the name of the city"],
+      },
+      state: {
+        type: String,
+        required: [true, "Please provide us the name of the province"],
       },
       phone: {
         type: String,
@@ -71,3 +74,6 @@ const orderSchema = new Schema ({
     }
 
 }, {timestamps: true})
+
+const Order = mongoose.model('Order', orderSchema)
+export default Order

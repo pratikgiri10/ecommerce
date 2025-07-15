@@ -9,6 +9,6 @@ export const getAllUsersDetails = () => {
 export const getUserAddress = async () => {
     return await authenticated(api).get('users/getaddress')
 }
-export const postDefaultAddress = async () => {
-    return authenticated(api).post('/users/postaddress')
+export const updateDefaultAddress = async (data) => {
+    return authenticated(api).put('/users/updateaddress', data)
 }

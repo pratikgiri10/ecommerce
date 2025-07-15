@@ -18,13 +18,20 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     defaultAddress: {
-        address: {
+        addressLine1: {
             type: String,
-            required: [true, "Please provide an address"]
+            required: [true, "Please provide an address"],
+        },
+        addressLine2: {
+            type: String,        
         },
         city: {
             type: String,
             required: [true, "Please provide us the name of the city"],
+        },
+        state: {
+            type: String,
+            required: [true, "Please provide us the name of the province"],
         },
         phone: {
             type: String,

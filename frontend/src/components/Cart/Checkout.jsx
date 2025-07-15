@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { setAddress } from '@/features/auth/authSlice'
 import AddressInfo from '../Auth/AddressInfo'
+import { useGetUserAddressQuery } from '@/api/user'
 
 const Checkout = ({price, items}) => {
      const dispatch = useDispatch()
@@ -13,23 +14,24 @@ const Checkout = ({price, items}) => {
     const [total, setTotal] = useState()
 
     const date = new Date(new Date().getTime()+ (3*24*60*60*1000));
-
+     // const {data: address} = useGetUserAddressQuery()
     const handleCheckout = async () => {
-          try{
-               const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/users/getaddress`,{
-                    withCredentials: true
-               })
-               console.log(response.data)
-               if(response.data.success && response.data.data){
-                    dispatch(setAddress(response.data.data))
-                    navigate('/placeorder')
-               }
-               else{
-                    navigate('/address')
-               }
-          }catch(err){
-               console.log(err)
-          }
+     navigate('/placeorder')
+          // try{
+          //      const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/users/getaddress`,{
+          //           withCredentials: true
+          //      })
+          //      console.log(response.data)
+          //      if(response.data.success && response.data.data){
+          //           dispatch(setAddress(response.data.data))
+          //           navigate('/placeorder')
+          //      }
+          //      else{
+          //           navigate('/address')
+          //      }
+          // }catch(err){
+          //      console.log(err)
+          // }
          
     }
 
@@ -76,9 +78,9 @@ const Checkout = ({price, items}) => {
                </div>
            </div>
            <AddressInfo />
-           <Button 
+           {/* <Button 
         onClick={handleCheckout}
-        className='btn-primary w-full text-lg'>Proceed to Checkout</Button>
+        className='btn-primary w-full text-lg'>Proceed to Checkout</Button> */}
         </div>
        
     </div>

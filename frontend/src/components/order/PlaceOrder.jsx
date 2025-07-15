@@ -36,14 +36,14 @@ const {data, isSuccess} = useGetCurrentUserQuery()
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Success Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
-          <Check className="w-8 h-8 text-green-600" />
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-yellow-400 mb-4">
+          <Check className="w-8 h-8 text-white" />
         </div>
-        <h1 className="text-3xl font-bold mb-2">Order Confirmed!</h1>
-        <p className="text-gray-600">
+        <h1 className="text-3xl font-bold mb-2">Confirm Your Order</h1>
+        {/* <p className="text-gray-600">
           Thank you for your purchase. We've sent a confirmation to your email.
-        </p>
-        <p className="font-medium mt-2">Order #{orderNumber}</p>
+        </p> */}
+        {/* <p className="font-medium mt-2">Order #{orderNumber}</p> */}
       </div>
 
       {/* Order Summary */}
@@ -55,9 +55,9 @@ const {data, isSuccess} = useGetCurrentUserQuery()
           {items.map((item) => (
             <div key={item._id} className="py-4 flex items-center">
               <div className="w-16 h-16 bg-gray-200 rounded mr-4">
-                {item.image && (
+                {item.imageUrl && (
                   <img 
-                    src={item.image} 
+                    src={item.imageUrl[0].url} 
                     alt={item.name} 
                     className="w-full h-full object-cover rounded"
                   />
@@ -115,21 +115,13 @@ const {data, isSuccess} = useGetCurrentUserQuery()
         <div className="bg-gray-50 rounded-lg p-6">
           <h2 className="text-xl font-bold mb-3">Payment Information</h2>
           <div className="flex items-center">
-            {paymentMethod.type === 'card' && (
+           
+            {paymentMethod.type === 'esewa' && (
               <>
-                <div className="w-10 h-6 bg-blue-100 rounded mr-3"></div>
+                <div className="w-10 h-6 bg-green-700 rounded mr-3"></div>
                 <div>
-                  <p className="font-medium">{paymentMethod.cardType}</p>
-                  <p className="text-gray-600">**** **** **** {paymentMethod.lastFour}</p>
-                </div>
-              </>
-            )}
-            {paymentMethod.type === 'paypal' && (
-              <>
-                <div className="w-10 h-6 bg-blue-100 rounded mr-3"></div>
-                <div>
-                  <p className="font-medium">PayPal</p>
-                  <p className="text-gray-600">{paymentMethod.email}</p>
+                  <p className="font-medium">Esewa</p>
+                  {/* <p className="text-gray-600">{paymentMethod.email}</p> */}
                 </div>
               </>
             )}
@@ -138,15 +130,18 @@ const {data, isSuccess} = useGetCurrentUserQuery()
       </div>
 
       {/* Actions */}
-      <div className="mt-8 text-center">
-        <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors">
-          Continue Shopping
+      <div className="mt-8 text-center space-x-2">
+        <button className="btn-primary text-white px-8 py-3 rounded-lg font-medium  transition-colors">
+          Place Your Order
         </button>
-        <div className="mt-4">
+         <button className="bg-gray-200 text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors">
+          Cancel
+        </button>
+        {/* <div className="mt-4">
           <a href="/orders" className="text-blue-600 hover:underline">
             View Order History
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );
