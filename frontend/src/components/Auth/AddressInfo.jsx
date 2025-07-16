@@ -4,9 +4,10 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
-import { useGetUserAddressQuery, usePostDefaultAddressMutation, useUpdateDefaultAddressMutation } from '@/api/user';
+import { useGetUserAddressQuery, useUpdateDefaultAddressMutation } from '@/api/user';
 import { usePostShippingAddressMutation } from '@/api/order';
-const AddressInfo = () => {
+import { createOrder } from '@/features/order/orderSlice';
+const AddressInfo = ({orderPrice}) => {
   const { 
     register, 
     handleSubmit, 
@@ -17,6 +18,8 @@ const navigate = useNavigate()
 const {data: address} = useGetUserAddressQuery()
 const {mutate: createShippingAddress} = usePostShippingAddressMutation()
 const {mutate: createDefaultAddress} = useUpdateDefaultAddressMutation()
+
+
 const onSubmit = async (data) => {
     console.log('Form submitted with data:', data);
 
@@ -29,18 +32,19 @@ const onSubmit = async (data) => {
        
         dispatch(setAddress(data))
     }
-    createShippingAddress(data, {
-      onSuccess: (data) => {
-        console.log('form subitted:', data);
+    dispatch(createOrder(data))
+    // createShippingAddress(data, {
+    //   onSuccess: (data) => {
+    //     console.log('form subitted:', data);
         
-      },
-      onError: (error) => {
-        console.log(error);
+    //   },
+    //   onError: (error) => {
+    //     console.log(error);
         
-      }
-    })   
+    //   }
+    // })   
     console.log('not db')
-    dispatch(setAddress(data))
+    
     navigate('/placeorder')
    
     

@@ -10,9 +10,9 @@ const Carts = () => {
   
   const items = useSelector(state => state.cart.items)
 
-  const val = items.reduce((acc, item) => acc+item.price*item.quantity,0)
+  // const val = items.reduce((acc, item) => acc+item.price*item.quantity,0)
   console.log('item',items)
-  console.log(val)
+  // console.log(val)
  useEffect(() => {
   dispatch(loadUserCart())
  }, [])
@@ -39,7 +39,7 @@ const Carts = () => {
          </div>
          {/* checkout section */}
          <div className='lg:col-span-1'>
-             {items.length >=1 && <Checkout price={val} items={items}/>}
+             {items.length >=1 && <Checkout />}
          </div>
          
         </div>

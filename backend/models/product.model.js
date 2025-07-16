@@ -34,6 +34,12 @@ const productSchema = new Schema ({
         required: [true, "A product must have a price"],
         min: [1, "A product price must be more than or equal to 1"],
     },
+    discountPercentage: {
+        type: Number,
+        default: 0,
+        min: [0, "Discount percentage should be greater than 0"],
+        max: [50, "Discount percentage cannot be more than 50%"],
+    },
     category: {
         type: String
     },
@@ -50,7 +56,20 @@ const productSchema = new Schema ({
         type: String,
         default: 'new'
     }
-}, {timestamps: true})
+},{
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
+    timestamps: true
+})
+
+productSchema.virtual("priceAfterDiscount").get(function () {
+  const discount = (this.price * this.discountPercentage) / 100;
+  return Math.round((this.price - discount) * 100) / 100;
+});
 
 const Product = mongoose.model('Product', productSchema)
 

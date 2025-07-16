@@ -17,14 +17,16 @@ const PlaceOrder = ({ orderNumber, shipping, tax, paymentMethod}) => {
   })
   const items = useSelector(state => state.cart.items)
   const subTotal = items.reduce((acc, item) => acc+item.price*item.quantity,0)
-  const address = useSelector(state => state.auth.address)
-  // if(address)
-  //   console.log(address);
+
+  const shippingAddress = useSelector(state => state.order.order)
     
 const estimatedDelivery = new Date(new Date().getTime()+ (3*24*60*60*1000))
+
 const {data, isSuccess} = useGetCurrentUserQuery()
 
   useEffect(() => {
+    console.log(shippingAddress);
+    
     
     if(isSuccess)
       console.log(data);
@@ -100,12 +102,12 @@ const {data, isSuccess} = useGetCurrentUserQuery()
         <div className="bg-gray-50 rounded-lg p-6">
           <h2 className="text-xl font-bold mb-3">Shipping Information</h2>
           <address className="not-italic text-gray-700">
-            <p>{name}</p>
-            <p>{address.addressLine1}</p>
-            <p>{address.addressLine2}</p>
-            <p>{address.city}, {address.state} {address.zipCode}</p>
-            <p>{address.country}</p>
-            <p>{address.phone}</p>
+            {/* <p>{name}</p> */}
+            <p>{shippingAddress.addressLine1}</p>
+            <p>{shippingAddress.addressLine2}</p>
+            <p>{shippingAddress.city}, {shippingAddress.state} {shippingAddress.zipCode}</p>
+            <p>{shippingAddress.country}</p>
+            <p>{shippingAddress.phone}</p>
           </address>
           <div className="mt-3 text-gray-700">
             <p><span className="font-medium">Estimated delivery:</span> {estimatedDelivery.toDateString()}</p>

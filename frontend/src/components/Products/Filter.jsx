@@ -20,7 +20,7 @@ const Filter = ({filters, setFilters}) => {
         </SelectTrigger>
         <SelectContent>
             {categoryList.map(({value, label}) => (
-                <SelectItem value={value}>{label}</SelectItem>
+                <SelectItem key={value} value={value}>{label}</SelectItem>
             ))}
         </SelectContent>
     </Select>

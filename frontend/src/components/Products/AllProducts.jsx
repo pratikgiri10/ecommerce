@@ -12,7 +12,7 @@ const AllProducts = () => {
    
         
   return (
-   <section className='min-h-screen flex'>
+   <section className='min-h-screen'>
    
      <div className='max-w-7xl mx-auto flex flex-col gap-12 px-4 sm:px-12'> 
         <div className='flex items-center justify-between'>
