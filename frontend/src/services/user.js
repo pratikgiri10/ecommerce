@@ -1,7 +1,7 @@
 import { api, authenticated } from "."
 
 export const getCurrentUserDetails = () => {
-    authenticated(api).get('/users/getUser')
+    return authenticated(api).get('/users/getuser')
 }
 export const getAllUsersDetails = () => {
     return api.get('/users/getallusers')

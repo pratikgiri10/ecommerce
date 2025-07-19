@@ -17,27 +17,31 @@ import { useNavigate } from 'react-router-dom'
 const Item = ({item, className}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const status = useSelector((state) => state.auth.isLoggedIn)
+  // const status = useSelector((state) => state.auth.isLoggedIn)
+
 
   const handleItemClick = (e) => {
   
     navigate(`/productdetails/${item._id}`)
   }
 
-  const addToCart = (e) => {
-    e.stopPropagation()
-    if(status){
-      dispatch(setToCart(item))
-      navigate('/cart')
-    }
-    else{
-      navigate('/login')
-    }
+  // const addToCart = (e) => {
+  //   // e.stopPropagation()
+  //   console.log(item);
+  //   if(status){
+  //     dispatch(setToCart(item))
+  //     navigate('/cart')
+  //   }
+  //   else{
+  //     navigate('/login')
+  //   }
     
-  }
+  // }
 
   return (
-    <Card onClick={handleItemClick} className={`w-full max-w-sm mx-auto bg-transparent text-black border-none transition-all duration-300 ${className}`}>
+    <Card 
+    onClick={handleItemClick} 
+    className={`w-full max-w-sm mx-auto bg-transparent text-black border-none transition-all duration-300 ${className}`}>
       
         <ProductImage
         className='w-full h-[300px] object-cover transition-transform duration-300 group-hover:scale-105'
@@ -59,9 +63,9 @@ const Item = ({item, className}) => {
        </div>
        
       </div>
-      <Button 
+      {/* <Button 
       onClick={addToCart}
-      className='w-full btn-primary text-gray-900 rounded-none'>Add to Cart</Button>
+      className='w-full btn-primary text-gray-900 rounded-none'>Add to Cart</Button> */}
     </Card>
 
   )

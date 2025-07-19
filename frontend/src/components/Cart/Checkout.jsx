@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setAddress } from '@/features/auth/authSlice'
 import AddressInfo from '../Auth/AddressInfo'
 import { useGetUserAddressQuery } from '@/api/user'
+import { selectTotalDiscountedPrice } from '@/features/selectors/cartSelector'
 
 
 const Checkout = () => {
      const dispatch = useDispatch()
      const navigate = useNavigate()
-    const [discount, setDiscount] = useState(100)
+//     const [discount, setDiscount] = useState(100)
     const [total, setTotal] = useState()
 
     const date = new Date(new Date().getTime()+ (3*24*60*60*1000));
@@ -23,9 +24,10 @@ const Checkout = () => {
          
          
     }
-    const discountedPrice = useMemo(() => {        
-     return totalPrice = totalPrice - discount   
-    }, [totalPrice])
+    const discountedPrice = useSelector(selectTotalDiscountedPrice)
+//     const discountedPrice = useMemo(() => {        
+//      return totalPrice = totalPrice - discount   
+//     }, [totalPrice])
 
     useEffect(()=> {
      setTotal(totalPrice)   
@@ -47,10 +49,10 @@ const Checkout = () => {
                     <h2 className='text-lg'>Subtotal</h2>
                     <p>{total}</p>
                </div>
-               <div className='flex items-center justify-between'>
+               {/* <div className='flex items-center justify-between'>
                     <h2 className='text-lg'>Discount</h2>
-                    <p>{discount}</p>
-               </div>
+                    <p>{discount}</p> 
+               </div> */}
                <div className='flex border-t-2 items-center justify-between'>
                     <h2 className='text-lg'>Total</h2>
                     <p>{discountedPrice}</p> 

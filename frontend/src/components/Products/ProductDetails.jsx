@@ -1,20 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useGetProductByIdQuery } from '@/api/product';
 import { motion } from "motion/react"
 import { cn } from '@/lib/utils';
 import Review from '../review/Review';
+import { setToCart } from '@/features/cart/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProductDetails = () => {
     const [selectedImage, setSelectedImage] = useState(0)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { id } = useParams();
     console.log(id);
+     const status = useSelector((state) => state.auth.isLoggedIn)
+
+    
     
    const {data, isLoading, isError, isSuccess} = useGetProductByIdQuery(id)
    const product = data?.data.data
    console.log(product);
-   
+   const addToCart = (e) => {
+        // e.stopPropagation()
+        console.log(product);
+        if(status){
+          dispatch(setToCart(product))
+          navigate('/cart')
+        }
+        else{
+          navigate('/login')
+        }
+        
+      }
    
     if(isLoading) return (<div className='p-8 text-lg'>Loading...</div>)
     if (isError || !product) return <p className='p-8 text-red-600'>Failed to load product.</p>;
@@ -51,7 +69,9 @@ const ProductDetails = () => {
                 {/* button container */}
                 <div className='flex gap-4 ml-24'>
                     <Button size='lg' className='flex-1 text-md bg-blue-600 hover:bg-blue-700 transition'>Buy Now</Button>
-                    <Button size='lg' className='flex-1 bg-orange-600 hover:bg-orange-700 text-md transition'>Add to Cart</Button>
+                    <Button 
+                    onClick={addToCart}
+                    size='lg' className='flex-1 bg-orange-600 hover:bg-orange-700 text-md transition'>Add to Cart</Button>
                 </div>     
             </section>
             {/* right section */}

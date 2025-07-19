@@ -4,11 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 export const useGetCurrentUserQuery = () => {
     return useQuery({
         queryKey: ['user', 'current-user'],
-        queryFn: async () => {
-            return await (
-                await getCurrentUserDetails().data
-            )
-        }
+        queryFn: getCurrentUserDetails
     })
 }
 export const useGetAllUsersQuery = () => {

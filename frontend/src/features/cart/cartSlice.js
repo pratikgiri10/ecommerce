@@ -24,7 +24,7 @@ export const cartSlice = createSlice({
         setToCart: (state, action) => {
             const cart = action.payload
 
-           const existingItem = state.items.find((item) => item.$id === cart.$id)
+           const existingItem = state.items.find((item) => item._id === cart._id)
            if(existingItem){
             existingItem.quantity +=1
            }
@@ -38,7 +38,7 @@ export const cartSlice = createSlice({
         },
         decreaseQuantity: (state,action) => {
             const cart = action.payload
-            const existingItem = state.items.find((item) => item.$id === cart.$id)
+            const existingItem = state.items.find((item) => item._id === cart._id)
             if(existingItem){
              existingItem.quantity -=1
             }
@@ -47,7 +47,7 @@ export const cartSlice = createSlice({
         },
         removeFromCart: (state, action) => {
             const cart = action.payload
-            const items = state.items.filter((item) => item.$id !== cart.$id)
+            const items = state.items.filter((item) => item._id !== cart._id)
             state.items = items
             const userId = getCurrentUserId()
             localStorage.setItem(`cart_${userId}`, JSON.stringify(state));

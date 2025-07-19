@@ -18,8 +18,12 @@ export const getUsers = asyncHandler(async (req,res) => {
 })
 
 export const getUser = asyncHandler(async(req,res) => {
+    console.log('get user');
+    
     const id = req.user._id
     const user = await User.findOne({_id: id}, {password: 0, accessToken: 0, refreshToken: 0})
+    console.log(user);
+    
     if(!user)
         return new ApiError(401, 'user not found')
 
@@ -27,10 +31,10 @@ export const getUser = asyncHandler(async(req,res) => {
     // console.log('user:',user)
 })
 export const getAddress = asyncHandler(async (req,res) => {
-    console.log('api hit');
+    // console.log('api hit');
     
     const id = req.user._id
-    console.log('id:', id);
+    // console.log('id:', id);
     
     const data = {
         addressLine1: 1,

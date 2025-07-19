@@ -3,6 +3,7 @@ import { Check } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useGetCurrentUserQuery } from '@/api/user';
+import { selectTotalDiscountedPrice } from '@/features/selectors/cartSelector';
 
 
 const PlaceOrder = ({ orderNumber, shipping, tax, paymentMethod}) => {
@@ -16,23 +17,23 @@ const PlaceOrder = ({ orderNumber, shipping, tax, paymentMethod}) => {
     payment_status: 'pending'
   })
   const items = useSelector(state => state.cart.items)
-  const subTotal = items.reduce((acc, item) => acc+item.price*item.quantity,0)
-
+  // const subTotal = items.reduce((acc, item) => acc+item.price*item.quantity,0)
+const discountedPrice = useSelector(selectTotalDiscountedPrice)
   const shippingAddress = useSelector(state => state.order.order)
     
 const estimatedDelivery = new Date(new Date().getTime()+ (3*24*60*60*1000))
 
-const {data, isSuccess} = useGetCurrentUserQuery()
+const {data: user, isSuccess} = useGetCurrentUserQuery()
+
+
+const handlePlaceOrder = () => {
+
+}
 
   useEffect(() => {
-    console.log(shippingAddress);
-    
-    
-    if(isSuccess)
-      console.log(data);
-      
-   
-  },[data])
+   if(isSuccess)
+     console.log(user);
+  },[user])
   
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -80,7 +81,7 @@ const {data, isSuccess} = useGetCurrentUserQuery()
         <div className="mt-4 pt-4 border-t border-gray-200">
           <div className="flex justify-between py-1">
             <span className="text-gray-600">Subtotal</span>
-            <span>Rs{subTotal.toFixed(2)}</span>
+            <span>Rs{discountedPrice.toFixed(2)}</span>
           </div>
           <div className="flex justify-between py-1">
             <span className="text-gray-600">Shipping</span>
@@ -92,7 +93,7 @@ const {data, isSuccess} = useGetCurrentUserQuery()
           </div>
           <div className="flex justify-between py-2 font-bold text-lg">
             <span>Total</span>
-            <span>Rs{(subTotal+shipping+tax).toFixed(2)}</span>
+            <span>Rs{(discountedPrice+shipping+tax).toFixed(2)}</span>
           </div>
         </div>
       </div>
@@ -102,7 +103,7 @@ const {data, isSuccess} = useGetCurrentUserQuery()
         <div className="bg-gray-50 rounded-lg p-6">
           <h2 className="text-xl font-bold mb-3">Shipping Information</h2>
           <address className="not-italic text-gray-700">
-            {/* <p>{name}</p> */}
+           {isSuccess &&  <p>{user?.data?.data?.name}</p>}
             <p>{shippingAddress.addressLine1}</p>
             <p>{shippingAddress.addressLine2}</p>
             <p>{shippingAddress.city}, {shippingAddress.state} {shippingAddress.zipCode}</p>
@@ -133,7 +134,9 @@ const {data, isSuccess} = useGetCurrentUserQuery()
 
       {/* Actions */}
       <div className="mt-8 text-center space-x-2">
-        <button className="btn-primary text-white px-8 py-3 rounded-lg font-medium  transition-colors">
+        <button 
+        onClick={handlePlaceOrder}
+        className="btn-primary text-white px-8 py-3 rounded-lg font-medium  transition-colors">
           Place Your Order
         </button>
          <button className="bg-gray-200 text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors">
