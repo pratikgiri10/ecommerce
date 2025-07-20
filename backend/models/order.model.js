@@ -15,7 +15,7 @@ const orderSchema = new Schema ({
     orderItems: {
         type: [
             {
-                productId: {
+                product: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: Product
                 },
@@ -26,11 +26,11 @@ const orderSchema = new Schema ({
         ]
     },
     shippingAddress: {
-      addressLine1: {
+      address_line1: {
         type: String,
         required: [true, "Please provide an address"],
       },
-      addressLine2: {
+      address_line2: {
         type: String,        
       },
       city: {
@@ -45,31 +45,31 @@ const orderSchema = new Schema ({
         type: String,
         required: [true, "Please provide us your phone number"],
       },
-      postalCode: {
+      postal_code: {
         type: String,
         required: [true, "Please provide us the postal code of your area"],
       },
     },
-    paymentMethod: {
+    payment_method: {
         type: String,
         enum: ["esewa", "cash_on_delivery"],
         default: "cash_on_delivery",
     },
-    paymentStatus: {
+    payment_status: {
         type: String,
         enum: ["pending", "paid", "failed"],
         default: "pending",
     },
-    paymentDetails: {
+    payment_details: {
       refId: String,
       paidAt: Date,
     },
-    orderStatus: {
+    order_status: {
       type: String,
       enum: ["processing", "shipped", "delivered", "cancelled"],
       default: "processing",
     },
-    Delivered: {
+    delivered: {
         type: Date
     }
 

@@ -4,36 +4,87 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useGetCurrentUserQuery } from '@/api/user';
 import { selectTotalDiscountedPrice } from '@/features/selectors/cartSelector';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { usePostOrderMutation} from '@/api/order';
 
 
 const PlaceOrder = ({ orderNumber, shipping, tax, paymentMethod}) => {
   // const [name, setName] = useState('')
   const [order, setOrder] = useState({
     order_price:0,
-    order_items: [''],
-    order_status: 'processing',
+    order_items: [],
     customer: '',
-    payment_method: 'COD',
-    payment_status: 'pending'
+    shippingAddress: {
+      address_line1: '',
+      address_line2: '',
+      city: '',
+      state: '',
+      phone: '',
+      postal_code: ''
+    },
+    order_status: '',   
+    payment_method: '',
+    payment_status: '',
+    payment_details: '',
+    delivered: Date
   })
+
+  const navigate = useNavigate()
   const items = useSelector(state => state.cart.items)
+ 
   // const subTotal = items.reduce((acc, item) => acc+item.price*item.quantity,0)
 const discountedPrice = useSelector(selectTotalDiscountedPrice)
-  const shippingAddress = useSelector(state => state.order.order)
+const shippingAddress = useSelector(state => state.order.order)
     
 const estimatedDelivery = new Date(new Date().getTime()+ (3*24*60*60*1000))
 
-const {data: user, isSuccess} = useGetCurrentUserQuery()
-
+const {data: user, isSuccess: isUserFetched} = useGetCurrentUserQuery()
+const {mutate: createUserOrder} = usePostOrderMutation()
 
 const handlePlaceOrder = () => {
+console.log(order);
 
+  // createUserOrder()
+  toast.success('Order Confirmed', {
+    style: {
+      fontSize: '1rem'
+    },
+    actionButtonStyle: {
+        background: 'white',
+        color: 'black',
+        fontSize: '0.8rem'
+      },
+    action: {
+      label: 'View Order',
+      onClick: () => {
+        navigate('/orderhistory')
+      }
+    }
+  })
 }
 
   useEffect(() => {
-   if(isSuccess)
-     console.log(user);
-  },[user])
+ setOrder({
+    order_price: discountedPrice,
+    order_items: items.map((item) => ({
+      product: item._id,
+      quantity: item.quantity
+ })),
+    customer: user.data.data._id,
+    shippingAddress: {
+      address_line1: shippingAddress.addressLine1,
+      address_line2: shippingAddress.addressLine2,
+      city: shippingAddress.city,
+      state: shippingAddress.state,
+      phone: shippingAddress.phone,
+      postal_code: shippingAddress.zipCode
+    },
+   })
+  
+   
+  },[])
+  
   
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -103,7 +154,7 @@ const handlePlaceOrder = () => {
         <div className="bg-gray-50 rounded-lg p-6">
           <h2 className="text-xl font-bold mb-3">Shipping Information</h2>
           <address className="not-italic text-gray-700">
-           {isSuccess &&  <p>{user?.data?.data?.name}</p>}
+           {isUserFetched &&  <p>{user?.data?.data?.name}</p>}
             <p>{shippingAddress.addressLine1}</p>
             <p>{shippingAddress.addressLine2}</p>
             <p>{shippingAddress.city}, {shippingAddress.state} {shippingAddress.zipCode}</p>

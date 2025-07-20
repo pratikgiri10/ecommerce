@@ -5,7 +5,7 @@ import Button from './Button'
 import { cn } from '@/lib/utils'
 const Banner = () => {
   return (
-    <div className=' bg-yellow-500 mt-4'>
+    <div className=' bg-yellow-500 mt-16'>
        
         <div className='flex justify-between max-w-7xl mx-auto px-4 sm:px-12'>
           <div className='mt-20 space-y-8'>

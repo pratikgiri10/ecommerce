@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { useGetUserAddressQuery, useUpdateDefaultAddressMutation } from '@/api/user';
-import { usePostShippingAddressMutation } from '@/api/order';
+
 import { createOrder } from '@/features/order/orderSlice';
 const AddressInfo = ({orderPrice}) => {
   const { 
@@ -16,7 +16,7 @@ const AddressInfo = ({orderPrice}) => {
 const dispatch = useDispatch()
 const navigate = useNavigate()
 const {data: address} = useGetUserAddressQuery()
-const {mutate: createShippingAddress} = usePostShippingAddressMutation()
+
 const {mutate: createDefaultAddress} = useUpdateDefaultAddressMutation()
 
 

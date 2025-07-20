@@ -3,9 +3,10 @@ import { ApiError } from "../../utils/ApiError";
 import { asyncHandler } from "../../utils/asyncHandler";
 
 export const postUserOrder = asyncHandler(async(req,res) => {
+    console.table(req.body.data)
     if(!req.body.data)
         throw new ApiError(400, 'please fill all the fields')
-    const order = await Order.create(req.body.data)
+    // const order = await Order.create(req.body.data)
 })
 export const getOrderDetails = asyncHandler(async(req,res) => {
 
