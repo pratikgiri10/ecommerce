@@ -19,7 +19,8 @@ export const cartSlice = createSlice({
        
         clearCart: (state, action) => {
             state.items = []
-            // localStorage.removeItem(`cart_${userId}`)
+            const userId = getCurrentUserId()
+            localStorage.removeItem(`cart_${userId}`)
         },
         setToCart: (state, action) => {
             const cart = action.payload

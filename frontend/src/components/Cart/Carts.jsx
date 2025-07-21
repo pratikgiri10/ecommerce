@@ -5,14 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { clearCart, loadUserCart } from '@/features/cart/cartSlice';
 
 const Carts = () => {
-  // const [items, setItems] = useState([])
+  
   const dispatch = useDispatch()
   
   const items = useSelector(state => state.cart.items)
 
-  // const val = items.reduce((acc, item) => acc+item.price*item.quantity,0)
-  console.log('item',items)
-  // console.log(val)
+ 
  useEffect(() => {
   dispatch(loadUserCart())
  }, [])
@@ -31,7 +29,7 @@ const Carts = () => {
              </div>
              <div className='divide-y divide-gray-200'>
               {items.map((item) => (              
-                <Cart key={item.$id} item={item}/>
+                <Cart key={item._id} item={item}/>
               ))}
              </div>
           </div>

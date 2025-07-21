@@ -1,31 +1,29 @@
 import mongoose from 'mongoose'
-import User from './user.model'
-import Product from './product.model'
+import User from './user.model.js'
+import Product from './product.model.js'
 
 const { Schema } = mongoose
 
 const orderSchema = new Schema ({
-    orderPrice: {
+    order_price: {
         type: Number
     },
     customer: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: User
+        ref: 'User'
     },
-    orderItems: {
-        type: [
-            {
-                product: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: Product
-                },
-                quantity: {
-                    type: Number
-                }
+    order_items: [
+        {
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product'
+            },
+            quantity: {
+                type: Number
             }
-        ]
-    },
-    shippingAddress: {
+        }
+    ],
+    shipping_address: {
       address_line1: {
         type: String,
         required: [true, "Please provide an address"],

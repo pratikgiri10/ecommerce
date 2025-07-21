@@ -1,37 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useGetCurrentUserQuery } from '@/api/user';
 import { selectTotalDiscountedPrice } from '@/features/selectors/cartSelector';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { usePostOrderMutation} from '@/api/order';
+import { clearCart } from '@/features/cart/cartSlice';
+
+import { clearOrder} from '@/features/order/orderSlice';
 
 
 const PlaceOrder = ({ orderNumber, shipping, tax, paymentMethod}) => {
-  // const [name, setName] = useState('')
-  const [order, setOrder] = useState({
-    order_price:0,
-    order_items: [],
-    customer: '',
-    shippingAddress: {
-      address_line1: '',
-      address_line2: '',
-      city: '',
-      state: '',
-      phone: '',
-      postal_code: ''
-    },
-    order_status: '',   
-    payment_method: '',
-    payment_status: '',
-    payment_details: '',
-    delivered: Date
-  })
 
   const navigate = useNavigate()
-  const items = useSelector(state => state.cart.items)
+  const dispatch = useDispatch()
+  const cartItems = useSelector(state => state.cart.items)
  
   // const subTotal = items.reduce((acc, item) => acc+item.price*item.quantity,0)
 const discountedPrice = useSelector(selectTotalDiscountedPrice)
@@ -43,47 +28,61 @@ const {data: user, isSuccess: isUserFetched} = useGetCurrentUserQuery()
 const {mutate: createUserOrder} = usePostOrderMutation()
 
 const handlePlaceOrder = () => {
-console.log(order);
-
-  // createUserOrder()
-  toast.success('Order Confirmed', {
-    style: {
-      fontSize: '1rem'
-    },
-    actionButtonStyle: {
-        background: 'white',
-        color: 'black',
-        fontSize: '0.8rem'
-      },
-    action: {
-      label: 'View Order',
-      onClick: () => {
-        navigate('/orderhistory')
-      }
-    }
-  })
-}
-
-  useEffect(() => {
- setOrder({
+  if(!isUserFetched) return
+  const orderData = {
     order_price: discountedPrice,
-    order_items: items.map((item) => ({
+    order_items: cartItems?.map((item) => ({
       product: item._id,
       quantity: item.quantity
  })),
-    customer: user.data.data._id,
-    shippingAddress: {
-      address_line1: shippingAddress.addressLine1,
-      address_line2: shippingAddress.addressLine2,
-      city: shippingAddress.city,
-      state: shippingAddress.state,
-      phone: shippingAddress.phone,
-      postal_code: shippingAddress.zipCode
+    customer: user?.data?.data?._id,
+    shipping_address: {
+      address_line1: shippingAddress?.addressLine1,
+      address_line2: shippingAddress?.addressLine2,
+      city: shippingAddress?.city,
+      state: shippingAddress?.state,
+      phone: shippingAddress?.phone,
+      postal_code: shippingAddress?.zipCode
     },
-   })
-  
-   
-  },[])
+
+  }
+
+
+  createUserOrder(orderData, {
+    onSuccess: () => {
+      dispatch(clearCart())
+      dispatch(clearOrder())
+       toast.success('Order Confirmed', {
+          style: {
+            fontSize: '1rem'
+          },
+          actionButtonStyle: {
+              background: 'white',
+              color: 'black',
+              fontSize: '0.8rem'
+            },
+          action: {
+            label: 'View Order',
+            onClick: () => {
+              navigate('/orderhistory')
+            }
+          }
+        })
+    },
+    onError: (error) => {
+      console.log(error);
+      
+      toast.error('Failed to confirm order')
+    }
+  })
+ 
+}
+const handleCancelOrder = () => {
+  const isConfirmed = confirm('Are you sure you want to cancel?')
+  isConfirmed ? navigate('/') : null
+}
+
+
   
   
   return (
@@ -106,7 +105,7 @@ console.log(order);
         
         {/* Items */}
         <div className="divide-y">
-          {items.map((item) => (
+          {cartItems.map((item) => (
             <div key={item._id} className="py-4 flex items-center">
               <div className="w-16 h-16 bg-gray-200 rounded mr-4">
                 {item.imageUrl && (
@@ -190,7 +189,9 @@ console.log(order);
         className="btn-primary text-white px-8 py-3 rounded-lg font-medium  transition-colors">
           Place Your Order
         </button>
-         <button className="bg-gray-200 text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors">
+         <button 
+         onClick={handleCancelOrder}
+         className="bg-gray-200 text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors">
           Cancel
         </button>
         {/* <div className="mt-4">

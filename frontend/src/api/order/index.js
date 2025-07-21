@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query"
 
 export const usePostOrderMutation = () => {
     return useMutation({
-        mutationKey: ['order', 'shipping-address'],
+        mutationKey: ['order', 'create-order'],
         mutationFn: (data) => postUserOrder(data)
     })
 }
