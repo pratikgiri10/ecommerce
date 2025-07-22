@@ -11,8 +11,11 @@ export const getAllOrders = async () => {
     return await authenticated(api).get('order/getallorders')
 }
 export const getOrderOfCurrentUser = async () => {
-    return await authenticated(api).get('order/getuserorderhistory')
+    return await authenticated(api).get('order/getuserorder')
 }
 export const updateOrderStatus = async () => {
     return await authenticated(api).put('order/updateorderstatus')
+}
+export const updatePaymentStatus = async () => {
+    return await authenticated(api).put('order/updatepaymentstatus')
 }

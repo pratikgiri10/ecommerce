@@ -21,7 +21,7 @@ import { login } from '@/features/auth/authSlice'
 import { useEffect } from 'react'
 import AddProducts from './components/Dashboard/Forms/AddProducts'
 import PlaceOrder from './components/order/PlaceOrder'
-import { OrderData } from './components/order/OrderData'
+
 import AddressInfo from './components/Auth/AddressInfo'
 import OrderHistory from './components/order/OrderHistory'
 import ProductDetails from './components/Products/ProductDetails'
@@ -58,9 +58,9 @@ function App() {
           <Route path='/viewproducts' element={<ViewProducts />}></Route>
           <Route path='/productdetails/:id' element={<ProductDetails />}></Route>
           
-          <Route path='/placeorder' element={<OrderData />}></Route>
+         
           <Route path='/address' element={<AddressInfo />}></Route>
-          <Route path='/orderhistory' element={<OrderHistory />}></Route>
+         
          
           <Route path='/reviews' element={<Review />}></Route>
           
@@ -68,6 +68,8 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path='/cart' element={<Carts />}></Route>
             <Route path='/checkout' element={<Checkout />}></Route>
+             <Route path='/placeorder' element={<PlaceOrder />}></Route>
+              <Route path='/orderhistory' element={<OrderHistory />}></Route>
           </Route>
           
           <Route path='/product' element={<Product />}></Route>

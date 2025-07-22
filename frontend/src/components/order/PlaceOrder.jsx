@@ -12,7 +12,7 @@ import { clearCart } from '@/features/cart/cartSlice';
 import { clearOrder} from '@/features/order/orderSlice';
 
 
-const PlaceOrder = ({ orderNumber, shipping, tax, paymentMethod}) => {
+const PlaceOrder = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -51,7 +51,7 @@ const handlePlaceOrder = () => {
   createUserOrder(orderData, {
     onSuccess: () => {
       dispatch(clearCart())
-      dispatch(clearOrder())
+      // dispatch(clearOrder())
        toast.success('Order Confirmed', {
           style: {
             fontSize: '1rem'
@@ -133,17 +133,10 @@ const handleCancelOrder = () => {
             <span className="text-gray-600">Subtotal</span>
             <span>Rs{discountedPrice.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between py-1">
-            <span className="text-gray-600">Shipping</span>
-            <span>Rs{shipping.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between py-1">
-            <span className="text-gray-600">Tax</span>
-            <span>Rs{tax.toFixed(2)}</span>
-          </div>
+         
           <div className="flex justify-between py-2 font-bold text-lg">
             <span>Total</span>
-            <span>Rs{(discountedPrice+shipping+tax).toFixed(2)}</span>
+            <span>Rs{(discountedPrice).toFixed(2)}</span>
           </div>
         </div>
       </div>
@@ -169,15 +162,14 @@ const handleCancelOrder = () => {
           <h2 className="text-xl font-bold mb-3">Payment Information</h2>
           <div className="flex items-center">
            
-            {paymentMethod.type === 'esewa' && (
-              <>
+           
                 <div className="w-10 h-6 bg-green-700 rounded mr-3"></div>
                 <div>
                   <p className="font-medium">Esewa</p>
                   {/* <p className="text-gray-600">{paymentMethod.email}</p> */}
                 </div>
-              </>
-            )}
+              
+          
           </div>
         </div>
       </div>
