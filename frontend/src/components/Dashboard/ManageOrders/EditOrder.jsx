@@ -1,10 +1,12 @@
 import { useUpdateOrderStatusMutation, useUpdatePaymentStatusMutation } from '@/api/order'
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { XCircle } from 'lucide-react'
+
 
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-const EditOrder = ({selectedOrder}) => {
+const EditOrder = ({selectedOrder, setShowEditOrder}) => {
 
     const orderStatus = [
         { name: "Processing", value: "processing" },
@@ -25,13 +27,24 @@ const EditOrder = ({selectedOrder}) => {
 
     }
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className='bg-white p-4 rounded-xl w-full max-w-xl'>
+    <div 
+    onClick={() => setShowEditOrder(false)}
+    className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div 
+      onClick={(e) => e.stopPropagation() }
+      className='relative bg-white p-6 rounded-xl w-full max-w-lg'>
+        <button 
+        onClick={() => setShowEditOrder(false)}
+        className='absolute right-5 p-2 hover:bg-gray-100 rounded-lg transition-colors'>
+             <XCircle className="w-6 h-6 text-gray-500" />
+        </button>
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
         
         <div className='space-y-4'> 
             <label className='text-foreground font-medium'>Update Order Status</label>           
-            <Select>
+            <Select
+            defaultValue={selectedOrder.order_status}
+            >
                 <SelectTrigger className="">
                     <SelectValue placeholder="please select an order status" />
                 </SelectTrigger>

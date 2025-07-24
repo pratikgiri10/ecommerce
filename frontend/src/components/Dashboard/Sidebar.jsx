@@ -37,7 +37,7 @@ import { NavLink } from "react-router-dom"
         },
         {
           title: "Manage Order",
-          url: "/manageorder",
+          url: "/manageorders",
          
         //   icon: Search,
         },
@@ -50,7 +50,7 @@ import { NavLink } from "react-router-dom"
       ]
     return (
      <SidebarProvider className='w-64 min-h-screen text-black'>
-         <Sidebar className='text-white bg-yellow-500'>
+         <Sidebar className='text-black bg-yellow-500'>
             <SidebarContent className='bg-yellow-500 py-4 px-6'>
                 <div className="">
                 <h1 className="text-2xl font-semibold ">EShop</h1>
@@ -64,7 +64,7 @@ import { NavLink } from "react-router-dom"
                                    <NavLink to={item.url}
                                    className={({ isActive }) =>
                                      `text-lg transition-width duration-300  ${
-                                       isActive ? 'text-zinc-800' : 'text-white hover:bg-white hover:text-black hover:px-2 hover:py-1 w-full'} `
+                                       isActive ? 'text-gray-200' : 'text-black hover:bg-white hover:text-black hover:px-2 hover:py-1 w-full'} `
                                    }
                                    >{item.title}</NavLink> 
                                   

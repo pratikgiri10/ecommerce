@@ -12,7 +12,7 @@ const ManageUsers = () => {
     
     
   return (
-    <div className='flex items-center justify-between'>
+    <div className='flex'>
         <AppSidebar />
         {isSuccess && <UsersDetail users={users?.data} header='Users' title={title}/>}
     </div>

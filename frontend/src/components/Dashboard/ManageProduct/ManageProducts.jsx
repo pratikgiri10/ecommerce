@@ -7,7 +7,7 @@ import ViewProducts from '../Tables/ViewProducts'
 
 const ManageProducts = () => {
   return (
-   <div className='flex gap-4'>
+   <div className='flex'>
     <AppSidebar />
     <ViewProducts />
     {/* <PostForm/> */}
