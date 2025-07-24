@@ -4,7 +4,7 @@ import Dashboard from './Dashboard'
 
 const AdminDashboard = () => {
   return (
-    <div className='flex items-start'>
+    <div className='flex'>
         <AppSidebar />
         <Dashboard />
     </div>
