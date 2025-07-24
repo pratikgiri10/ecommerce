@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react'
 import UsersDetail from '../Tables/UsersDetail'
 import axios from 'axios'
 import { AppSidebar } from '../Sidebar'
-import { useGetAllUsersQuery } from '@/api/user'
 
 const ManageUsers = () => {
-    const title = ['id','name', 'email']
+    const title = ['Id','Name', 'Email']
 
-    const {data: users, isSuccess} = useGetAllUsersQuery()
+    
    
     
     
   return (
     <div className='flex'>
         <AppSidebar />
-        {isSuccess && <UsersDetail users={users?.data} header='Users' title={title}/>}
+        <UsersDetail title={title}/>
     </div>
   )
 }

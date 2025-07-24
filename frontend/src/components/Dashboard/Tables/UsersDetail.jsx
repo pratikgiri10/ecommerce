@@ -1,15 +1,27 @@
+import { useGetAllUsersQuery } from '@/api/user'
 import Button from '@/components/common/Button'
 import ProductImage from '@/components/Products/ProductImage'
-import { Search } from 'lucide-react'
-import React from 'react'
+import { Package, Search } from 'lucide-react'
+import React, { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const UsersDetail = ({header, title, users, ...props}) => {
-  console.log(users);
+const UsersDetail = ({header, title, ...props}) => {
+  const [searchTerm, setSearchTerm] = useState('')
+    const {data: users, isSuccess, isLoading} = useGetAllUsersQuery()
+  // console.log(users);
+  const filteredUsers = useMemo(() => {
+    if(!users) return []
+    return users.data.data.filter((user) => {
+      const matchesUser = user.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          user._id.toLowerCase().includes(searchTerm.toLowerCase())
+      return matchesUser
+    })
+  }, [searchTerm, users])
   
   return (
     <div className='w-full min-h-screen p-4 bg-gradient-to-br from-yellow-50 to-indigo-50 space-y-4'>
-         <h1 className='font-medium text-4xl mb-8'>{header}</h1>
+         <h1 className='font-medium text-4xl mb-8'>Users</h1>
         <div className=' grid grid-cols-3 '>
          <div className='col-span-1 w-full'>
           <Link to='/addproducts'>
@@ -22,6 +34,8 @@ const UsersDetail = ({header, title, users, ...props}) => {
           
         </span>
         <input
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Search"
         className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
         />
@@ -38,8 +52,8 @@ const UsersDetail = ({header, title, users, ...props}) => {
               </tr>
             </thead>
             <tbody className='rounded-b-md'>
-            {users?.data.map((user) => (
-          <tr  key={users._id} className='bg-white'>
+            {isSuccess && filteredUsers.map((user) => (
+          <tr  key={user._id} className='bg-white'>
              <td className='p-4'>
               <p className='text-black text-lg'>{user._id}</p>
             </td>
@@ -61,6 +75,20 @@ const UsersDetail = ({header, title, users, ...props}) => {
           ))}
             </tbody>
           </table>
+          {filteredUsers.length === 0 && (
+            <div className="text-center py-12">
+              <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-500">No users found matching your criteria</p>
+            </div>
+          )}
+          {isLoading && (
+            <div className='fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-40'>
+               <div className="bg-white p-6 rounded-xl shadow-lg">
+                <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading Users...</p>
+              </div>           
+            </div>
+          )}
       </div>
 
   )

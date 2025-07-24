@@ -1,15 +1,28 @@
 import { useGetProductQuery } from '@/api/product'
 import Button from '@/components/common/Button'
 import ProductImage from '@/components/Products/ProductImage'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import {Search} from 'lucide-react'
+import {ChevronDown, Package, Search} from 'lucide-react'
+import { categoryList } from '@/constants'
 
 const ViewProducts = () => {
-   const {data: productList, isSuccess} = useGetProductQuery()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState('All')
+   const {data: productList, isSuccess, isLoading} = useGetProductQuery()
+
   if(isSuccess)
     console.log(productList);
     
+  const filteredProducts = useMemo(() => {
+     if(!productList) return []
+      return productList.data.data.products.filter(product => {
+       const matchesSearch =  product.title.toLowerCase().includes(searchTerm.toLowerCase()) || product.description.toLowerCase().includes(searchTerm.toLowerCase())
+       const matchesCategory = product.category === categoryFilter || categoryFilter === 'All'
+       return matchesSearch && matchesCategory
+      })
+  }, [searchTerm, productList, categoryFilter])
+  
   
   return (
    
@@ -30,11 +43,32 @@ const ViewProducts = () => {
         </span>
         <input
         placeholder="Search"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
         className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
         />
        </div>
-       
+        <div className="relative">
+                <select
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  className="appearance-none pl-4 pr-8 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                >
+                  
+                  <option value="All">All Categories</option>
+                  {categoryList.map((category) => (
+                    <option key={category.value} value={category.value}>{category.label}</option>
+                  ))}
+                  {/* <option value="Electronics">Electronics</option>
+                  <option value="Cameras">Cameras</option>
+                  <option value="Laptops">Laptops</option>
+                  <option value="Headphones">Headphones</option>
+                  <option value="Accessories">Accessories</option> */}
+                </select>
+                <ChevronDown className="absolute right-2 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
         </div>
+         
          <div className='bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mt-4'>
             <table className='w-full'>
             <thead className='bg-yellow-400 border-b border-gray-100'>
@@ -48,8 +82,8 @@ const ViewProducts = () => {
               </tr>
             </thead>
             <tbody className='rounded-b-md'>
-            {productList?.data?.data?.products?.map((product) => (
-          <tr  key={product.$id} className='border-b border-gray-50 hover:bg-gray-50 transition-colors'>
+            {isSuccess && filteredProducts.map((product) => (
+          <tr  key={product._id} className='border-b border-gray-50 hover:bg-gray-50 transition-colors'>
             <td className='p-4 '> 
               <div className='flex items-center gap-2'>
                 <ProductImage prod_image={product.imageUrl[0].url} className='w-24'/>              
@@ -82,8 +116,27 @@ const ViewProducts = () => {
              
           </tr>
           ))}
+         
             </tbody>
           </table>
+           {filteredProducts.length === 0 && (
+            <div className="text-center py-12">
+              <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-500">No products found matching your criteria</p>
+            </div>
+          )}
+            {/*loading overlay  */}
+          
+            {isLoading && (
+              <div className='fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-40'>
+                <div className="bg-white p-6 rounded-xl shadow-lg">
+                <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading Products...</p>
+              </div>
+              </div>
+              
+            )}
+          
          </div>
       </div>
 
