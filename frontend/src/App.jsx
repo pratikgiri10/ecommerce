@@ -26,6 +26,8 @@ import AddressInfo from './components/Auth/AddressInfo'
 import OrderHistory from './components/order/OrderHistory'
 import ProductDetails from './components/Products/ProductDetails'
 import Review from './components/review/Review'
+import Orders from './components/Dashboard/ManageOrders/Orders'
+import ManageOrders from './components/Dashboard/ManageOrders/ManageOrders'
 
 
 function App() {
@@ -71,7 +73,7 @@ function App() {
              <Route path='/placeorder' element={<PlaceOrder />}></Route>
               <Route path='/orderhistory' element={<OrderHistory />}></Route>
           </Route>
-          
+          <Route path='/manageorders' element={<ManageOrders />}></Route>
           <Route path='/product' element={<Product />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>

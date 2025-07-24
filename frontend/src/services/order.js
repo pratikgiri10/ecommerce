@@ -19,3 +19,6 @@ export const updateOrderStatus = async () => {
 export const updatePaymentStatus = async () => {
     return await authenticated(api).put('order/updatepaymentstatus')
 }
+export const deleteOrder = async () => {
+    return await authenticated(api).delete('order/deleteorder')
+}

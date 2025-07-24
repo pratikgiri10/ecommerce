@@ -24,12 +24,23 @@ export const getOrderDetails = asyncHandler(async(req,res) => {
 
     res.status(200).json(new ApiResponse(200, order, 'orders found successfully'))
 })
-export const cancelOrder = asyncHandler(async(req,res) => {
 
+export const getAllOrderDetails = asyncHandler(async(req,res) => {
+    const order = await Order.find({})
+    .populate('customer', 'name email')
+    .populate('order_items.product', 'title imageUrl price discountPercentage')
+    if(!order)
+        throw new ApiError(404, 'no orders found')
+
+    res.status(200).json(new ApiResponse(200, order, 'orders found successfully'))
 })
+
 export const changeOrderStatus = asyncHandler(async(req,res) => {
 
 })
 export const changePaymentStatus = asyncHandler(async(req,res) => {
+
+})
+export const deleteOrder = asyncHandler(async(req,res) => {
 
 })
