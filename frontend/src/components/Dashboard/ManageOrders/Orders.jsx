@@ -18,6 +18,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useGetAllOrdersQuery } from '@/api/order';
 import OrderDetails from './OrderDetails';
 import EditOrder from './EditOrder';
+import { exportToPdf } from '@/utils/exportToPdf';
 
 const Orders = () => {
     const {data: orders, isLoading, isError} = useGetAllOrdersQuery()
@@ -48,7 +49,8 @@ const Orders = () => {
       return matchesSearch && matchesStatus;
     });
   }, [orders, searchTerm, statusFilter]);
-console.log(filteredOrders);
+// console.log(filteredOrders);
+
 
 //   const updateOrderStatus = (orderId, newStatus) => {
 //     // setIsLoading(true);
@@ -71,6 +73,14 @@ console.log(filteredOrders);
 //       setIsLoading(false);
 //     }, 1000);
 //   };
+const handleExport = () => {
+  console.log('exporting');
+  
+  const title = 'Orders'
+  const columns = ['Order Id', 'Customer', 'Date', 'Status', 'Total', 'Items']
+  const rows = filteredOrders.map((order) => order)
+  exportToPdf(title, columns, rows)
+}
 
 
 
@@ -136,6 +146,7 @@ console.log(filteredOrders);
                 <ChevronDown className="absolute right-2 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
               </div>
               <motion.button
+              onClick={handleExport}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
