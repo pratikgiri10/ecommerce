@@ -17,17 +17,17 @@ const Dashboard = () => {
       data = [
         {
           label: 'Total Users',
-          value: users.data.data.length,
+          value: users.length,
           icon: <User />
         },
         {
           label: 'Total Products',
-          value: products.data.data.products.length,
+          value: products.products.length,
           icon: <Boxes />
         },
         {
           label: 'Total Orders',
-          value: orders.data.data.length,
+          value: orders.length,
           
         },
         {

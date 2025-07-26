@@ -3,7 +3,7 @@ import Button from '@/components/common/Button'
 import ProductImage from '@/components/Products/ProductImage'
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import {ChevronDown, Package, Search} from 'lucide-react'
+import {ChevronDown, Edit3, Package, Search, Trash2} from 'lucide-react'
 import { categoryList } from '@/constants'
 
 const ViewProducts = () => {
@@ -16,7 +16,7 @@ const ViewProducts = () => {
     
   const filteredProducts = useMemo(() => {
      if(!productList) return []
-      return productList.data.data.products.filter(product => {
+      return productList.products.filter(product => {
        const matchesSearch =  product.title.toLowerCase().includes(searchTerm.toLowerCase()) || product.description.toLowerCase().includes(searchTerm.toLowerCase())
        const matchesCategory = product.category === categoryFilter || categoryFilter === 'All'
        return matchesSearch && matchesCategory
@@ -108,10 +108,10 @@ const ViewProducts = () => {
               <p className='text-black text-lg'>{product.price}</p>
               </td>         
             <td className='p-4 '>
-             <div className='flex items-center gap-4'>
-                 <Button children='Edit' className='bg-blue-700 text-white hover:bg-blue-400'/>
-                  <Button children='Delete' className='bg-red-600 text-white hover:bg-red-400'/>
-             </div>
+              <div className='flex items-center'>
+                <Button children={ <Edit3 className="w-4 h-4" />} className='p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors'/>
+                <Button children={<Trash2 className="w-4 h-4" />} className='p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors'/>
+              </div>
             </td>
              
           </tr>

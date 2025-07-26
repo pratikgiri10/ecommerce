@@ -1,17 +1,20 @@
 import { useGetAllUsersQuery } from '@/api/user'
 import Button from '@/components/common/Button'
 import ProductImage from '@/components/Products/ProductImage'
-import { Package, Search } from 'lucide-react'
+import { Edit3, Package, Search, Trash2 } from 'lucide-react'
 import React, { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import EditUser from '../ManageUsers/EditUser'
 
 const UsersDetail = ({header, title, ...props}) => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [showEditUser, setShowEditUser] = useState(false)
+  const [selectedUser, setSelectedUser] = useState(null)
     const {data: users, isSuccess, isLoading} = useGetAllUsersQuery()
   // console.log(users);
   const filteredUsers = useMemo(() => {
     if(!users) return []
-    return users.data.data.filter((user) => {
+    return users.filter((user) => {
       const matchesUser = user.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           user._id.toLowerCase().includes(searchTerm.toLowerCase())
@@ -63,11 +66,19 @@ const UsersDetail = ({header, title, ...props}) => {
              <td className='p-4'>
               <p className='text-black text-lg'>{user.email}</p>
             </td>
+             <td className='p-4'>
+              <p className='text-black text-lg'>{user.role}</p>
+            </td>
            
             <td className='p-4 text-white'>
-              <div className='flex items-center gap-4'>
-                <Button children='Edit' className='bg-blue-700 hover:bg-blue-400'/>
-                <Button children='Delete' className='bg-red-600 hover:bg-red-400'/>
+              <div className='flex items-center'>
+                <Button 
+                onClick={() => {
+                  setShowEditUser(true)
+                  setSelectedUser(user)
+                }}
+                children={ <Edit3 className="w-4 h-4" />} className='p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors'/>
+                <Button children={<Trash2 className="w-4 h-4" />} className='p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors'/>
               </div>
             </td>
              
@@ -75,6 +86,11 @@ const UsersDetail = ({header, title, ...props}) => {
           ))}
             </tbody>
           </table>
+          {showEditUser && 
+          <EditUser
+          selectedUser={selectedUser}
+          setShowEditUser={setShowEditUser}
+          />}
           {filteredUsers.length === 0 && (
             <div className="text-center py-12">
               <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />

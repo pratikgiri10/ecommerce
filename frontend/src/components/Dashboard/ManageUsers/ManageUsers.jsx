@@ -4,7 +4,7 @@ import axios from 'axios'
 import { AppSidebar } from '../Sidebar'
 
 const ManageUsers = () => {
-    const title = ['Id','Name', 'Email']
+    const title = ['Id','Name', 'Email', 'Role']
 
     
    
