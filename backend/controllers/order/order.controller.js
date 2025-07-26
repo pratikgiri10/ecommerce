@@ -35,12 +35,20 @@ export const getAllOrderDetails = asyncHandler(async(req,res) => {
     res.status(200).json(new ApiResponse(200, order, 'orders found successfully'))
 })
 
-export const changeOrderStatus = asyncHandler(async(req,res) => {
+export const changeStatus = asyncHandler(async(req,res) => {
+    
+    if(!req.body)
+        throw new ApiError(401, 'the update data is empty')
 
-})
-export const changePaymentStatus = asyncHandler(async(req,res) => {
+   
+        const status = await Order.findByIdAndUpdate(req.params.id, {order_status: req.body.order_status}, {new: true})
+    if(!status)
+        throw new ApiError(401, 'No order found')
+   
 
+    res.status(200).json(new ApiResponse(200, status, 'Status Updated Successfully'))
 })
+
 export const deleteOrder = asyncHandler(async(req,res) => {
 
 })

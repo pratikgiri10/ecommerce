@@ -1,30 +1,50 @@
-import { useUpdateOrderStatusMutation, useUpdatePaymentStatusMutation } from '@/api/order'
+import { useUpdateStatusMutation } from '@/api/order'
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { XCircle } from 'lucide-react'
 
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 const EditOrder = ({selectedOrder, setShowEditOrder}) => {
 
-    const orderStatus = [
+    const orderStatuses = [
         { name: "Processing", value: "processing" },
         { name: "Shipped", value: "shipped" },
         { name: "Delivered", value: "delivered" },
         { name: "Cancelled", value: "cancelled" },
     ];
-    const paymentStatus = [
+    const paymentStatuses = [
         { name: "Pending", value: "pending" },
         { name: "Paid", value: "paid" },
         { name: "Failed", value: "failed" },
     ];
-    const {handleSubmit, control} = useForm() 
+    const {handleSubmit, control} = useForm({
+       defaultValues: {
+        order_status: selectedOrder.order_status,
+        payment_status: selectedOrder.payment_status
+       }
+    }) 
 
-    const {data: changeOrderStatus} = useUpdateOrderStatusMutation()
-    const {data: changePaymentStatus} = useUpdatePaymentStatusMutation()
-    const onSubmit = () => {
-
+    const {mutate: changeStatus} = useUpdateStatusMutation()
+ 
+    const onSubmit = (data) => {
+        const changedFields = {}
+        // console.log(data);
+       for (const key in data){
+        if(data[key] !== selectedOrder[key]){
+            changedFields[key] = data[key]
+            const formData = {
+                id: selectedOrder._id,
+                data: changedFields
+            }
+            changeStatus(formData, {
+                onSuccess: () => {},
+                onError: () => {}
+            })
+        }
+       }
+        
     }
   return (
     <div 
@@ -42,36 +62,57 @@ const EditOrder = ({selectedOrder, setShowEditOrder}) => {
         
         <div className='space-y-4'> 
             <label className='text-foreground font-medium'>Update Order Status</label>           
+           <Controller
+            name= 'order_status'
+            control={control}
+            
+            render = {({field}) => (
             <Select
             defaultValue={selectedOrder.order_status}
+            onValueChange={field.onChange}
+            value={field.value}            
             >
                 <SelectTrigger className="">
                     <SelectValue placeholder="please select an order status" />
                 </SelectTrigger>
                 <SelectContent>
-                    {orderStatus.map((status) => (
-                        <SelectItem value={status.value}>{status.name}</SelectItem>
+                    {orderStatuses.map((status) => (
+                        <SelectItem key={status.value} value={status.value}>{status.name}</SelectItem>
                     ))}
                     
                     
                 </SelectContent>
             </Select>
+            )}
+           />
 
         </div>
        <div className='space-y-4'>
             <label className='text-foreground font-medium'>Update Payment Status</label>
-            <Select>
+            <Controller
+            name='payment_status' 
+            control={control}
+           
+            render = {({field}) => (
+            <Select
+            defaultValue={selectedOrder.payment_status}
+            onValueChange={field.onChange}
+            value={field.value} 
+            
+            >
                 <SelectTrigger className="">
                     <SelectValue placeholder="please select payment status" />
                 </SelectTrigger>
                 <SelectContent>
-                    {paymentStatus.map((status) => (
-                        <SelectItem value={status.value}>{status.name}</SelectItem>
+                    {paymentStatuses.map((status) => (
+                        <SelectItem key={status.value} value={status.value}>{status.name}</SelectItem>
                     ))}
                     
                     
                 </SelectContent>
             </Select>
+            )}
+            />
 
        </div>
        <button className='btn-primary w-full rounded p-2'>Update</button>

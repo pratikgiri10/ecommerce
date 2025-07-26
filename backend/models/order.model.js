@@ -50,8 +50,8 @@ const orderSchema = new Schema ({
     },
     payment_method: {
         type: String,
-        enum: ["esewa", "cash_on_delivery"],
-        default: "cash_on_delivery",
+        enum: ["Esewa", "Cash On Delivery"],
+        default: "Cash On Delivery",
     },
     payment_status: {
         type: String,

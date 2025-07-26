@@ -1,4 +1,4 @@
-import { getAllOrders, getOrderOfCurrentUser, postUserOrder, updateOrderStatus, updatePaymentStatus } from "@/services/order"
+import { getAllOrders, getOrderOfCurrentUser, postUserOrder, updateStatus} from "@/services/order"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
 export const usePostOrderMutation = () => {
@@ -23,18 +23,13 @@ export const useGetAllOrdersQuery = () => {
     })
 }
 
-export const useUpdateOrderStatusMutation = () => {
+export const useUpdateStatusMutation = () => {
     return useMutation({
-        mutationKey: ['order', 'update-order-status'],
-        mutationFn: updateOrderStatus
+        mutationKey: ['order', 'update-status'],
+        mutationFn: ({id, data}) => updateStatus(id, data)
     })
 }
-export const useUpdatePaymentStatusMutation = () => {
-    return useMutation({
-        mutationKey: ['order', 'update-payment-status'],
-        mutationFn: updatePaymentStatus
-    })
-}
+
 export const useDeleteOrderMutation = () => {
     return useMutation({
         mutationKey: ['order', 'delete-order'],
