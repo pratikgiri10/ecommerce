@@ -1,10 +1,12 @@
 import { useUpdateStatusMutation } from '@/api/order'
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useQueryClient } from '@tanstack/react-query'
 import { XCircle } from 'lucide-react'
 
 
 import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 const EditOrder = ({selectedOrder, setShowEditOrder}) => {
 
@@ -27,7 +29,7 @@ const EditOrder = ({selectedOrder, setShowEditOrder}) => {
     }) 
 
     const {mutate: changeStatus} = useUpdateStatusMutation()
- 
+    const queryClient = useQueryClient()
     const onSubmit = (data) => {
         const changedFields = {}
         // console.log(data);
@@ -39,9 +41,22 @@ const EditOrder = ({selectedOrder, setShowEditOrder}) => {
                 data: changedFields
             }
             changeStatus(formData, {
-                onSuccess: () => {},
-                onError: () => {}
+                onSuccess: (data) => {
+                    toast.success('Status Updated Successfully')
+                    console.log(data.data.data);
+                    
+                    queryClient.setQueryData(['order', 'get-all-orders'], (oldOrders) => {
+                        
+                        return (oldOrders?.map((order) => order._id == data.data.data._id ? {...order, order_status: data.data.data.order_status, payment_status: data.data.data.payment_status} : order));
+                        
+                    })
+                    setShowEditOrder(false)
+                },
+                onError: () => {
+                    toast.error('Failed to update status')
+                }
             })
+            
         }
        }
         

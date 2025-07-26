@@ -50,5 +50,12 @@ export const changeStatus = asyncHandler(async(req,res) => {
 })
 
 export const deleteOrder = asyncHandler(async(req,res) => {
-
+    console.log(req.params.id);
+    
+    const order = await Order.deleteOne({_id: req.params.id})
+    
+    if(!order)
+        throw new ApiError(401, 'no order found')
+    
+    res.status(200).json(new ApiResponse(200, order, 'order deleted successfully'))
 })

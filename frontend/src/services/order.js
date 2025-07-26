@@ -8,7 +8,8 @@ export const postUserOrder = async (data) => {
     return await authenticated(api).post('order/postuserorder', data)
 }
 export const getAllOrders = async () => {
-    return await authenticated(api).get('order/getallorders')
+    const response = await authenticated(api).get('order/getallorders')
+    return response.data.data
 }
 export const getOrderOfCurrentUser = async () => {
     return await authenticated(api).get('order/getuserorder')
@@ -16,6 +17,6 @@ export const getOrderOfCurrentUser = async () => {
 export const updateStatus = async (id, data) => {
     return await authenticated(api).put(`order/updatestatus/${id}`, data)
 }
-export const deleteOrder = async () => {
-    return await authenticated(api).delete('order/deleteorder')
+export const deleteOrder = async (id) => {
+    return await authenticated(api).delete(`order/deleteorder/${id}`)
 }

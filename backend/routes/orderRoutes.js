@@ -8,6 +8,6 @@ router.post('/postuserorder', isAuthenticated, postUserOrder)
 router.get('/getuserorder', isAuthenticated, getOrderDetails)
 router.get('/getallorders', getAllOrderDetails)
 router.put('/updatestatus/:id', changeStatus)
-router.delete('/deleteorder', deleteOrder)
+router.delete('/deleteorder/:id', deleteOrder)
 
 export default router 

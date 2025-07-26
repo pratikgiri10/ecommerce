@@ -15,21 +15,21 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useGetAllOrdersQuery } from '@/api/order';
+import { useDeleteOrderMutation, useGetAllOrdersQuery } from '@/api/order';
 import OrderDetails from './OrderDetails';
 import EditOrder from './EditOrder';
 import { exportToPdf } from '@/utils/exportToPdf';
+import { toast } from 'sonner';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Orders = () => {
-    const {data: orders, isLoading, isError} = useGetAllOrdersQuery()
-  
+    const {data: orders, isLoading} = useGetAllOrdersQuery()   
 
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showOrderDetails, setShowOrderDetails] = useState(false);
   const [showEditOrder, setShowEditOrder] = useState(false)
-//   const [isLoading, setIsLoading] = useState(false);
 
   const statusConfig = {
     pending: { icon: Clock, color: 'text-yellow-600 bg-yellow-50 border-yellow-200', label: 'Pending' },
@@ -41,7 +41,7 @@ const Orders = () => {
 
   const filteredOrders = useMemo(() => {
     if(!orders) return []
-    return orders.data.data.filter(order => {
+    return orders.filter(order => {
       const matchesSearch = order._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            order.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            order.customer.email.toLowerCase().includes(searchTerm.toLowerCase());
@@ -49,23 +49,24 @@ const Orders = () => {
       return matchesSearch && matchesStatus;
     });
   }, [orders, searchTerm, statusFilter]);
-// console.log(filteredOrders);
 
-
-//   const updateOrderStatus = (orderId, newStatus) => {
-//     // setIsLoading(true);
-//     setTimeout(() => {
-//       setOrders(prev => prev.map(order => 
-//         order.id === orderId ? { ...order, status: newStatus } : order
-//       ));
-//       setIsLoading(false);
-//     }, 500);
-//   };
-
-//   const deleteOrder = (orderId) => {
-//     setOrders(prev => prev.filter(order => order.id !== orderId));
-//     setShowOrderDetails(false);
-//   };
+  const queryClient = useQueryClient()
+  const {mutate: deleteOrderById} = useDeleteOrderMutation()
+  const deleteOrder = (orderId) => {
+    deleteOrderById(orderId, {
+      onSuccess: (_,orderId) => {        
+        toast.success('Order deleted succesfully')        
+        queryClient.setQueryData(['order', 'get-all-orders'], (oldOrders) => {        
+          return oldOrders?.filter((order) => order._id !== orderId)          
+        })
+      },
+      onError: (error) => {
+        toast.error('error failed to delete order')
+      }
+    })
+   
+    setShowOrderDetails(false);
+  };
 
 //   const refreshOrders = () => {
 //     setIsLoading(true);
@@ -213,7 +214,7 @@ const handleExport = () => {
                           Rs. {order.order_price.toFixed(2)}
                         </td>
                         <td className="p-4 text-gray-600">
-                          {order.order_items.length} items
+                          {order.order_items.length} item{order.order_items.length > 1 && 's'}
                         </td>
                         <td className="p-4">
                           <div className="flex justify-center gap-2">
@@ -244,7 +245,7 @@ const handleExport = () => {
                             <motion.button
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
-                            //   onClick={() => deleteOrder(order.id)}
+                              onClick={() => deleteOrder(order._id)}
                               className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                               title="Delete Order"
                             >
