@@ -10,6 +10,9 @@ export const getAllUsersDetails = async () => {
 export const getUserAddress = async () => {
     return await authenticated(api).get('users/getaddress')
 }
+export const updateUser = (id, data) => {
+    return api.put(`users/updateuser/${id}`, data)
+}
 export const updateDefaultAddress = async (data) => {
     return authenticated(api).put('/users/updateaddress', data)
 }

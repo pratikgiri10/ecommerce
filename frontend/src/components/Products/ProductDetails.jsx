@@ -71,7 +71,7 @@ const ProductDetails = () => {
                     <Button size='lg' className='flex-1 text-md bg-blue-600 hover:bg-blue-700 transition'>Buy Now</Button>
                     <Button 
                     onClick={addToCart}
-                    size='lg' className='flex-1 bg-orange-600 hover:bg-orange-700 text-md transition'>Add to Cart</Button>
+                    size='lg' className='flex-1 btn-primary text-md transition'>Add to Cart</Button>
                 </div>     
             </section>
             {/* right section */}

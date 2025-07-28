@@ -4,10 +4,10 @@ import { ApiResponse } from '../../utils/ApiResponse.js';
 import User from '../../models/user.model.js'
 
 export const getUsers = asyncHandler(async (req,res) => {
-    console.log('api hit');
+    // console.log('api hit');
      
      const users = await User.find({}).select({password: 0})
-     console.log(users);
+    //  console.log(users);
               
     if(!users)
         throw new ApiError(401,'bad request' )
@@ -18,11 +18,11 @@ export const getUsers = asyncHandler(async (req,res) => {
 })
 
 export const getUser = asyncHandler(async(req,res) => {
-    console.log('get user');
+    // console.log('get user');
     
     const id = req.user._id
     const user = await User.findOne({_id: id}, {password: 0, accessToken: 0, refreshToken: 0})
-    console.log(user);
+    // console.log(user);
     
     if(!user)
         return new ApiError(401, 'user not found')
@@ -49,7 +49,7 @@ export const getAddress = asyncHandler(async (req,res) => {
     
    try {
      const user = await User.findOne({_id: id}, data).lean()
-    console.log(Object.keys(user).length);
+    // console.log(Object.keys(user).length);
      if(!user)
         return new ApiError(401, 'user not found')
     if(user.length < 1 || (Object.keys(user).length < 1)){
@@ -65,6 +65,15 @@ export const getAddress = asyncHandler(async (req,res) => {
     
     
 })
+
+export const updateUser = asyncHandler(async (req,res) => {
+    console.log(req.body);
+    
+    const id = req.params.id
+    const user = await User.findByIdAndUpdate({_id: id}, req.body, {new: true})
+    res.status(200).json(new ApiResponse(200, user, 'user details updated successfully '))
+})
+
 export const updateAddress = asyncHandler(async(req,res) => {
     const {addressLine1, addressLine2, city, state, zipCode, phone} = req.body.data
     const id = req.user._id
@@ -78,7 +87,7 @@ export const updateAddress = asyncHandler(async(req,res) => {
 })
 // this is only for testing as i can completely empty the document 
 export const deleteUsers = async(req, res) => {
-    console.log('deleting');
+    // console.log('deleting');
     
     await User.deleteMany({})
 }

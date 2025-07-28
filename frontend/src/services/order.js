@@ -15,7 +15,7 @@ export const getOrderOfCurrentUser = async () => {
     return await authenticated(api).get('order/getuserorder')
 }
 export const updateStatus = async (id, data) => {
-    return await authenticated(api).put(`order/updatestatus/${id}`, data)
+    return await authenticated(api).patch(`order/updatestatus/${id}`, data)
 }
 export const deleteOrder = async (id) => {
     return await authenticated(api).delete(`order/deleteorder/${id}`)

@@ -50,7 +50,7 @@ export const changeStatus = asyncHandler(async(req,res) => {
 })
 
 export const deleteOrder = asyncHandler(async(req,res) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     
     const order = await Order.deleteOne({_id: req.params.id})
     

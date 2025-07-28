@@ -1,4 +1,4 @@
-import { getAllUsersDetails, getCurrentUserDetails, getUserAddress, updateDefaultAddress } from "@/services/user"
+import { getAllUsersDetails, getCurrentUserDetails, getUserAddress, updateDefaultAddress, updateUser } from "@/services/user"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
 export const useGetCurrentUserQuery = () => {
@@ -21,7 +21,12 @@ export const useGetUserAddressQuery = () => {
         queryFn: getUserAddress
     })
 }
-
+export const useUpdateUserMutation = () => {
+    return useMutation({
+        mutationKey: ['user', 'update-user'],
+        mutationFn: ({id, data}) => updateUser(id, data)
+    })
+}
 export const useUpdateDefaultAddressMutation = () => {
     return useMutation({
         mutationKey: ['user', 'default-address'],

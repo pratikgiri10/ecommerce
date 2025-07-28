@@ -15,3 +15,6 @@ export const getProductDetails = async (filters = []) => {
 export const getProductById = (id) => {
     return api.get(`product/get/productDetailsById/${id}`)
 }
+export const updateProduct = (id, data) => {
+    return api.put(`product/updateproduct/${id}`, data)
+}

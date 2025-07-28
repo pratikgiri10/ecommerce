@@ -5,10 +5,13 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {ChevronDown, Edit3, Package, Search, Trash2} from 'lucide-react'
 import { categoryList } from '@/constants'
+import EditProduct from '../ManageProduct/EditProduct'
 
 const ViewProducts = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('All')
+  const [showEditProduct, setShowEditProduct] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState(null)
    const {data: productList, isSuccess, isLoading} = useGetProductQuery()
 
   if(isSuccess)
@@ -109,7 +112,12 @@ const ViewProducts = () => {
               </td>         
             <td className='p-4 '>
               <div className='flex items-center'>
-                <Button children={ <Edit3 className="w-4 h-4" />} className='p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors'/>
+                <Button 
+                onClick={() => {
+                  setSelectedProduct(product)
+                  setShowEditProduct(true)
+                }}
+                children={ <Edit3 className="w-4 h-4" />} className='p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors'/>
                 <Button children={<Trash2 className="w-4 h-4" />} className='p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors'/>
               </div>
             </td>
@@ -119,6 +127,12 @@ const ViewProducts = () => {
          
             </tbody>
           </table>
+          {showEditProduct && 
+          <EditProduct 
+          setShowEditProduct={setShowEditProduct}
+          selectedProduct={selectedProduct}
+          />
+          }
            {filteredProducts.length === 0 && (
             <div className="text-center py-12">
               <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />

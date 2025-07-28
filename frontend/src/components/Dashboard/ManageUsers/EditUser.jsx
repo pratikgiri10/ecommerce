@@ -1,3 +1,4 @@
+import { useUpdateUserMutation } from '@/api/user'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -14,9 +15,17 @@ const EditUser = ({selectedUser, setShowEditUser}) => {
             role: selectedUser.role
         }
     })
-   
+   const {mutate: updateUserDetails} = useUpdateUserMutation()
     const handleEditUser = (data) => {
         console.log(data);
+        const updatedData = {
+            id: selectedUser._id,
+            data
+        }
+        updateUserDetails(updatedData, {
+            onSuccess: () => {},
+            onError: () => {}
+        })
         
     }
   return (

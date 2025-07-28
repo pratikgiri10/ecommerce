@@ -52,7 +52,7 @@ const generateToken = async (userId) => {
 export const register =  asyncHandler(async (req, res) => {
 
     const {name, email, password} =  req.body;   
-    console.table(req.body)
+    // console.table(req.body)
    
     if(
         [name, email, password].some((field) => field?.trim() === "")

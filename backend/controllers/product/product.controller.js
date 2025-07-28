@@ -7,7 +7,7 @@ import Product  from '../../models/product.model.js';
 
 export const postProductDetails = asyncHandler( async (req, res) => {    
  const {name: title, description, price, category, stock} = req.body
- console.log(req.body);
+//  console.log(req.body);
  
          const prodImg = req.files?.prod_image
         let imageUrl;
@@ -44,7 +44,7 @@ export const postProductDetails = asyncHandler( async (req, res) => {
 })
 
 export const getProductDetails = asyncHandler( async(req,res) => {
-    console.log(req.query);
+    // console.log(req.query);
     
     
     const filteredQuery = new ApiFeatures(Product.find(), req.query)
@@ -83,7 +83,7 @@ export const getProductDetails = asyncHandler( async(req,res) => {
 })
 export const getProductById = asyncHandler(async(req,res) => {
     const product = await Product.findById(req.params.id)
-    console.log('product: ',product);
+    // console.log('product: ',product);
     
     if(!product)
         throw new ApiError(404, 'product not found')

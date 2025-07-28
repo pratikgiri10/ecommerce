@@ -23,11 +23,11 @@ const AllProducts = () => {
             
             {isPending? <Loading /> : (isError ?  <p className="text-center text-muted-foreground">
           Error fetching products
-        </p> : (products.data.data.products === 0 ? <p className="text-center text-muted-foreground mt-6">
+        </p> : (products.products === 0 ? <p className="text-center text-muted-foreground mt-6">
           No products found.
         </p> :  
         (<div className={`grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 transition-transform duration-300 ease-in-out`}>
-            {products?.data.data.products.map((product) => (              
+            {products?.products.map((product) => (              
                      
               <Item item={product} />        
               
