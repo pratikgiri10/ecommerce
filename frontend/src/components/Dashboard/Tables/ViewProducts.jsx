@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom'
 import {ChevronDown, Edit3, Package, Search, Trash2} from 'lucide-react'
 import { categoryList } from '@/constants'
 import EditProduct from '../ManageProduct/EditProduct'
+import AddProducts from '../Forms/AddProducts'
 
 const ViewProducts = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('All')
+  const [showAddProduct, setShowAddProduct] = useState(false)
   const [showEditProduct, setShowEditProduct] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
    const {data: productList, isSuccess, isLoading} = useGetProductQuery()
@@ -31,12 +33,14 @@ const ViewProducts = () => {
    
       <div className='w-full min-h-screen p-4 bg-gradient-to-br from-yellow-50 to-indigo-50'>
          <h1 className='font-medium text-4xl'>Products</h1>
-        <div className=' flex items-center gap-4 mt-8'>
+        <div className=' flex items-center gap-4 mt-8 '>
          
          <div className='flex-1'>
-        <Link to='/addproducts'>
-        <Button children='Add Products' className='btn-primary'/>
-        </Link>
+        {/* <Link to='/addproducts'> */}
+        <Button 
+        onClick={() => setShowAddProduct(true)}
+        children='Add Product' className='btn-primary'/>
+        {/* </Link> */}
         
        </div>
        <div className='relative flex-1'>
@@ -108,7 +112,7 @@ const ViewProducts = () => {
             </td>
             
             <td className='p-4'>
-              <p className='text-black text-lg'>{product.price}</p>
+              <p className='text-black text-lg'>{product.priceAfterDiscount}</p>
               </td>         
             <td className='p-4 '>
               <div className='flex items-center'>
@@ -127,12 +131,18 @@ const ViewProducts = () => {
          
             </tbody>
           </table>
+          {showAddProduct && 
+          <AddProducts 
+          setShowAddProduct={setShowAddProduct}
+          />
+          }
           {showEditProduct && 
           <EditProduct 
           setShowEditProduct={setShowEditProduct}
           selectedProduct={selectedProduct}
           />
           }
+
            {filteredProducts.length === 0 && (
             <div className="text-center py-12">
               <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />

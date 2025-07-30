@@ -8,9 +8,9 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { usePostProductMutation } from '@/api/product'
 import { toast } from 'sonner'
-import { X } from 'lucide-react';
+import { X, XCircle } from 'lucide-react';
 
-const AddProducts = () => {
+const AddProducts = ({setShowAddProduct}) => {
     const {register, handleSubmit, setFocus, formState: {errors} , reset} = useForm()
     const [image, setImage] = useState([])
     const [imagePreview, setImagePreview] = useState([])
@@ -96,9 +96,20 @@ const AddProducts = () => {
      setFocus('name')
     },[])
   return (
-    <div className='min-h-screen flex justify-center items-center bg-yellow-500'>
-         <form onSubmit={handleSubmit(onSubmit)} className='w-[50%] flex flex-col gap-4 bg-white py-4 px-6'>
-            <h1 className='text-xl font-semibold'>Add Products</h1>
+   <div 
+   onClick={() => setShowAddProduct(false)}
+   className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50'>
+       <div 
+       onClick={(e) => e.stopPropagation()}
+       className=' relative bg-white p-6 w-full max-w-xl rounded-xl'>
+        <h1 className='text-xl font-semibold mb-4'>Add Product</h1>
+         <button 
+        onClick={() => setShowAddProduct(false)}
+        className='absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-lg transition-colors'>
+             <XCircle className="w-6 h-6 text-gray-500" />
+        </button>
+         <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+            
         
           <Input required type='text' placeholder='product name' {...register('name')}/>     
           <textarea 
@@ -107,7 +118,7 @@ const AddProducts = () => {
           placeholder='description' 
           {...register('description')}/>
           {/* <Input type='text' placeholder='category' {...register('category')}/> */}
-          <select className='outline-none border-2 px-3 py-2 rounded-md' {...register('category')}>
+          <select className='outline-none border-2 px-3 py-2 rounded-md w-full' {...register('category')}>
             {categoryList.map((category) => (
               <option value={category.value} key={category.value} className=''>{category.label}</option>
             ))}
@@ -158,9 +169,10 @@ const AddProducts = () => {
           {/* errors will return when field validation fails  */}
           {errors.exampleRequired && <span className='text-red-600'>This field is required</span>}
 
-          <Button className='btn-primary'>Submit</Button>
+          <Button className='btn-primary w-full'>Submit</Button>
         </form>
     </div>
+   </div>
    
    
   )

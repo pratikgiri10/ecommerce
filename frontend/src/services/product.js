@@ -15,6 +15,7 @@ export const getProductDetails = async (filters = []) => {
 export const getProductById = (id) => {
     return api.get(`product/get/productDetailsById/${id}`)
 }
-export const updateProduct = (id, data) => {
-    return api.put(`product/updateproduct/${id}`, data)
+export const updateProduct = async (id, data) => {
+    const response = await api.put(`product/updateproduct/${id}`, data)
+    return response.data.data
 }

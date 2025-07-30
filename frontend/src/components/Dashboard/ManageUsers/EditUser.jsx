@@ -2,9 +2,11 @@ import { useUpdateUserMutation } from '@/api/user'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useQueryClient } from '@tanstack/react-query'
 import { XCircle } from 'lucide-react'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 const EditUser = ({selectedUser, setShowEditUser}) => {
     const form = useForm()
@@ -16,6 +18,7 @@ const EditUser = ({selectedUser, setShowEditUser}) => {
         }
     })
    const {mutate: updateUserDetails} = useUpdateUserMutation()
+   const queryClient = useQueryClient()
     const handleEditUser = (data) => {
         console.log(data);
         const updatedData = {
@@ -23,8 +26,16 @@ const EditUser = ({selectedUser, setShowEditUser}) => {
             data
         }
         updateUserDetails(updatedData, {
-            onSuccess: () => {},
-            onError: () => {}
+            onSuccess: (data) => {
+                toast.success('User Updated Successfully')
+                queryClient.setQueryData(['user', 'all-users'], (oldUser) => {
+                    return oldUser.map((user) => user._id === data._id ? {...user, ...data} : user)
+                })
+                setShowEditUser(false)
+            },
+            onError: () => {
+                toast.error('Failed to update user')
+            }
         })
         
     }
@@ -40,6 +51,7 @@ const EditUser = ({selectedUser, setShowEditUser}) => {
         className='absolute top-0 right-0 p-2 hover:bg-gray-100 rounded-lg transition-colors'>
              <XCircle className="w-6 h-6 text-gray-500" />
         </button>
+        <h1 className='text-foreground font-semibold text-xl mb-2'>Edit User Details</h1>
          <Form {...form}>
             <form onSubmit={handleSubmit(handleEditUser)} className='space-y-4'>
                 <div>              

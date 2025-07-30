@@ -3,13 +3,13 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 
 export const usePostProductMutation = () => {
     return useMutation({
-        mutationKey: ['add_product'],
+        mutationKey: ['product','add_product'],
         mutationFn: (data) => postProductDetails(data)
     })
 }
 export const useGetProductQuery = (filters=null) => {
     return useQuery({
-        queryKey: ['fetchProducts'],
+        queryKey: ['product','fetch-all-products'],
         queryFn:  () => getProductDetails(filters),
         refetchOnWindowFocus: true
         
@@ -17,7 +17,7 @@ export const useGetProductQuery = (filters=null) => {
 }
 export const useGetProductByIdQuery = (id) => {
     return useQuery({
-        queryKey: ['fetchProductsById'],
+        queryKey: ['product','fetch-product'],
         queryFn: () => getProductById(id)
     })
 }
