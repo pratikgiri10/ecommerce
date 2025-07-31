@@ -12,12 +12,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { Package } from 'lucide-react'
 
 const AllProducts = () => {
     const [filters, setFilters] = useState({
         category: '',
         page: 1,
-        limit: 12
+        limit: 2
     })
     const {data: products, isPending, isError, error, isSuccess} = useGetProductQueryByCategory(filters)
    const pagination = products?.pagination
@@ -52,6 +53,12 @@ const AllProducts = () => {
            
             }
         </div>
+        {products?.products.length === 0 && (
+           <div className="text-center py-12">
+              <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-500">No products found matching your criteria</p>
+            </div>
+        )}
         {pagination && (
           <Pagination>
             <PaginationContent>
@@ -64,10 +71,26 @@ const AllProducts = () => {
                 )}
                 />
               </PaginationItem>
-              {/* page numbers */}
-              <PaginationItem>
-                <PaginationLink href="#" isActive>1</PaginationLink>
-              </PaginationItem>
+               {/* Page numbers */}
+              {Array.from({ length: pagination.totalPages }).map((_, idx) => {
+                const pageNum = idx + 1;
+                return (
+                  <PaginationItem key={pageNum}>
+                    <PaginationLink
+                      href="#"
+                      isActive={filters.page === pageNum}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setFilters((prev) => filters.page !== pageNum ? {...prev, page:pageNum} : prev);
+                        
+                       
+                      }}
+                    >
+                      {pageNum}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              })}
              {/* */}
               <PaginationItem>
                 <PaginationEllipsis />
@@ -77,7 +100,7 @@ const AllProducts = () => {
                 <PaginationNext 
                 // href="#" 
                 onClick={() => (
-                  setFilters((prev) => filters.page < pagination.totalPages && {...prev, page:prev.page+1})
+                  setFilters((prev) => filters.page < pagination.totalPages ? {...prev, page:prev.page+1} : prev)
                 )}
                 />
               </PaginationItem>

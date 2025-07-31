@@ -70,7 +70,8 @@ export const getProductDetails = asyncHandler( async(req,res) => {
     const limit = req.query.limit || 12;
     // total page accor to limit per page   
     const totalPages = Math.ceil(totalItems / limit);
-
+    console.log(totalPages);
+    
     res.status(200).json(
         new ApiResponse(
             200,

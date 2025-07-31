@@ -9,9 +9,15 @@ export const getProductDetails = async (filters = []) => {
     if (filters?.category) {
     queryParts.push(`category=${encodeURIComponent(filters.category)}`);
   }
-  console.log(queryParts);
+  if (filters?.limit) {
+    queryParts.push(`limit=${encodeURIComponent(filters.limit)}`);
+  }
+   if (filters?.page) {
+    queryParts.push(`page=${encodeURIComponent(filters.page)}`);
+  }
   
-    const response =  await api.get(`product/get/productDetails/?${queryParts}`)
+    const queryStr = queryParts.join('&')
+    const response =  await api.get(`product/get/productDetails/?${queryStr}`)
     return response.data.data
 }
 export const getProductById = (id) => {

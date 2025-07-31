@@ -41,7 +41,7 @@ const Item = ({item, className}) => {
   return (
     <Card 
     onClick={handleItemClick} 
-    className={`w-full max-w-sm mx-auto bg-transparent text-black border-none transition-all duration-300 ${className}`}>
+    className={` group w-full max-w-sm bg-transparent text-black border-none transition-all duration-300 ${className}`}>
       
         <ProductImage
         className='w-full h-[300px] object-cover transition-transform duration-300 group-hover:scale-105'

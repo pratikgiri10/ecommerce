@@ -9,7 +9,7 @@ import Banner from '@/components/common/Banner'
 const Home = () => {
  
   return (
-    <div className='w-full bg-[rgb(242,242,242)]'>
+    <div className='bg-[rgb(242,242,242)]'>
       <Navbar />     
       <HeroSection />
       <Product />

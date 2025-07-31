@@ -9,10 +9,7 @@ import {
 } from "@/components/ui/select"
 
 const Filter = ({filters, setFilters}) => {
-  useEffect(() => {
-    console.log(filters.category);
-    
-  },[filters])
+ 
   return (
    <Select
    value={filters.category}
