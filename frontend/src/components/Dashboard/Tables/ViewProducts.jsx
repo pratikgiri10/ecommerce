@@ -2,7 +2,6 @@ import { useGetProductQuery } from '@/api/product'
 import Button from '@/components/common/Button'
 import ProductImage from '@/components/Products/ProductImage'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import {ChevronDown, Edit3, Package, Search, Trash2} from 'lucide-react'
 import { categoryList } from '@/constants'
 import EditProduct from '../ManageProduct/EditProduct'
@@ -36,11 +35,11 @@ const ViewProducts = () => {
         <div className=' flex items-center gap-4 mt-8 '>
          
          <div className='flex-1'>
-        {/* <Link to='/addproducts'> */}
+       
         <Button 
         onClick={() => setShowAddProduct(true)}
         children='Add Product' className='btn-primary'/>
-        {/* </Link> */}
+       
         
        </div>
        <div className='relative flex-1'>
@@ -140,6 +139,7 @@ const ViewProducts = () => {
           <EditProduct 
           setShowEditProduct={setShowEditProduct}
           selectedProduct={selectedProduct}
+          categoryFilter={categoryFilter}
           />
           }
 

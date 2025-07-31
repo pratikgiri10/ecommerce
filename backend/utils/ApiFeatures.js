@@ -21,7 +21,9 @@ class ApiFeatures {
         //we need to remove the special fields from the query string 
         const removeFields = ['sort', 'limit', 'page', 'fields']
         removeFields.forEach(el => delete queryStrObj[el]);
-
+        
+        if(queryStrObj.category === 'All' || queryStrObj.category === '')
+            delete queryStrObj.category
         // we need to replace gte with $gte
         //like price[gte]=100 -> { price : { $gte: 100 }}
         // after that this query string is passed to the query
@@ -59,7 +61,7 @@ class ApiFeatures {
     limitFields(){
         if(this.queryStr.fields){
             const fields = this.queryStr.split(',').join(' ');
-            this.query = this.query,select(fields);
+            this.query = this.query.select(fields);
         } else {
             this.query = this.query.select("-_v")
         }

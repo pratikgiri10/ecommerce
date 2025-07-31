@@ -1,5 +1,5 @@
 import { categoryList } from '@/constants'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Select,
   SelectContent,
@@ -9,6 +9,10 @@ import {
 } from "@/components/ui/select"
 
 const Filter = ({filters, setFilters}) => {
+  useEffect(() => {
+    console.log(filters.category);
+    
+  },[filters])
   return (
    <Select
    value={filters.category}
@@ -19,6 +23,7 @@ const Filter = ({filters, setFilters}) => {
             <SelectValue placeholder="Select a Category" />
         </SelectTrigger>
         <SelectContent>
+            <SelectItem value="All">All</SelectItem>
             {categoryList.map(({value, label}) => (
                 <SelectItem key={value} value={value}>{label}</SelectItem>
             ))}

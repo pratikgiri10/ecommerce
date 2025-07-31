@@ -11,7 +11,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-const EditProduct = ({setShowEditProduct,selectedProduct}) => {
+const EditProduct = ({setShowEditProduct,selectedProduct, categoryFilter}) => {
   const form = useForm()
   const {handleSubmit, control} = useForm({
     defaultValues: {
@@ -26,7 +26,7 @@ const EditProduct = ({setShowEditProduct,selectedProduct}) => {
   const {mutate: updateProduct} = useUpdateProductMutation()
   const queryClient = useQueryClient()
   const handleEditProduct = (data) => {
-    console.log(data);
+    
     const updatedData = {
       id: selectedProduct._id,
       data
@@ -34,8 +34,12 @@ const EditProduct = ({setShowEditProduct,selectedProduct}) => {
     updateProduct(updatedData, {
       onSuccess: (data) => {
         toast.success('Product updated successfully')
-        console.log(data);
+      
+        // const cached = queryClient.getQueryData(['product', filters]);
+        // console.log('Cached product list:', cached);
         queryClient.setQueryData(['product', 'fetch-all-products'], (oldProduct) => {
+          console.log(oldProduct);
+          
         const updateProduct = (oldProduct.products.map((product) => product._id === data._id ? {...product, ...data} : product))        
         return {
           products: updateProduct

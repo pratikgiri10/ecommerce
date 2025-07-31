@@ -44,14 +44,19 @@ export const postProductDetails = asyncHandler( async (req, res) => {
 })
 
 export const getProductDetails = asyncHandler( async(req,res) => {
-    // console.log(req.query);
-    
-    
+
+   
     const filteredQuery = new ApiFeatures(Product.find(), req.query)
     .filter()
     .sort()
     .limitFields()
-
+   
+    
+    
+   
+     
+    // console.log(filteredQuery);
+    
 
     // we are counting the total items in the document for pagination    
     const totalItems = await filteredQuery.query.clone().countDocuments();
@@ -59,6 +64,7 @@ export const getProductDetails = asyncHandler( async(req,res) => {
 
     const paginateQuery = filteredQuery.paginate();
     const products = await paginateQuery.query;
+    // console.log(products);
     
     const page = req.query.page || 1;
     const limit = req.query.limit || 12;
@@ -80,6 +86,7 @@ export const getProductDetails = asyncHandler( async(req,res) => {
             'fetched products successfully'
         )
     )
+  
 })
 export const getProductById = asyncHandler(async(req,res) => {
     const product = await Product.findById(req.params.id)

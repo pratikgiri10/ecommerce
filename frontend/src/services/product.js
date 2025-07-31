@@ -9,7 +9,9 @@ export const getProductDetails = async (filters = []) => {
     if (filters?.category) {
     queryParts.push(`category=${encodeURIComponent(filters.category)}`);
   }
-    const response =  await api.get(`product/get/productDetails/${queryParts}`)
+  console.log(queryParts);
+  
+    const response =  await api.get(`product/get/productDetails/?${queryParts}`)
     return response.data.data
 }
 export const getProductById = (id) => {

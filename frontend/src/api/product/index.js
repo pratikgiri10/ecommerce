@@ -7,11 +7,19 @@ export const usePostProductMutation = () => {
         mutationFn: (data) => postProductDetails(data)
     })
 }
-export const useGetProductQuery = (filters=null) => {
+export const useGetProductQueryByCategory = (filters) => {
+    
     return useQuery({
-        queryKey: ['product','fetch-all-products'],
+        queryKey: ['product',{filters}],
         queryFn:  () => getProductDetails(filters),
-        refetchOnWindowFocus: true
+        
+    })
+}
+export const useGetProductQuery = (filters) => {
+    
+    return useQuery({
+        queryKey: ['product', 'fetch-all-products' ],
+        queryFn:  () => getProductDetails(filters),
         
     })
 }
