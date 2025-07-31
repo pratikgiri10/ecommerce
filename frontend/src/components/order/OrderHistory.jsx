@@ -1,5 +1,5 @@
 import { useGetOrderQuery } from '@/api/order';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 const OrderHistory = () => {
  

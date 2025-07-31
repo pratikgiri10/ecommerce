@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 import {
     Form,
-    FormControl,
-    FormDescription,
+    FormControl,    
     FormField,
     FormItem,
     FormLabel,
@@ -11,7 +10,6 @@ import {
   } from "@/components/ui/form"
   import { Button } from '../ui/button'
   import { Input } from '../ui/input'
-  import axios from 'axios'
 import { usePostSignUpMutation } from '@/api/auth'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'

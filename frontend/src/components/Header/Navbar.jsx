@@ -4,9 +4,8 @@ import { ShoppingCart } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { logout } from '@/features/auth/authSlice';
-import { clearCart, loadUserCart } from '@/features/cart/cartSlice';
-import { useGetCurrentUserQuery } from '@/api/user';
-// import {username} from '../../features/auth/authSlice'
+import { clearCart } from '@/features/cart/cartSlice';
+
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);

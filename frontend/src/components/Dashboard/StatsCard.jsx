@@ -1,5 +1,4 @@
-import { Icon } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
+import { Card, CardContent} from '../ui/card'
 
 export const StatsCard = ({stats}) => (
 

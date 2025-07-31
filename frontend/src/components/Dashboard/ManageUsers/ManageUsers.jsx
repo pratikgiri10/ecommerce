@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import UsersDetail from '../Tables/UsersDetail'
-import axios from 'axios'
 import { AppSidebar } from '../Sidebar'
 
 const ManageUsers = () => {

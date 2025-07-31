@@ -1,7 +1,7 @@
 import { useGetProductQuery } from '@/api/product'
 import Button from '@/components/common/Button'
 import ProductImage from '@/components/Products/ProductImage'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import {ChevronDown, Edit3, Package, Search, Trash2} from 'lucide-react'
 import { categoryList } from '@/constants'
 import EditProduct from '../ManageProduct/EditProduct'

@@ -129,7 +129,7 @@ export const login = asyncHandler(async (req, res) => {
 //thus user is required to login
 export const logout = asyncHandler(async (req, res) => {
     const userId = req.user._id
-    await db.collection('users').findOneAndUpdate({_id: userId}, {$set : {refreshToken: undefined}}, {new: true})
+    await User.findOneAndUpdate({_id: userId}, {$set : {refreshToken: undefined}}, {new: true})
     const options = {
         httpOnly: true,
         secure: true,
@@ -149,7 +149,7 @@ export const refreshAccessToken = asyncHandler(async (req,res) => {
 
     const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
 
-    const user = await db.collection('users').findOne({_id: decodedToken.id})
+    const user = await User.findOne({_id: decodedToken.id})
     if(!user)
         throw new ApiError(401, 'Invalid refresh token')
     if(incomingRefreshToken !== user?.refreshToken){
@@ -195,10 +195,17 @@ export const auth = (req,res) => {
 
 
 export const forgotPassword = asyncHandler(async(req, res) => {
-
+    // req the user email
+    // check for user
+    // generate the reset password token
+    // create the resetUrl
+    // send the resetUrl through mail
 })
-export const resetPassword = asyncHandler(async(req,res) => {
 
+// this api is used when user clicks the resetUrl from email
+// which navigates the user to create the new password
+export const resetPassword = asyncHandler(async(req,res) => {
+    
 })
 
 export const registerAdmin = asyncHandler(async(req,res) => {

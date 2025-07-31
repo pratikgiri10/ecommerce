@@ -1,11 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Button } from '../ui/button'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAddress } from '@/features/auth/authSlice'
 import AddressInfo from '../Auth/AddressInfo'
-import { useGetUserAddressQuery } from '@/api/user'
 import { selectTotalDiscountedPrice } from '@/features/selectors/cartSelector'
 
 

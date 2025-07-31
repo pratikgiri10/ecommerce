@@ -1,4 +1,4 @@
-import { useGetProductQuery, useGetProductQueryByCategory } from '@/api/product'
+import { useGetProductQueryByCategory } from '@/api/product'
 import React, { useState } from 'react'
 import Loading from '../common/Loading'
 import Item from './Item'

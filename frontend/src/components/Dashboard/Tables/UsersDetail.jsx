@@ -1,6 +1,5 @@
 import { useGetAllUsersQuery } from '@/api/user'
 import Button from '@/components/common/Button'
-import ProductImage from '@/components/Products/ProductImage'
 import { Edit3, Package, Search, Trash2 } from 'lucide-react'
 import React, { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'

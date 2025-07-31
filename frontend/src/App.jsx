@@ -2,7 +2,6 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import './App.css'
 import '../src/css/style.css'
 import Home from './pages/Home'
-import Cart from './components/Cart/Cart'
 import Carts from './components/Cart/Carts'
 import Checkout from './components/Cart/Checkout'
 import Product from './pages/Product'
@@ -10,7 +9,6 @@ import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
 import ProtectedRoute from './components/protected/ProtectedRoute'
 import { AppSidebar } from './components/Dashboard/Sidebar'
-import Dashboard from './components/Dashboard/Dashboard'
 import AdminDashboard from './components/Dashboard/AdminDashboard'
 import ManageProducts from './components/Dashboard/ManageProduct/ManageProducts'
 import ManageUsers from './components/Dashboard/ManageUsers/ManageUsers'
@@ -21,13 +19,14 @@ import { login } from '@/features/auth/authSlice'
 import { useEffect } from 'react'
 import AddProducts from './components/Dashboard/Forms/AddProducts'
 import PlaceOrder from './components/order/PlaceOrder'
-
 import AddressInfo from './components/Auth/AddressInfo'
 import OrderHistory from './components/order/OrderHistory'
 import ProductDetails from './components/Products/ProductDetails'
 import Review from './components/review/Review'
-import Orders from './components/Dashboard/ManageOrders/Orders'
 import ManageOrders from './components/Dashboard/ManageOrders/ManageOrders'
+import ForgotPassword from './components/Auth/ForgotPassword'
+import ResetPassword from './components/Auth/ResetPassword'
+import ChangePassword from './components/profile/ChangePassword'
 
 
 function App() {
@@ -56,7 +55,7 @@ function App() {
           <Route path='/manageproducts' element={<ManageProducts />}></Route>
           <Route path='/manageusers' element={<ManageUsers />}></Route>
           <Route path='/addproducts' element={<AddProducts />}></Route>
-         
+
           <Route path='/viewproducts' element={<ViewProducts />}></Route>
           <Route path='/productdetails/:id' element={<ProductDetails />}></Route>
           
@@ -77,6 +76,9 @@ function App() {
           <Route path='/product' element={<Product />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>
+          <Route path='/forgotpassword' element={<ForgotPassword />}></Route>
+          <Route path='/resetpassword' element={<ResetPassword />}></Route>
+          <Route path='/changepassword' element={<ChangePassword />}></Route>
         </Routes>
       </Router>
   

@@ -14,7 +14,6 @@ import {
   ChevronDown,
   RefreshCw
 } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useDeleteOrderMutation, useGetAllOrdersQuery } from '@/api/order';
 import OrderDetails from './OrderDetails';
 import EditOrder from './EditOrder';

@@ -1,6 +1,4 @@
 import React from 'react'
-
-import PostForm from '../Forms/AddProducts'
 import { AppSidebar } from '../Sidebar'
 import ViewProducts from '../Tables/ViewProducts'
 

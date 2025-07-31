@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React from 'react'
 import Item from './Item'
 // import item1 from '../../assets/lp1.webp'
 // import item2 from '../../assets/lp2.webp'
@@ -12,7 +12,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { useGetProductQuery } from '@/api/product'
-import { Card, CardContent } from '../ui/card'
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 
@@ -34,7 +33,7 @@ const Product = () => {
           to='/product'
          
           >
-          <Button className='text-xs flex items-center text-muted-foreground font-medium'>
+          <Button className='text-sm flex items-center text-muted-foreground text-yellow-500 font-medium'>
             <span>View All Products</span>
             <ChevronRight size={18}/>
           </Button>

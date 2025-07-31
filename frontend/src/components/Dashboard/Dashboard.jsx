@@ -1,8 +1,6 @@
 import React from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
 import { StatsCard } from './StatsCard'
 import { Boxes, DollarSign, User } from 'lucide-react'
-import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { useGetAllUsersQuery } from '@/api/user'
 import { useGetProductQuery } from '@/api/product'
 import { useGetAllOrdersQuery } from '@/api/order'

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ProductImage from '../Products/ProductImage'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { removeFromCart, setToCart, decreaseQuantity } from '@/features/cart/cartSlice'
 import { Minus, Plus, Trash2 } from 'lucide-react'
 

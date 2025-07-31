@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import { useGetCurrentUserQuery } from '@/api/user';
 import { selectTotalDiscountedPrice } from '@/features/selectors/cartSelector';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { usePostOrderMutation} from '@/api/order';
 import { clearCart } from '@/features/cart/cartSlice';
-
-import { clearOrder} from '@/features/order/orderSlice';
 
 
 const PlaceOrder = () => {

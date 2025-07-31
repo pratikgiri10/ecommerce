@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { Button } from '../ui/button'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGetProductByIdQuery } from '@/api/product';
-import { motion } from "motion/react"
-import { cn } from '@/lib/utils';
+
 import Review from '../review/Review';
 import { setToCart } from '@/features/cart/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';

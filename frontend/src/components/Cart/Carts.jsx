@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Cart from './Cart'
 import Checkout from './Checkout'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearCart, loadUserCart } from '@/features/cart/cartSlice';
+import { loadUserCart } from '@/features/cart/cartSlice';
 
 const Carts = () => {
   

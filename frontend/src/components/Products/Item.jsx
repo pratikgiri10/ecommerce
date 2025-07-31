@@ -3,15 +3,12 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
  
-import { Button } from '../ui/button'
 import ProductImage from './ProductImage'
-import { useDispatch, useSelector } from 'react-redux'
-import { setToCart } from '@/features/cart/cartSlice'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 const Item = ({item, className}) => {
