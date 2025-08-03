@@ -4,9 +4,7 @@ import { app } from './app.js';
 
 
 
-app.get('/' , (_req,res) => {
-    res.send("Hello World")
-})
+
 connectDb().then(() => {
     console.log("Mongodb connected: ")
     

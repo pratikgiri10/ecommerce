@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import crypto from "node:crypto"
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -49,7 +50,10 @@ const userSchema = new mongoose.Schema({
     // only refresh token is stored in db not access token
     refreshToken: {
         type: String
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordTokenExpiry: Date
+
 }, {timestamps: true})
 
 userSchema.pre('save', async function (next){
@@ -61,6 +65,12 @@ userSchema.pre('save', async function (next){
 })
 userSchema.methods.comparePassword = async function (inputPassword){
     return await bcrypt.compare(inputPassword, this.password)
+}
+userSchema.methods.generateResetToken = async function (){
+    const resetToken = crypto.randomBytes(32).toString('hex')
+    this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex')
+    this.resetPasswordTokenExpiry = Date.now() + 10 * 60 * 1000
+    return resetToken    
 }
 const User = mongoose.model('User', userSchema)
 

@@ -1,5 +1,5 @@
 import express from 'express'
-import {auth, login, logout, refreshAccessToken, register, registerAdmin } from '../controllers/Auth/auth.controller.js'
+import {auth, changePassword, forgotPassword, login, logout, refreshAccessToken, register, registerAdmin, resetPassword } from '../controllers/Auth/auth.controller.js'
 import { isAuthenticated } from '../middlewares/authenticated.js'
 
 const router  = express.Router()
@@ -10,6 +10,10 @@ router.post('/register', register)
 router.post('/logout', isAuthenticated, logout)
 router.post('/refresh-token', refreshAccessToken)
 router.get('/session',isAuthenticated, auth)
+
+router.post('/password/forgot', forgotPassword)
+router.post('/password/reset', resetPassword)
+router.post('/password/change', changePassword)
 
 router.get('/admin/register', isAuthenticated,registerAdmin)
 

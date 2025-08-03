@@ -1,10 +1,10 @@
-// import {client} from '../../config/dbConfig.js'
 import jwt from 'jsonwebtoken'
 import { asyncHandler } from '../../utils/asyncHandler.js';
 import {ApiError} from '../../utils/ApiError.js'
 import { ApiResponse } from '../../utils/ApiResponse.js';
 import User from '../../models/user.model.js'
-// export const db = client.db('ecommerce');
+import { sendMail } from '../../utils/sendMail.js';
+import crypto from 'node:crypto'
 
 const generateToken = async (userId) => {
     try{
@@ -105,8 +105,8 @@ export const login = asyncHandler(async (req, res) => {
     )
     const options = {
         httpOnly: true,
-        secure: true,
-        sameSite: 'lax'
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     }
     return res.status(200).cookie("accessToken", accessToken, options).cookie("refreshToken", options).json(
         new ApiResponse(
@@ -195,8 +195,31 @@ export const auth = (req,res) => {
 
 
 export const forgotPassword = asyncHandler(async(req, res) => {
-    // req the user email
-    // check for user
+    
+    const user = await User.findOne({email: req.body.email})
+    
+    
+    if(!user)
+        throw new ApiError(404, 'user not found')
+
+    const resetToken = await user.generateResetToken()
+    console.log(resetToken);
+    
+    await user.save({validateBeforeSave: false})    
+
+    const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/auth/password/reset/${resetToken}`
+    const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
+    
+    try {
+        await sendMail(message)
+    } catch (error) {
+        console.log(error);
+        
+    }
+    
+
+    res.status(200).json(new ApiResponse(200, user, 'user found'))
+    
     // generate the reset password token
     // create the resetUrl
     // send the resetUrl through mail
@@ -205,7 +228,36 @@ export const forgotPassword = asyncHandler(async(req, res) => {
 // this api is used when user clicks the resetUrl from email
 // which navigates the user to create the new password
 export const resetPassword = asyncHandler(async(req,res) => {
+    const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
+    const user = await User.findOne({
+        resetPasswordToken,
+        resetPasswordTokenExpiry: {$gt: Date.now()}
+    })
+    if(!user)
+        throw new ApiError(400, 'Password reset token is invalid or has been expired')
+
+    user.password = req.body.password
+
+    user.resetPasswordToken = undefined
+    user.resetPasswordTokenExpiry = undefined
+    await user.save()
     
+    res.status(200).json(new ApiResponse(200, user, 'password changed successfully'))
+    
+})
+
+export const changePassword = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id).select('+password')
+
+    const isMatch = await user.comparePassword(req.body.oldPassword)
+    if(!isMatch)
+        throw new ApiError(400, 'Old password is incorrect')
+
+    user.password = req.body.password
+    await user.save()
+
+    res.status(200).json(new ApiResponse(200, user, 'password changed successfully'))
+
 })
 
 export const registerAdmin = asyncHandler(async(req,res) => {

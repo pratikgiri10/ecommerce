@@ -1,17 +1,15 @@
-import { ApiError } from "../utils/ApiError.js";
+export const errorHandler = (err, req, res, next) => {
 
-export const errorHandler = async (err, req, res, next) => {
-    let {statusCode, message, errors} = err
-    if(!(err instanceof ApiError))
-    {
-        statusCode = 500
-        message = 'internal server error'
+  err.statusCode = err.statusCode || 500;
+  err.message = err.message || "Internal Server Error";
+
+  res.status(err.statusCode).json({
+      success: false,
+      error: err.message,
     }
-    res.status(statusCode).json({
-        success: false,
-        statusCode,
-        message,
-        errors: errors || null,
-    });
-    next()
-}
+  );
+
+ 
+};
+
+

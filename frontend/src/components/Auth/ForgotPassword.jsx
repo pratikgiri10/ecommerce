@@ -21,8 +21,10 @@ const ForgotPassword = () => {
             onSuccess: () => {
                  toast.success('email submitted successfully')
             },
-            onError: () => {
+            onError: (error) => {
                  toast.error('failed to submit email')
+                 console.error(error);
+                 
             }
         })
     }
