@@ -6,9 +6,15 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { usePostResetPasswordMutation } from '@/api/auth'
 import { toast } from 'sonner'
+import { useParams } from 'react-router-dom'
 
 const ResetPassword = () => {
-    const {handleSubmit, register, setError,formState: {errors}} = useForm({
+
+    const { token } = useParams()
+    console.log(token);
+    
+
+    const {handleSubmit, register, setError, reset, formState: {errors}} = useForm({
         defaultValues: {
             password: '',
             confirmPassword: ''
@@ -22,10 +28,13 @@ const ResetPassword = () => {
             setError('password', {match: 'passwords do not match'})
             return
         }
+        if(!token)
+            toast.warning('reset token is missing')
             
-        resetPassword(data, {
+        resetPassword({data, token}, {
             onSuccess: () => {
                 toast.success('password resetted successfully')
+                reset()
             },
             onError: () => {
                 toast.error('failed to reset password')

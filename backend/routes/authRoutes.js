@@ -12,7 +12,7 @@ router.post('/refresh-token', refreshAccessToken)
 router.get('/session',isAuthenticated, auth)
 
 router.post('/password/forgot', forgotPassword)
-router.post('/password/reset', resetPassword)
+router.post('/password/reset/:id', resetPassword)
 router.post('/password/change', changePassword)
 
 router.get('/admin/register', isAuthenticated,registerAdmin)

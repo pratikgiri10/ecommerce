@@ -6,8 +6,8 @@ export const signInUser = (data) => {
 export const signUpUser = (data) => {
     return api.post('/auth/register/', data)
 }
-export const forgotPassword = (data) => {
-    return api.post('/auth/password/forgot', data)
+export const forgotPassword = ({data, token}) => {
+    return api.post(`/auth/password/forgot/${token}`, data)
 }
 export const resetPassword = (data) => {
     return api.post('/auth/password/reset', data)

@@ -15,7 +15,7 @@ export const sendMail = async (message) => {
     },
 });
 await transporter.sendMail({
-    from: `DigitalDokan<${process.env.SMTP_HOST}>`,
+    from: `DigitalDokan<${process.env.SMTP_EMAIL}>`,
     to: 'pratikgiri2320@gmail.com',
     subject: 'Password Reset Token',
     text: message,

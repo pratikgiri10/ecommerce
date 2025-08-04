@@ -203,11 +203,11 @@ export const forgotPassword = asyncHandler(async(req, res) => {
         throw new ApiError(404, 'user not found')
 
     const resetToken = await user.generateResetToken()
-    console.log(resetToken);
+   
     
     await user.save({validateBeforeSave: false})    
 
-    const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/auth/password/reset/${resetToken}`
+    const resetUrl = `${req.headers.origin}/resetPassword/${resetToken}`
     const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
     
     try {

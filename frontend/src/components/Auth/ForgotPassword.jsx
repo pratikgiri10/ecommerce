@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 
 
 const ForgotPassword = () => {
-    const {handleSubmit, register} = useForm({
+    const {handleSubmit, register, reset} = useForm({
         defaultValues: {
             email: ''
         }
@@ -20,6 +20,7 @@ const ForgotPassword = () => {
         forgotpassword(data, {
             onSuccess: () => {
                  toast.success('email submitted successfully')
+                 reset()
             },
             onError: (error) => {
                  toast.error('failed to submit email')
