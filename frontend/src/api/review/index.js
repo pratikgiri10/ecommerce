@@ -7,10 +7,10 @@ export const usePostReviewMutation = () => {
         mutationFn: postReviews
     })
 }
-export const useGetReviewByIdQuery = () => {
+export const useGetReviewByIdQuery = (id) => {
     return useQuery({
         queryKey: ['review', 'fetch-by-id'],
-        queryFn: getReviewByProductId
+        queryFn: () => getReviewByProductId(id)
     })
 }
 export const useGetAllReviewsQuery = () => {

@@ -98,11 +98,13 @@ const ProductDetails = () => {
             </section>
         </div>
         {/* customer reviews */}
-        <div className='border border-gray-200 shadow-md rounded-2xl mt-12'>
+        <div className='border border-gray-200 shadow-md rounded-2xl mt-12 w-full'>
             <div className='p-4'>
                 <h1 className='text-2xl font-semibold text-gray-800'>Customer Review</h1>
             </div>
-            <Review />
+            <Review 
+            prodId={id}
+            />
         </div>
          
     </div>
