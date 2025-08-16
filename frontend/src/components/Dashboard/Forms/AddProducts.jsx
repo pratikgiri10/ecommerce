@@ -1,13 +1,18 @@
-import React, { useEffect, useId, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Input } from '../../ui/input'
 import { Button } from '../../ui/button'
 import { usePostProductMutation } from '@/api/product'
 import { toast } from 'sonner'
 import { X, XCircle } from 'lucide-react';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { productSchema } from '@/schemas/product'
+import { createImageSchema } from '@/schemas'
 
 const AddProducts = ({ setShowAddProduct }) => {
-  const { register, handleSubmit, setFocus, formState: { errors }, reset } = useForm()
+  const { register, handleSubmit, setFocus, formState: { errors }, reset } = useForm({
+    resolver: zodResolver(productSchema)
+  })
   const [image, setImage] = useState([])
   const [imagePreview, setImagePreview] = useState([])
   const fileInputRef = useRef()
@@ -21,15 +26,14 @@ const AddProducts = ({ setShowAddProduct }) => {
     { value: "Books", label: "Books" },
   ];
   const handleImageChange = (e) => {
-    console.log('invoked');
-    // setImagePreview([])
+
 
     const files = Array.from(e.target.files);
+    createImageSchema.parse(files)
+
     setImage((prev) => [...prev, ...files])
     fileInputRef.current.value = '';
-    // console.log(files);
 
-    // setImageFile(file);
     const imagePreview = files.map((file) => URL.createObjectURL(file))
     setImagePreview((prev) => [...prev, ...imagePreview])
     //  const reader = new FileReader();
@@ -63,16 +67,12 @@ const AddProducts = ({ setShowAddProduct }) => {
     formData.append('stock', data.stock)
 
 
-
-
     postProduct(formData, {
       onSuccess() {
         toast.success('Product Added Succesfully')
         reset()
         setImage(null)
         setImagePreview(null)
-        //  dispatch(postProducts({data}))
-        // navigate('/viewproducts')
       },
       onError() {
         toast.error('Failed to add product')
@@ -80,8 +80,6 @@ const AddProducts = ({ setShowAddProduct }) => {
     })
   }
   const handleDeselectFile = (index) => {
-    console.log('removing');
-
     setImage((prev) => prev.filter((_, i) => i !== index))
     setImagePreview((prev) => prev.filter((_, i) => i !== index))
     console.log(fileInputRef.current.files)
@@ -162,9 +160,6 @@ const AddProducts = ({ setShowAddProduct }) => {
                 Click to upload product image
               </span> */}
           </label>
-          {/* errors will return when field validation fails  */}
-          {errors.exampleRequired && <span className='text-red-600'>This field is required</span>}
-
           <Button className='btn-primary w-full'>Submit</Button>
         </form>
       </div>

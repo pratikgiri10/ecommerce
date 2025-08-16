@@ -7,16 +7,12 @@ import Checkout from './components/Cart/Checkout'
 import Product from './pages/Product'
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
-import ProtectedRoute from './components/protected/ProtectedRoute'
-import { AppSidebar } from './components/Dashboard/Sidebar'
+import ProtectedRoute from './routes/protectedRoutes/ProtectedRoute'
 import AdminDashboard from './components/Dashboard/AdminDashboard'
 import ManageProducts from './components/Dashboard/ManageProduct/ManageProducts'
 import ManageUsers from './components/Dashboard/ManageUsers/ManageUsers'
 import ViewProducts from './components/Dashboard/Tables/ViewProducts'
 import { useDispatch } from 'react-redux'
-import axios from 'axios'
-import { login } from '@/features/auth/authSlice'
-import { useEffect } from 'react'
 import AddProducts from './components/Dashboard/Forms/AddProducts'
 import PlaceOrder from './components/order/PlaceOrder'
 import AddressInfo from './components/Auth/AddressInfo'
@@ -27,58 +23,69 @@ import ManageOrders from './components/Dashboard/ManageOrders/ManageOrders'
 import ForgotPassword from './components/Auth/ForgotPassword'
 import ResetPassword from './components/Auth/ResetPassword'
 import ChangePassword from './components/profile/ChangePassword'
+import { useAuth } from './hooks/useAuth'
+import UserOnlyRoutes from './routes/permissionRoutes/UserOnlyRoutes'
+import AdminOnlyRoutes from './routes/permissionRoutes/AdminOnlyRoutes'
 
 
 function App() {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_DOMAIN}/auth/session`, {
-      withCredentials: true
-    }).then((response) => {
-      if (response.data.success) {
-        dispatch(login(response.data.data.email))
-      }
-      else {
-        dispatch(logout())
-      }
+  const { isAuthenticated } = useAuth()
 
-    })
-  }, [])
+  // useEffect(() => {
+  //   axios.get(`${import.meta.env.VITE_DOMAIN}/auth/session`, {
+  //     withCredentials: true
+  //   }).then((response) => {
+  //     if (response.data.success) {
+  //       dispatch(login(response.data.data.email))
+  //     }
+  //     else {
+  //       dispatch(logout())
+  //     }
+
+  //   })
+  // }, [])
 
   return (
 
     <Router>
       <Routes>
+
+
         <Route path='/' element={<Home />}></Route>
-        <Route path='/sidebar' element={<AppSidebar />}></Route>
-        <Route path='/dashboard' element={<AdminDashboard />}></Route>
-        <Route path='/manageproducts' element={<ManageProducts />}></Route>
-        <Route path='/manageusers' element={<ManageUsers />}></Route>
-        <Route path='/addproducts' element={<AddProducts />}></Route>
+        <Route path='/login' element={<Login />}></Route>
+        <Route path='/register' element={<Register />}></Route>
 
-        <Route path='/viewproducts' element={<ViewProducts />}></Route>
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+
+          <Route path='/resetpassword/:token' element={<ResetPassword />}></Route>
+          <Route path='/changepassword' element={<ChangePassword />}></Route>
+
+          <Route element={<UserOnlyRoutes />}>
+            <Route path='/cart' element={<Carts />}></Route>
+            <Route path='/checkout' element={<Checkout />}></Route>
+            <Route path='/placeorder' element={<PlaceOrder />}></Route>
+            <Route path='/orderhistory' element={<OrderHistory />}></Route>
+            <Route path='/reviews' element={<Review />}></Route>
+          </Route>
+
+          <Route element={<AdminOnlyRoutes />}>
+            {/* <Route path='/sidebar' element={<AppSidebar />}></Route> */}
+            <Route path='/dashboard' element={<AdminDashboard />}></Route>
+            <Route path='/manageproducts' element={<ManageProducts />}></Route>
+            <Route path='/manageusers' element={<ManageUsers />}></Route>
+            <Route path='/addproducts' element={<AddProducts />}></Route>
+            <Route path='/viewproducts' element={<ViewProducts />}></Route>
+            <Route path='/manageorders' element={<ManageOrders />}></Route>
+          </Route>
+
+        </Route>
+
+        <Route path='/forgotpassword' element={<ForgotPassword />}></Route>
+        <Route path='/product' element={<Product />}></Route>
         <Route path='/productdetails/:id' element={<ProductDetails />}></Route>
-
 
         <Route path='/address' element={<AddressInfo />}></Route>
 
-
-        <Route path='/reviews' element={<Review />}></Route>
-
-
-        <Route element={<ProtectedRoute />}>
-          <Route path='/cart' element={<Carts />}></Route>
-          <Route path='/checkout' element={<Checkout />}></Route>
-          <Route path='/placeorder' element={<PlaceOrder />}></Route>
-          <Route path='/orderhistory' element={<OrderHistory />}></Route>
-        </Route>
-        <Route path='/manageorders' element={<ManageOrders />}></Route>
-        <Route path='/product' element={<Product />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='/register' element={<Register />}></Route>
-        <Route path='/forgotpassword' element={<ForgotPassword />}></Route>
-        <Route path='/resetpassword/:token' element={<ResetPassword />}></Route>
-        <Route path='/changepassword' element={<ChangePassword />}></Route>
       </Routes>
     </Router>
 

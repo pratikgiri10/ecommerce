@@ -1,10 +1,11 @@
 import { api, authenticated } from "."
 
-export const getCurrentUserDetails = () => {
-    return authenticated(api).get('/users/getuser')
+export const getCurrentUserDetails = async () => {
+    const response = await authenticated(api).get('/users/getuser')
+    return response.data.data
 }
 export const getAllUsersDetails = async () => {
-    const response = await  api.get('/users/getallusers')
+    const response = await api.get('/users/getallusers')
     return response.data.data
 }
 export const getUserAddress = async () => {

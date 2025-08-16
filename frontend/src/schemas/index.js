@@ -27,8 +27,15 @@ export function createPercentageSchema() {
       message: `Invalid Number`
     })
 }
-export function createImageSchema() {
-  return z.array(
+export function createDropdownSchema(fieldName) {
+  return z.union([
+    z.string().trim().min(1, { message: `please select ${fieldName}` }),
+    z.null()
+  ])
+    .refine((val) => val !== '', { message: `${fieldName} is required` })
+}
+export const createImageSchema =
+  z.array(
     z.instanceof(File)
       .min(1, "Atleast 1 image is required")
       .max(5, "Maximum 5 images are allowed")
@@ -41,7 +48,7 @@ export function createImageSchema() {
       }, "Only JPEG/PNG/WEBP are allowed")
   )
 
-}
+
 export function createEmailSchema(fieldName) {
   return z
     .string({ required_error: `Please enter ${fieldName} address` })

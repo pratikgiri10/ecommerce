@@ -2,10 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isLoggedIn: false,
-    username: "",
-    address: {
-
-    }
+    userDetails: {}
     // address1: "",
     // address2: "",
     // city: "",
@@ -13,7 +10,7 @@ const initialState = {
     // zip: "",
     // country: "",
     // phone: "",
-   
+
 }
 
 export const authSlice = createSlice({
@@ -22,13 +19,13 @@ export const authSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.isLoggedIn = true,
-            state.username = action.payload.username
-            
+                state.userDetails = { ...action.payload }
+
         },
         logout: (state) => {
             state.isLoggedIn = false
-            state.username = ""
-          
+            state.userDetails = {}
+
         },
         setAddress: (state, action) => {
             state.address = action.payload
@@ -44,5 +41,5 @@ export const authSlice = createSlice({
     }
 })
 
-export const {login, logout, setAddress} = authSlice.actions
+export const { login, logout, setAddress } = authSlice.actions
 export default authSlice.reducer
