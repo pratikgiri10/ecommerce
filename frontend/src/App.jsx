@@ -12,7 +12,6 @@ import AdminDashboard from './components/Dashboard/AdminDashboard'
 import ManageProducts from './components/Dashboard/ManageProduct/ManageProducts'
 import ManageUsers from './components/Dashboard/ManageUsers/ManageUsers'
 import ViewProducts from './components/Dashboard/Tables/ViewProducts'
-import { useDispatch } from 'react-redux'
 import AddProducts from './components/Dashboard/Forms/AddProducts'
 import PlaceOrder from './components/order/PlaceOrder'
 import AddressInfo from './components/Auth/AddressInfo'
@@ -28,22 +27,11 @@ import UserOnlyRoutes from './routes/permissionRoutes/UserOnlyRoutes'
 import AdminOnlyRoutes from './routes/permissionRoutes/AdminOnlyRoutes'
 
 
+
 function App() {
+
   const { isAuthenticated } = useAuth()
 
-  // useEffect(() => {
-  //   axios.get(`${import.meta.env.VITE_DOMAIN}/auth/session`, {
-  //     withCredentials: true
-  //   }).then((response) => {
-  //     if (response.data.success) {
-  //       dispatch(login(response.data.data.email))
-  //     }
-  //     else {
-  //       dispatch(logout())
-  //     }
-
-  //   })
-  // }, [])
 
   return (
 
@@ -55,10 +43,11 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
 
-        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated()} />}>
 
           <Route path='/resetpassword/:token' element={<ResetPassword />}></Route>
           <Route path='/changepassword' element={<ChangePassword />}></Route>
+
 
           <Route element={<UserOnlyRoutes />}>
             <Route path='/cart' element={<Carts />}></Route>
@@ -74,8 +63,8 @@ function App() {
             <Route path='/manageproducts' element={<ManageProducts />}></Route>
             <Route path='/manageusers' element={<ManageUsers />}></Route>
             <Route path='/addproducts' element={<AddProducts />}></Route>
-            <Route path='/viewproducts' element={<ViewProducts />}></Route>
             <Route path='/manageorders' element={<ManageOrders />}></Route>
+            <Route path='/viewproducts' element={<ViewProducts />}></Route>
           </Route>
 
         </Route>

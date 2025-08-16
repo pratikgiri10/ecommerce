@@ -1,4 +1,8 @@
 export const useAuth = () => {
-    const token = localStorage.getItem('accessToken');
-    return !!token
+    const isAuthenticated = () => {
+        const token = localStorage.getItem('accessToken');
+        return !!token
+    }
+    return { isAuthenticated }
+
 }

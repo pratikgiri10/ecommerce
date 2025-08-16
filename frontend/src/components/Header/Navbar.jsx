@@ -12,14 +12,14 @@ import { toast } from 'sonner';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: currentUser, isSuccess, isError } = useGetCurrentUserQuery()
-  // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   const navigate = useNavigate();
   const dispatch = useDispatch()
   useEffect(() => {
-    if (isError) {
-      toast.error('failed to get user')
-    }
+    // if (isError) {
+    //   toast.error('failed to get user')
+    // }
     if (isSuccess) {
       dispatch(login(currentUser))
     }
@@ -71,7 +71,7 @@ const Navbar = () => {
 
                 navigate('/')
               }}
-              className="text-xl" variant="ghost">Logout</Button>}
+              className="text-base" variant="destructive">Logout</Button>}
         </div>
 
         {/* Mobile Menu Button */}

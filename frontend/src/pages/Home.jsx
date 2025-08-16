@@ -7,10 +7,10 @@ import Banner from '@/components/common/Banner'
 
 // const Product = lazy(() => import('../components/Products/Product'))
 const Home = () => {
- 
+
   return (
     <div className='bg-[rgb(242,242,242)]'>
-      <Navbar />     
+      <Navbar />
       <HeroSection />
       <Product />
       <Banner />

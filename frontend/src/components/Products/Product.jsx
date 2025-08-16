@@ -15,56 +15,56 @@ import { useGetProductQuery } from '@/api/product'
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 
-  
+
 
 const Product = () => {
 
-  const {data: products, isSuccess, isPending, isError, error} = useGetProductQuery()
-  if(isError)
+  const { data: products, isSuccess, isPending, isError, error } = useGetProductQuery()
+  if (isError)
     console.log(error);
-   
+
   return (
-   
-   <div className='container'>     
-     <div className='max-w-7xl mx-auto  my-16 space-y-2'>
-       <div className='flex items-center justify-between'>
-           <h1 className='text-3xl font-semibold'>Recent Products</h1>
+
+    <div className='container'>
+      <div className='max-w-7xl mx-auto  my-16 space-y-2'>
+        <div className='flex items-center justify-between'>
+          <h1 className='text-3xl font-semibold'>Recent Products</h1>
           <Link
-          to='/product'
-         
+            to='/product'
+
           >
-          <Button className='text-sm flex items-center text-muted-foreground text-yellow-500 font-medium'>
-            <span>View All Products</span>
-            <ChevronRight size={18}/>
-          </Button>
-          
+            <Button className='text-sm flex items-center text-muted-foreground text-yellow-500 font-medium'>
+              <span>View All Products</span>
+              <ChevronRight size={18} />
+            </Button>
+
           </Link>
-       </div>    
+        </div>
         <Carousel
-       
+
         >
-          <CarouselContent>    
-            
-           
-              
-              {products?.products.map((product) => (
-                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                    <Item key={product._id} item={product}/> 
-                </CarouselItem>
-              ))} 
-                  
-            
-            
-          
+          <CarouselContent>
+
+
+
+            {products?.products.map((product) => (
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <Item key={product._id} item={product} />
+              </CarouselItem>
+            ))}
+
+
+
+
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
 
-     
-     </div>
-   </div>
-    
+
+      </div>
+    </div>
+
   )
 }
 

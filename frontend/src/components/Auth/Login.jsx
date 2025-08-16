@@ -14,9 +14,9 @@ import { toast } from "sonner";
 export default function Login() {
 
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
-  const {form, handleSubmit, register}  = useForm({
+
+  const { form, handleSubmit, register } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -29,11 +29,11 @@ export default function Login() {
   const { mutate: signInUserRequest, isPending } = useMutation({
     mutationFn: signInUser,
     onSuccess: (res) => {
-      const {data: {data}} = res
+      const { data: { data } } = res
       // console.log(data.accessToken)
       localStorage.setItem('refreshToken', data.refreshToken)
       localStorage.setItem('accessToken', data.accessToken)
-      dispatch(login(data.user.email))
+      // dispatch(login(data.user))
       navigate('/')
     },
     onError: (error) => {
@@ -48,7 +48,7 @@ export default function Login() {
       email: values.email,
       password: values.password
     })
-    
+
   }
   return (
     <div className="flex min-h-screen items-center justify-center bg-yellow-500">
@@ -58,25 +58,25 @@ export default function Login() {
         </CardHeader>
         <CardContent className="py-4">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
+            <div>
               <label className="block text-gray-700 text-sm font-medium mb-2">Email</label>
               <Input
-              type="email" placeholder="Enter your email" className="w-full" required  
-              {...register('email')}/>
+                type="email" placeholder="Enter your email" className="w-full" required
+                {...register('email')} />
             </div>
             <div>
               <label className="block text-gray-700 text-sm font-medium mb-2">Password</label>
-              <Input 
-              type="password" placeholder="Enter your password" className="w-full" required 
-              {...register('password')}/>
+              <Input
+                type="password" placeholder="Enter your password" className="w-full" required
+                {...register('password')} />
             </div>
             <Button
-            type = 'submit' 
-            className="btn-primary w-full hover:opacity-95 text-white py-2 rounded-xl" disabled={isPending}>
+              type='submit'
+              className="btn-primary w-full hover:opacity-95 text-white py-2 rounded-xl" disabled={isPending}>
               Sign In
             </Button>
           </form>
-        
+
           <p className="text-sm text-gray-600 text-center mt-4">
             Don't have an account? <a href="/register" className="text-blue-600 hover:underline">Sign Up</a>
           </p>

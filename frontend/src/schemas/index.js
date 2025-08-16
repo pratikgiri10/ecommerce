@@ -1,6 +1,5 @@
-import { a } from 'dist/assets/index-CLW8a33a';
 import { z } from 'zod';
-import { includes } from 'zod/v4';
+
 export function createStringSchema(fieldName) {
   return z
     .string({ required_error: `${fieldName} is required` })
@@ -35,18 +34,17 @@ export function createDropdownSchema(fieldName) {
     .refine((val) => val !== '', { message: `${fieldName} is required` })
 }
 export const createImageSchema =
-  z.array(
-    z.instanceof(File)
-      .min(1, "Atleast 1 image is required")
-      .max(5, "Maximum 5 images are allowed")
-      .refine((files) => {
-        return files.every((file) => 2 * 1024 * 1024)
-      }, 'each file should be less than or equal to 2MB')
-      .refine((files) => {
-        const allowedTypes = ["image/jpeg", "image/png", "image/webp"]
-        return files.every(file => allowedTypes.includes(file.type))
-      }, "Only JPEG/PNG/WEBP are allowed")
-  )
+  z.array(z.instanceof(File))
+    .min(1, "Atleast 1 image is required")
+    .max(5, "Maximum 5 images are allowed")
+    .refine((files) => {
+      return files.every((file) => 2 * 1024 * 1024)
+    }, 'each file should be less than or equal to 2MB')
+    .refine((files) => {
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"]
+      return files.every(file => allowedTypes.includes(file.type))
+    }, "Only JPEG/PNG/WEBP are allowed")
+
 
 
 export function createEmailSchema(fieldName) {
