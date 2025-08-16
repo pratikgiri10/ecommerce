@@ -32,56 +32,56 @@ import ChangePassword from './components/profile/ChangePassword'
 function App() {
   const dispatch = useDispatch()
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_DOMAIN}/auth/session`,{
+    axios.get(`${import.meta.env.VITE_DOMAIN}/auth/session`, {
       withCredentials: true
     }).then((response) => {
-      if(response.data.success){
+      if (response.data.success) {
         dispatch(login(response.data.data.email))
       }
-      else{
+      else {
         dispatch(logout())
       }
-     
+
     })
-  },[])
+  }, [])
 
   return (
-  
-      <Router>
-        <Routes>
-          <Route path='/' element={<Home />}></Route>
-          <Route path='/sidebar' element={<AppSidebar />}></Route>
-          <Route path='/dashboard' element={<AdminDashboard />}></Route>
-          <Route path='/manageproducts' element={<ManageProducts />}></Route>
-          <Route path='/manageusers' element={<ManageUsers />}></Route>
-          <Route path='/addproducts' element={<AddProducts />}></Route>
 
-          <Route path='/viewproducts' element={<ViewProducts />}></Route>
-          <Route path='/productdetails/:id' element={<ProductDetails />}></Route>
-          
-         
-          <Route path='/address' element={<AddressInfo />}></Route>
-         
-         
-          <Route path='/reviews' element={<Review />}></Route>
-          
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home />}></Route>
+        <Route path='/sidebar' element={<AppSidebar />}></Route>
+        <Route path='/dashboard' element={<AdminDashboard />}></Route>
+        <Route path='/manageproducts' element={<ManageProducts />}></Route>
+        <Route path='/manageusers' element={<ManageUsers />}></Route>
+        <Route path='/addproducts' element={<AddProducts />}></Route>
 
-          <Route element={<ProtectedRoute />}>
-            <Route path='/cart' element={<Carts />}></Route>
-            <Route path='/checkout' element={<Checkout />}></Route>
-             <Route path='/placeorder' element={<PlaceOrder />}></Route>
-              <Route path='/orderhistory' element={<OrderHistory />}></Route>
-          </Route>
-          <Route path='/manageorders' element={<ManageOrders />}></Route>
-          <Route path='/product' element={<Product />}></Route>
-          <Route path='/login' element={<Login />}></Route>
-          <Route path='/register' element={<Register />}></Route>
-          <Route path='/forgotpassword' element={<ForgotPassword />}></Route>
-          <Route path='/resetpassword/:token' element={<ResetPassword />}></Route>
-          <Route path='/changepassword' element={<ChangePassword />}></Route>
-        </Routes>
-      </Router>
-  
+        <Route path='/viewproducts' element={<ViewProducts />}></Route>
+        <Route path='/productdetails/:id' element={<ProductDetails />}></Route>
+
+
+        <Route path='/address' element={<AddressInfo />}></Route>
+
+
+        <Route path='/reviews' element={<Review />}></Route>
+
+
+        <Route element={<ProtectedRoute />}>
+          <Route path='/cart' element={<Carts />}></Route>
+          <Route path='/checkout' element={<Checkout />}></Route>
+          <Route path='/placeorder' element={<PlaceOrder />}></Route>
+          <Route path='/orderhistory' element={<OrderHistory />}></Route>
+        </Route>
+        <Route path='/manageorders' element={<ManageOrders />}></Route>
+        <Route path='/product' element={<Product />}></Route>
+        <Route path='/login' element={<Login />}></Route>
+        <Route path='/register' element={<Register />}></Route>
+        <Route path='/forgotpassword' element={<ForgotPassword />}></Route>
+        <Route path='/resetpassword/:token' element={<ResetPassword />}></Route>
+        <Route path='/changepassword' element={<ChangePassword />}></Route>
+      </Routes>
+    </Router>
+
   )
 }
 

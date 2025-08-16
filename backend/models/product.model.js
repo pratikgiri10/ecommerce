@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { type } from 'os'
 const { Schema } = mongoose
 
-const productSchema = new Schema ({
+const productSchema = new Schema({
     title: {
         type: String,
         required: [true, "A product title is required"],
@@ -56,19 +56,19 @@ const productSchema = new Schema ({
         type: String,
         default: 'new'
     }
-},{
+}, {
     toJSON: {
-      virtuals: true,
+        virtuals: true,
     },
     toObject: {
-      virtuals: true,
+        virtuals: true,
     },
     timestamps: true
 })
 
 productSchema.virtual("priceAfterDiscount").get(function () {
-  const discount = (this.price * this.discountPercentage) / 100;
-  return Math.round((this.price - discount) * 100) / 100;
+    const discount = (this.price * this.discountPercentage) / 100;
+    return Math.round((this.price - discount) * 100) / 100;
 });
 
 const Product = mongoose.model('Product', productSchema)

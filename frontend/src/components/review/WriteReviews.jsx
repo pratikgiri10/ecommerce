@@ -9,54 +9,54 @@ import { usePostReviewMutation } from '@/api/review'
 
 
 
-const WriteReviews = ({prodId}) => {
+const WriteReviews = ({ prodId }) => {
     const [rating, setRating] = useState(0)
-    const {handleSubmit, register, reset} = useForm({
+    const { handleSubmit, register, reset } = useForm({
         defaultValues: {
 
         }
     })
-    const {mutate: createReview, isPending} = usePostReviewMutation()
+    const { mutate: createReview, isPending } = usePostReviewMutation()
     const handleReviews = (data) => {
         const updatedData = {
             ...data,
             rating,
             prodId
         }
-        createReview({updatedData}, {
-            onSuccess: () => {},
-            onError: () => {}
+        createReview({ updatedData }, {
+            onSuccess: () => { },
+            onError: () => { }
         })
     }
-  return (
-    <div className=''>
-        <form onSubmit={handleSubmit(handleReviews)} className='space-y-4'>
-                <Rating 
-                style={{maxWidth: 150}}
-                itemStyles={{                
-                    itemShapes: Star,
-                    activeFillColor: '#ffb700',
-                    inactiveFillColor: '#ccc'
-                }}
-                value={rating}
-                onChange={setRating}
+    return (
+        <div className=''>
+            <form onSubmit={handleSubmit(handleReviews)} className='space-y-4'>
+                <Rating
+                    style={{ maxWidth: 150 }}
+                    itemStyles={{
+                        itemShapes: Star,
+                        activeFillColor: '#ffb700',
+                        inactiveFillColor: '#ccc'
+                    }}
+                    value={rating}
+                    onChange={setRating}
                 />
-                <Textarea 
-                placeholder='write a review...'
-                {...register('review', {
-                    maxLength: 100
-                })}
-                className='resize-none '
+                <Textarea
+                    placeholder='write a review...'
+                    {...register('review', {
+                        maxLength: 100
+                    })}
+                    className='resize-none '
                 />
-                
-          
-            <Button 
-            disabled={isPending}
-            className='btn-primary'>Submit Review</Button>
-            
-        </form>
-    </div>
-  )
+
+
+                <Button
+                    disabled={isPending}
+                    className='btn-primary'>Submit Review</Button>
+
+            </form>
+        </div>
+    )
 }
 
 export default WriteReviews

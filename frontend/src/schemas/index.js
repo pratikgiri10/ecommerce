@@ -1,9 +1,46 @@
+import { a } from 'dist/assets/index-CLW8a33a';
 import { z } from 'zod';
+import { includes } from 'zod/v4';
 export function createStringSchema(fieldName) {
   return z
     .string({ required_error: `${fieldName} is required` })
     .trim()
     .min(3, `${fieldName} must be at least 3 characters long.`);
+}
+export function createNumberSchema(fieldName) {
+  return z
+    .number().min(1, `${fieldName} must atleast be 1`)
+    .refine((val) => val !== null, {
+      message: `${fieldName} is required`
+    })
+    .refine((val) => !NaN(val), {
+      message: `Invalid Number`
+    })
+}
+export function createPercentageSchema() {
+  return z
+    .number()
+    .refine((val) => val >= 0 && val <= 100, {
+      message: `Percentage must be between 0 and 100`
+    })
+    .refine((val) => !isNaN(val), {
+      message: `Invalid Number`
+    })
+}
+export function createImageSchema() {
+  return z.array(
+    z.instanceof(File)
+      .min(1, "Atleast 1 image is required")
+      .max(5, "Maximum 5 images are allowed")
+      .refine((files) => {
+        return files.every((file) => 2 * 1024 * 1024)
+      }, 'each file should be less than or equal to 2MB')
+      .refine((files) => {
+        const allowedTypes = ["image/jpeg", "image/png", "image/webp"]
+        return files.every(file => allowedTypes.includes(file.type))
+      }, "Only JPEG/PNG/WEBP are allowed")
+  )
+
 }
 export function createEmailSchema(fieldName) {
   return z
