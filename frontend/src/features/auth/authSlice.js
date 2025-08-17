@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isLoggedIn: false,
-    userDetails: {}
+    userDetails: {},
+    isLoading: true
     // address1: "",
     // address2: "",
     // city: "",
@@ -18,12 +18,13 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
-            state.isLoggedIn = true
             state.userDetails = action.payload
+            state.isLoading = false
         },
         logout: (state) => {
-            state.isLoggedIn = false
+
             state.userDetails = {}
+            state.isloading = true
 
         },
         setAddress: (state, action) => {

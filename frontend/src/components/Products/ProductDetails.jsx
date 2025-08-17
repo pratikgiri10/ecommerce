@@ -6,6 +6,7 @@ import { useGetProductByIdQuery } from '@/api/product';
 import Review from '../review/Review';
 import { setToCart } from '@/features/cart/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAuth } from '@/hooks/useAuth';
 
 const ProductDetails = () => {
     const [selectedImage, setSelectedImage] = useState(0)
@@ -13,7 +14,7 @@ const ProductDetails = () => {
     const navigate = useNavigate()
     const { id } = useParams();
 
-    const status = useSelector((state) => state.auth.isLoggedIn)
+    const status = useAuth()
 
 
 

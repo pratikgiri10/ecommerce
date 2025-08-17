@@ -39,7 +39,12 @@ function App() {
     '/register',
     '/resetpassword/:token',
     '/changepassword',
-    '/forgotpassword'
+    '/forgotpassword',
+    'dashboard',
+    'manageproducts',
+    'manageorders',
+    'manageusers',
+    'addproducts'
   ]
   // const routesWithoutFooter = [
   //   '/login',

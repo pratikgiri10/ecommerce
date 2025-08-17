@@ -1,18 +1,19 @@
-import { getUser } from '@/utils/getUser'
+import { useGetCurrentUserQuery } from '@/api/user'
+import Loader from '@/components/common/Loader'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 
 const AdminOnlyRoutes = ({
-
     redirectPath = '/',
     children
 }) => {
-    const userDetails = useSelector(state => state.auth.userDetails)
-    console.log(userDetails);
+    const { data: userDetails, isSuccess, isLoading } = useGetCurrentUserQuery()
+    if (isLoading)
+        return <Loader />
 
     return (
-        userDetails.role == 'admin' ? children || <Outlet /> : <Navigate to={redirectPath} replace />
+        isSuccess && userDetails.role == 'admin' ? children || <Outlet /> : <Navigate to={redirectPath} replace />
     )
 
 }
