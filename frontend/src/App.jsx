@@ -32,7 +32,7 @@ const ManageUsers = lazy(() => import('./pages/ManageUsers'))
 
 function App() {
   const { pathname } = useLocation()
-  const { isAuthenticated } = useAuth()
+  const isAuthenticated = useAuth()
 
   const routesWithoutNavbarFooter = [
     '/login',
@@ -63,7 +63,7 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>
 
-          <Route element={<ProtectedRoute isAuthenticated={isAuthenticated()} />}>
+          <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
 
             <Route path='/resetpassword/:token' element={<ResetPassword />}></Route>
             <Route path='/changepassword' element={<ChangePassword />}></Route>

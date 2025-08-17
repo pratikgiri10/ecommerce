@@ -18,7 +18,7 @@ const AllProducts = () => {
   const [filters, setFilters] = useState({
     category: '',
     page: 1,
-    limit: 2
+    limit: 12
   })
   const { data: products, isPending, isError, error, isSuccess } = useGetProductQueryByCategory(filters)
   const pagination = products?.pagination
@@ -64,6 +64,7 @@ const AllProducts = () => {
             <PaginationContent>
               {/* previous btn */}
               <PaginationItem>
+
                 <PaginationPrevious
                   // href="#" 
                   onClick={() => (
@@ -92,9 +93,11 @@ const AllProducts = () => {
                 );
               })}
               {/* */}
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
+              {products.products.length > 12 &&
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>}
+
               {/* next btn */}
               <PaginationItem>
                 <PaginationNext

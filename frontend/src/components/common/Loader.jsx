@@ -6,7 +6,7 @@ const Loader = () => {
         <div className="flex h-[calc(100vh-2.5rem)] items-center justify-center">
             <div
                 className='w-[3rem] h-[3rem]
-                border-2 border-gray-200 rounded-full border-t-black animate-spin'>
+                border-4 border-gray-200 rounded-full border-t-yellow-500 animate-spin'>
 
             </div>
         </div>

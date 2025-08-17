@@ -7,13 +7,14 @@ import { login, logout } from '@/features/auth/authSlice';
 import { clearCart } from '@/features/cart/cartSlice';
 import { useGetCurrentUserQuery } from '@/api/user';
 import { toast } from 'sonner';
+import { useAuth } from '@/hooks/useAuth';
 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: currentUser, isSuccess, isError } = useGetCurrentUserQuery()
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-
+  // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const isLoggedIn = useAuth()
   const navigate = useNavigate();
   const dispatch = useDispatch()
   useEffect(() => {

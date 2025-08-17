@@ -2,9 +2,9 @@ import { categoryList } from "@/constants";
 
 export default function Footer() {
   return (
-    <footer className="flex flex-col items-center py-10 space-y-6 px-4 bg-gray-100 text-black ">
-      <div className="text-3xl font-bold mb-6 text-yellow-500">DigitalDokan</div>
-      <div className="px-10 flex justify-between items-start border-t-2 border-black  w-full py-10">
+    <footer className="flex flex-col items-center pt-8 space-y-6 px-4 bg-gray-100 text-black ">
+      <div className="text-3xl font-bold text-yellow-500">DigitalDokan</div>
+      <div className="px-10 flex justify-between items-start border-t-2 border-black  w-full py-4">
 
         <div className="w-[500px] flex flex-col items-start justify-center">
           <h1 className="text-xl font-medium">About US</h1>

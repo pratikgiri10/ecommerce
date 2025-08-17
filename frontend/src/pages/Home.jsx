@@ -9,7 +9,7 @@ import Banner from '@/components/common/Banner'
 const Home = () => {
 
   return (
-    <div>
+    <div className='min-h-screen'>
       <HeroSection />
       <Product />
       <Banner />
