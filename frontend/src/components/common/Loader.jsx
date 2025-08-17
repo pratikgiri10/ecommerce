@@ -3,8 +3,12 @@ import '../../css/style.css'
 
 const Loader = () => {
     return (
-        <div className="h-screen flex justify-center item-center">
-            <span className='text-xl font-medium'> Loading...</span>
+        <div className="flex h-[calc(100vh-2.5rem)] items-center justify-center">
+            <div
+                className='w-[3rem] h-[3rem]
+                border-2 border-gray-200 rounded-full border-t-black animate-spin'>
+
+            </div>
         </div>
     )
 }
