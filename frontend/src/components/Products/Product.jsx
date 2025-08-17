@@ -1,8 +1,5 @@
 import React from 'react'
 import Item from './Item'
-// import item1 from '../../assets/lp1.webp'
-// import item2 from '../../assets/lp2.webp'
-import Loading from '../common/Loading'
 import Button from '../common/Button'
 import {
   Carousel,
@@ -19,7 +16,7 @@ import { ChevronRight } from 'lucide-react'
 
 const Product = () => {
 
-  const { data: products, isSuccess, isPending, isError, error } = useGetProductQuery()
+  const { data: products, isError, error } = useGetProductQuery()
   if (isError)
     console.log(error);
 
@@ -31,7 +28,6 @@ const Product = () => {
           <h1 className='text-3xl font-semibold'>Recent Products</h1>
           <Link
             to='/product'
-
           >
             <Button className='text-sm flex items-center text-muted-foreground text-yellow-500 font-medium'>
               <span>View All Products</span>
@@ -41,21 +37,13 @@ const Product = () => {
           </Link>
         </div>
         <Carousel
-
         >
           <CarouselContent>
-
-
-
             {products?.products.map((product) => (
               <CarouselItem key={product._id} className="md:basis-1/2 lg:basis-1/3">
                 <Item key={product._id} item={product} />
               </CarouselItem>
             ))}
-
-
-
-
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />

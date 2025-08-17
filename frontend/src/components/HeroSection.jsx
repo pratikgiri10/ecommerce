@@ -12,7 +12,7 @@ const HeroSection = () => {
                     src='https://images.unsplash.com/photo-1505740420928-5e560c06d30e' alt="bg" />
             </div>
             <div className='flex justify-center items-center w-full'>
-                <div className='mx-16 bg-gray-950 flex flex-col justify-center lg:flex-row lg:items-center  gap-8 lg:gap-20 px-10 py-10 lg:py-0 lg:h-[100px] shadow-sm w-full text-white'>
+                <div className='mx-16 bg-zinc-950 flex flex-col justify-center lg:flex-row lg:items-center  gap-8 lg:gap-20 px-10 py-10 lg:py-0 lg:h-[100px] shadow-sm w-full text-white'>
                     <div className='flex flex-col justify-center gap-2'>
                         <p className=' text-lg xl:text-xl font-medium text-yellow-600 '>Free Shipping</p>
                         <p className='text-sm'>When Ordering over 20k</p>

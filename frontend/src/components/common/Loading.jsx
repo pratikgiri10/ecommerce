@@ -9,7 +9,6 @@ const Loading = () => {
       <SkeletonCard />
       <SkeletonCard />
       <SkeletonCard />
-      <SkeletonCard />
     </div>
   )
 }
