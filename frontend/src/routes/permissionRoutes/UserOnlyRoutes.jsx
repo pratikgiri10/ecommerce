@@ -10,8 +10,6 @@ const UserOnlyRoutes = ({
 
     const userDetails = useSelector(state => state.auth.userDetails)
 
-
-
     return (
         userDetails && userDetails.role == 'user' ? children || <Outlet /> : <Navigate to={redirectPath} replace />
     )

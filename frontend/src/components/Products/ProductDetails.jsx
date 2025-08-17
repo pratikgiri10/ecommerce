@@ -12,7 +12,7 @@ const ProductDetails = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { id } = useParams();
-    console.log(id);
+
     const status = useSelector((state) => state.auth.isLoggedIn)
 
 

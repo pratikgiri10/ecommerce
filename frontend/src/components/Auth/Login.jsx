@@ -1,22 +1,22 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { login } from "@/features/auth/authSlice";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { signInUser } from "@/services/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from "@/schemas/auth";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { login } from "@/features/auth/authSlice";
 
 export default function Login() {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-
-  const { form, handleSubmit, register } = useForm({
+  const { handleSubmit, register } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -30,10 +30,12 @@ export default function Login() {
     mutationFn: signInUser,
     onSuccess: (res) => {
       const { data: { data } } = res
-      // console.log(data.accessToken)
+
       localStorage.setItem('refreshToken', data.refreshToken)
       localStorage.setItem('accessToken', data.accessToken)
-      // dispatch(login(data.user))
+
+      dispatch(login(data))
+
       navigate('/')
     },
     onError: (error) => {

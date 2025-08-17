@@ -1,6 +1,7 @@
 import React from 'react'
 import WriteReviews from './WriteReviews'
 import { useGetReviewByIdQuery } from '@/api/review'
+import { Rating, Star } from '@smastrom/react-rating'
 
 const Review = ({ prodId }) => {
     const { data: reviews, isSuccess } = useGetReviewByIdQuery(prodId)
@@ -16,14 +17,23 @@ const Review = ({ prodId }) => {
                             <div className='w-20 h-20 rounded-full border'></div>
                             <div className='space-y-2 '>
                                 <div className=''>
-                                    <h1 className='text-xl font-semibold'>Name</h1>
+                                    <h1 className='text-xl font-semibold'>{review.user.name}</h1>
                                 </div>
                                 <div className=''>
-                                    <p className='text-base font-medium text-gray-400'>Review</p>
+                                    <p className='text-base font-medium text-gray-400'>{review.review}</p>
                                 </div>
                                 <div className='absolute top-0 right-0 flex flex-col gap-4'>
-                                    <span className='text-sm text-gray-800'>Posted Date</span>
-                                    <span className='text-sm text-gray-800'>Rating</span>
+                                    <span className='text-sm text-gray-800'>{new Date(review.createdAt).toLocaleDateString()}</span>
+                                    <Rating
+                                        style={{ maxWidth: 150 }}
+                                        itemStyles={{
+                                            itemShapes: Star,
+                                            activeFillColor: '#ffb700',
+                                            inactiveFillColor: '#ccc'
+                                        }}
+                                        value={review.rating}
+                                    />
+                                    {/* <span className='text-sm text-gray-800'>{}</span> */}
                                 </div>
                             </div>
                         </div>

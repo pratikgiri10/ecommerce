@@ -6,6 +6,7 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { Textarea } from '../ui/textarea'
 import { usePostReviewMutation } from '@/api/review'
+import { toast } from 'sonner'
 
 
 
@@ -17,15 +18,21 @@ const WriteReviews = ({ prodId }) => {
         }
     })
     const { mutate: createReview, isPending } = usePostReviewMutation()
-    const handleReviews = (data) => {
-        const updatedData = {
-            ...data,
+    const handleReviews = ({ review }) => {
+        const data = {
+            review,
             rating,
-            prodId
+            product: prodId
         }
-        createReview({ updatedData }, {
-            onSuccess: () => { },
-            onError: () => { }
+        createReview({ data }, {
+            onSuccess: () => {
+                toast.success('review submitted successfully')
+                reset()
+                setRating(0)
+            },
+            onError: () => {
+                toast.error('something went wrong')
+            }
         })
     }
     return (

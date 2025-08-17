@@ -8,7 +8,9 @@ const AdminOnlyRoutes = ({
     redirectPath = '/',
     children
 }) => {
-    const userDetails = getUser()
+    const userDetails = useSelector(state => state.auth.userDetails)
+    console.log(userDetails);
+
     return (
         userDetails.role == 'admin' ? children || <Outlet /> : <Navigate to={redirectPath} replace />
     )

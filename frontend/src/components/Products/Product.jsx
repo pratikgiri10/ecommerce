@@ -48,7 +48,7 @@ const Product = () => {
 
 
             {products?.products.map((product) => (
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+              <CarouselItem key={product._id} className="md:basis-1/2 lg:basis-1/3">
                 <Item key={product._id} item={product} />
               </CarouselItem>
             ))}
