@@ -2,7 +2,7 @@ import { useGetAllUsersQuery } from '@/api/user'
 import Button from '@/components/common/Button'
 import { Edit3, Package, Search, Trash2 } from 'lucide-react'
 import React, { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import EditUser from '../ManageUsers/EditUser'
 
 const UsersDetail = ({ header, title, ...props }) => {
@@ -23,8 +23,30 @@ const UsersDetail = ({ header, title, ...props }) => {
 
   return (
     <div className='w-full min-h-screen p-4 bg-gradient-to-br from-yellow-50 to-indigo-50 space-y-4'>
-      <h1 className='font-medium text-4xl mb-8'>Users</h1>
-      <div className=' grid grid-cols-3 '>
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: -20
+        }}
+        animate={{
+          opacity: 1,
+          y: 0
+        }}
+        className='space-y-2'>
+        <h1 className='font-bold text-4xl'>User management</h1>
+        <p className='text-muted-foreground'>Manage Users and their activity</p>
+      </motion.div>
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 20
+        }}
+        animate={{
+          opacity: 1,
+          y: 0
+        }}
+        transition={{ delay: 0.2 }}
+        className=' grid grid-cols-3 '>
         {/* <div className='col-span-1 w-full'>
           <Link to='/adduser'>
             <Button children='Add User' className='btn-primary' />
@@ -43,8 +65,18 @@ const UsersDetail = ({ header, title, ...props }) => {
           />
         </div>
 
-      </div>
-      <table className='bg-white min-w-full rounded-xl overflow-hidden '>
+      </motion.div>
+      <motion.table
+        initial={{
+          opacity: 0,
+          y: 20
+        }}
+        animate={{
+          opacity: 1,
+          y: 0
+        }}
+        transition={{ delay: 0.3 }}
+        className='bg-white min-w-full rounded-xl overflow-hidden '>
         <thead className=''>
           <tr className='bg-yellow-400'>
             {title.map((title) => (
@@ -84,7 +116,7 @@ const UsersDetail = ({ header, title, ...props }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </motion.table>
       {showEditUser &&
         <EditUser
           selectedUser={selectedUser}

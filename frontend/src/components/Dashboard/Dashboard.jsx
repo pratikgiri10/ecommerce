@@ -5,6 +5,7 @@ import { useGetAllUsersQuery } from '@/api/user'
 import { useGetProductQuery } from '@/api/product'
 import { useGetAllOrdersQuery } from '@/api/order'
 import { CartesianGrid, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import LegendItem from './LegendItem'
 
 const Dashboard = () => {
 
@@ -104,26 +105,27 @@ const Dashboard = () => {
         ))}
 
       </div>
-      <div className='flex'>
-        <div>
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+        <div className='w-full h-[300px] space-y-4 bg-white px-4 py-2 rounded-xl shadow-md'>
           {/* sales analytics */}
-          <h1>Total Sales</h1>
-          <div width={730} height={250}>
-            <ResponsiveContainer width='100%' height='100%'>
-              <LineChart data={salesData} >
-                <XAxis dataKey='month' />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type='monotone' dataKey='sales' stroke='#eab308' />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          <h1 className='text-[1.1rem] font-semibold'>Total Sales</h1>
+          {/* <div className='w-[500px] h-[250px]'> */}
+          <ResponsiveContainer width='100%' height='90%'>
+            <LineChart data={salesData} >
+              <XAxis dataKey='month' />
+              <YAxis />
+              <Tooltip />
+              <Legend layout="horizontal" verticalAlign="bottom" align="center" />
+              <Line type='monotone' dataKey='sales' stroke='#eab308' />
+            </LineChart>
+          </ResponsiveContainer>
+          {/* </div> */}
         </div>
         {/* top product category */}
-        <div>
-          <h1>Top Products Category</h1>
-          <div className='h-[450px] w-[300px]'>
+        <div className='w-full h-[300px] space-y-4 bg-white px-4 py-2 rounded-xl shadow-md'>
+          <h1 className='text-[1.1rem] font-semibold'>Top Products Category</h1>
+          <div className='flex w-full h-full'>
+            {/* <div className=''> */}
             <ResponsiveContainer width='100%' height='100%'>
               <PieChart>
                 <Pie
@@ -134,14 +136,21 @@ const Dashboard = () => {
                   cy='50%'
                   outerRadius={80}
                   innerRadius={60}
-                  label
+                  labelLine={false}
+                  paddingAngle={0}
 
                 />
                 <Tooltip />
+
               </PieChart>
             </ResponsiveContainer>
+
+            {/* </div> */}
+            <LegendItem legendItems={salesPerCategory} />
           </div>
+
         </div>
+
       </div>
 
 

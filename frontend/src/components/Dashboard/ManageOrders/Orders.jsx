@@ -1,14 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Search, 
-  Download, 
-  Eye, 
-  Edit3, 
-  Trash2, 
-  Package, 
-  Truck, 
-  CheckCircle, 
+import {
+  Search,
+  Download,
+  Eye,
+  Edit3,
+  Trash2,
+  Package,
+  Truck,
+  CheckCircle,
   XCircle,
   Clock,
   ChevronDown,
@@ -22,7 +22,7 @@ import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 
 const Orders = () => {
-    const {data: orders, isLoading} = useGetAllOrdersQuery()   
+  const { data: orders, isLoading } = useGetAllOrdersQuery()
 
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -39,48 +39,48 @@ const Orders = () => {
   };
 
   const filteredOrders = useMemo(() => {
-    if(!orders) return []
+    if (!orders) return []
     return orders.filter(order => {
       const matchesSearch = order._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           order.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           order.customer.email.toLowerCase().includes(searchTerm.toLowerCase());
+        order.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.customer.email.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesStatus = statusFilter === 'all' || order.order_status === statusFilter;
       return matchesSearch && matchesStatus;
     });
   }, [orders, searchTerm, statusFilter]);
 
   const queryClient = useQueryClient()
-  const {mutate: deleteOrderById} = useDeleteOrderMutation()
+  const { mutate: deleteOrderById } = useDeleteOrderMutation()
   const deleteOrder = (orderId) => {
     deleteOrderById(orderId, {
-      onSuccess: (_,orderId) => {        
-        toast.success('Order deleted succesfully')        
-        queryClient.setQueryData(['order', 'get-all-orders'], (oldOrders) => {        
-          return oldOrders?.filter((order) => order._id !== orderId)          
+      onSuccess: (_, orderId) => {
+        toast.success('Order deleted succesfully')
+        queryClient.setQueryData(['order', 'get-all-orders'], (oldOrders) => {
+          return oldOrders?.filter((order) => order._id !== orderId)
         })
       },
       onError: (error) => {
         toast.error('error failed to delete order')
       }
     })
-   
+
     setShowOrderDetails(false);
   };
 
-//   const refreshOrders = () => {
-//     setIsLoading(true);
-//     setTimeout(() => {
-//       setIsLoading(false);
-//     }, 1000);
-//   };
-const handleExport = () => {
-  console.log('exporting');
-  
-  const title = 'Orders'
-  const columns = ['Order Id', 'Customer', 'Date', 'Status', 'Total', 'Items']
-  const rows = filteredOrders.map((order) => order)
-  exportToPdf(title, columns, rows)
-}
+  //   const refreshOrders = () => {
+  //     setIsLoading(true);
+  //     setTimeout(() => {
+  //       setIsLoading(false);
+  //     }, 1000);
+  //   };
+  const handleExport = () => {
+    console.log('exporting');
+
+    const title = 'Orders'
+    const columns = ['Order Id', 'Customer', 'Date', 'Status', 'Total', 'Items']
+    const rows = filteredOrders.map((order) => order)
+    exportToPdf(title, columns, rows)
+  }
 
 
 
@@ -94,14 +94,14 @@ const handleExport = () => {
           className="mb-8"
         >
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">Order Management</h1>
+            <div className='space-y-2'>
+              <h1 className="text-4xl font-bold text-gray-900">Order Management</h1>
               <p className="text-gray-600">Manage and track all customer orders</p>
             </div>
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-            //   onClick={refreshOrders}
+              //   onClick={refreshOrders}
               className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow"
               disabled={isLoading}
             >
@@ -146,7 +146,7 @@ const handleExport = () => {
                 <ChevronDown className="absolute right-2 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
               </div>
               <motion.button
-              onClick={handleExport}
+                onClick={handleExport}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
@@ -180,7 +180,7 @@ const handleExport = () => {
               </thead>
               <tbody>
                 <AnimatePresence>
-                   {filteredOrders.map((order, index) => {
+                  {filteredOrders.map((order, index) => {
                     const StatusIcon = statusConfig[order.order_status].icon;
                     return (
                       <motion.tr
@@ -195,10 +195,10 @@ const handleExport = () => {
                           <span className="font-medium text-gray-900">{order._id}</span>
                         </td>
                         <td className="p-4">
-                          
-                            <p className="font-medium text-gray-900">{order.customer.name}</p>
-                            <p className="text-sm text-gray-500">{order.customer.email}</p>
-                          
+
+                          <p className="font-medium text-gray-900">{order.customer.name}</p>
+                          <p className="text-sm text-gray-500">{order.customer.email}</p>
+
                         </td>
                         <td className="p-4 text-gray-600">
                           {new Date(order.createdAt).toLocaleDateString()}
@@ -255,12 +255,12 @@ const handleExport = () => {
                       </motion.tr>
                     );
                   })}
-                 
+
                 </AnimatePresence>
               </tbody>
             </table>
           </div>
-          
+
           {filteredOrders.length === 0 && (
             <div className="text-center py-12">
               <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
@@ -268,20 +268,20 @@ const handleExport = () => {
             </div>
           )}
         </motion.div>
-          {/* edit order  */}
-          <AnimatePresence>
-            {showEditOrder && 
-            <EditOrder selectedOrder={selectedOrder} setShowEditOrder={setShowEditOrder}/>
-            }
-          </AnimatePresence>
+        {/* edit order  */}
+        <AnimatePresence>
+          {showEditOrder &&
+            <EditOrder selectedOrder={selectedOrder} setShowEditOrder={setShowEditOrder} />
+          }
+        </AnimatePresence>
         {/* Order Details Modal */}
         <AnimatePresence>
           {showOrderDetails && selectedOrder && (
-            <OrderDetails 
-            setShowOrderDetails={setShowOrderDetails}
-            selectedOrder={selectedOrder}
-            statusConfig={statusConfig}
-            isLoading={isLoading}
+            <OrderDetails
+              setShowOrderDetails={setShowOrderDetails}
+              selectedOrder={selectedOrder}
+              statusConfig={statusConfig}
+              isLoading={isLoading}
             />
           )}
         </AnimatePresence>
