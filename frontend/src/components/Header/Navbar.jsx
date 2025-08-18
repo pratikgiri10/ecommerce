@@ -17,6 +17,15 @@ const Navbar = () => {
   const isLoggedIn = useAuth()
   const navigate = useNavigate();
   const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(clearCart())
+    dispatch(logout())
+    localStorage.clear('accessToken')
+    //TODO - clear the localStorage and make api call to clear the access token
+
+    navigate('/')
+  }
   useEffect(() => {
 
     if (isSuccess) {
@@ -71,14 +80,7 @@ const Navbar = () => {
               navigate('/login')
             }}
             className="text-base btn-primary" variant="ghost">Login</Button> : <Button
-              onClick={() => {
-                dispatch(clearCart())
-                dispatch(logout())
-                localStorage.clear('accessToken')
-                //TODO - clear the localStorage and make api call to clear the access token
-
-                navigate('/')
-              }}
+              onClick={handleLogout}
               className="text-base" variant="destructive">Logout</Button>}
         </div>
 

@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom'
 const Item = ({ item, className }) => {
   const navigate = useNavigate()
 
-  const handleItemClick = (e) => {
+  const handleItemClick = () => {
 
     navigate(`/productdetails/${item._id}`)
   }

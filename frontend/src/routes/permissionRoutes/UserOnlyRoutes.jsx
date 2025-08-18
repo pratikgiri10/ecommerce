@@ -1,7 +1,6 @@
 import { useGetCurrentUserQuery } from '@/api/user'
 import Loader from '@/components/common/Loader'
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
 const UserOnlyRoutes = ({

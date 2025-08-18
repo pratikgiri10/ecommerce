@@ -1,7 +1,4 @@
 import React from 'react'
-// import cv1 from '../assets/cover.jpg'
-// import cv2 from '../assets/cover2.jpg'
-// import cv3 from '../assets/cover3.jpg'
 
 const HeroSection = () => {
     return (

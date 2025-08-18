@@ -1,15 +1,9 @@
 import { useGetOrderQuery } from '@/api/order';
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+
 const OrderHistory = () => {
-
-
   const { data: order, isSuccess } = useGetOrderQuery()
-
-  if (isSuccess)
-    console.log(order);
-
-
 
   // State for expanded order details
   const [expandedOrder, setExpandedOrder] = useState(null);

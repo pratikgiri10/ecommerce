@@ -1,8 +1,5 @@
 import { lazy } from 'react'
 import React, { Suspense } from 'react'
-
-import Navbar from '@/components/Header/Navbar'
-import Footer from '@/components/Footer/Footer'
 import Loader from '@/components/common/Loader'
 // import ProductComponent from '@/components/Products/Product'
 const ProductComponent = lazy(() => import('@/components/Products/AllProducts'))
