@@ -12,8 +12,8 @@ import { useAuth } from '@/hooks/useAuth';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { data: currentUser, isSuccess, isError } = useGetCurrentUserQuery()
-  // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  // const { data: currentUser, isSuccess, isError } = useGetCurrentUserQuery()
+
   const isLoggedIn = useAuth()
   const navigate = useNavigate();
   const dispatch = useDispatch()
@@ -26,13 +26,13 @@ const Navbar = () => {
 
     navigate('/')
   }
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (isSuccess) {
-      dispatch(login(currentUser))
-    }
+  //   if (isSuccess) {
+  //     dispatch(login(currentUser))
+  //   }
 
-  }, [currentUser, isSuccess, isError, login])
+  // }, [currentUser, isSuccess, isError, login])
 
 
   return (

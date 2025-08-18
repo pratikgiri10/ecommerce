@@ -46,16 +46,8 @@ function App() {
     'manageusers',
     'addproducts'
   ]
-  // const routesWithoutFooter = [
-  //   '/login',
-  //   '/register',
-  //   '/resetpassword/:token',
-  //   '/changepassword'
-  // ]
 
   const hideNavbarFooter = routesWithoutNavbarFooter.some((url) => pathname.includes(url))
-  // const hideFooter = routesWithoutNavbar.some((url) => pathname.includes(url))
-
 
   return (
 

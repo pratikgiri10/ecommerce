@@ -1,13 +1,20 @@
 import { useGetCurrentUserQuery } from '@/api/user'
 import Loader from '@/components/common/Loader'
 import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 const AdminOnlyRoutes = ({
     redirectPath = '/',
     children
 }) => {
-    const { data: userDetails, isSuccess, isLoading } = useGetCurrentUserQuery()
+    const navigate = useNavigate()
+    const { data: userDetails, isSuccess, isLoading, isError } = useGetCurrentUserQuery()
+    if (isError) {
+        toast.error('session has expired')
+        localStorage.clear('accessToken')
+        return navigate('/login')
+    }
     if (isLoading)
         return <Loader />
 

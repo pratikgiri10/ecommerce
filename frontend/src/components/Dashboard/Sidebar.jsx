@@ -11,9 +11,10 @@ import {
 } from "@/components/ui/sidebar"
 
 
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 
 export function AppSidebar() {
+  const navigate = useNavigate()
   const items = [
     {
       title: "Dashboard",
@@ -74,7 +75,12 @@ export function AppSidebar() {
 
         </SidebarContent>
         <SidebarFooter className='bg-yellow-500 p-4 hover:bg-red-600 hover:text-white'>
-          <SidebarMenuButton className='hover:bg-red-600 hover:text-white'><h1 className="text-xl font-medium ">Logout</h1></SidebarMenuButton>
+          <SidebarMenuButton
+            onClick={() => {
+              localStorage.clear('accessToken')
+              navigate('/')
+            }}
+            className='hover:bg-red-600 hover:text-white'><h1 className="text-xl font-medium ">Logout</h1></SidebarMenuButton>
         </SidebarFooter>
 
       </Sidebar>
